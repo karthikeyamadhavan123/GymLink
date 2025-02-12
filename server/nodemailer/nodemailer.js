@@ -169,10 +169,67 @@ async function sendResetEmailSuccessful(email) {
       console.error("Error sending password reset success email:", error);
     }
   }
+  async function sendGymCreationSuccessful(email, gymName) {
+    try {
+      const info = await transporter.sendMail({
+        from: process.env.NODEMAILER_EMAIL,
+        to: email,
+        subject: `🎉 Your Gym "${gymName}" is Now Live on GymLink!` ,
+        text: `Congratulations! Your gym, "${gymName}," has been successfully added to GymLink. Gym enthusiasts can now discover and connect with your facility!`,
+        html: `
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Successfully Added</title>
+  </head>
+  <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+    <div style="background: linear-gradient(to right, #4CAF50, #8BC34A); padding: 20px; text-align: center;">
+      <h1 style="color: white; margin: 0;">🎉 Gym Successfully Created! 🏋️‍♂️</h1>
+    </div>
+    <div style="background-color: #f9f9f9; padding: 20px; border-radius: 0 0 5px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+      <p>Hello,</p>
+      <p>We are thrilled to inform you that your gym, <strong>"${gymName}"</strong>, has been successfully added to GymLink! 🎊</p>
+      <div style="text-align: center; margin: 30px 0;">
+        <div style="background-color: #4CAF50; color: white; width: 50px; height: 50px; line-height: 50px; border-radius: 50%; display: inline-block; font-size: 30px;">
+          ✓
+        </div>
+      </div>
+      <p>Your gym is now discoverable by fitness enthusiasts looking for the perfect workout spot. Here’s what you can do next:</p>
+      <ul style="list-style-type: none; padding-left: 0;">
+        <li>📍 Update your gym details and add images</li>
+        <li>👥 Connect with potential members and trainers</li>
+        <li>🏆 Promote your gym with exclusive offers</li>
+        <li>🤖 Get AI-powered recommendations to attract new members</li>
+      </ul>
+      <div style="text-align: center; margin: 30px 0;">
+        <a href="${process.env.CLIENT_URL}/dashboard" 
+           style="background: linear-gradient(to right, #4CAF50, #8BC34A); color: white; padding: 15px 30px; text-decoration: none; border-radius: 25px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">
+           Manage Your Gym
+        </a>
+      </div>
+      <p>If you have any questions, feel free to reach out to our support team.</p>
+      <p>Thank you for being a part of GymLink! 💪<br>The GymLink Team 🏋️‍♂️</p>
+    </div>
+    <div style="text-align: center; margin-top: 20px; color: #888; font-size: 0.8em;">
+      <p>This is an automated message. Please do not reply to this email.</p>
+    </div>
+  </body>
+  </html>`
+      });
+  
+      console.log("Gym creation success email sent successfully");
+  
+    } catch (error) {
+      console.error("Error sending gym creation success email:", error);
+    }
+  }
 
 // Export all functions
 module.exports = { 
     welcomeEmail,
     sendVerificationEmail,
-    sendResetEmailSuccessful
+    sendResetEmailSuccessful,
+    sendGymCreationSuccessful
 }

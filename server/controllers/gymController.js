@@ -1,11 +1,11 @@
 const Gym = require("../models/gymSchema");
 const cloudinary = require("cloudinary").v2;
 const User = require("../models/userSchema");
+const { sendGymCreationSuccessful } = require("../nodemailer/nodemailer");
 
 const createGym = async (req, res) => {
   try {
     const { userId } = req.userId;
-
     if (!userId) {
       return res
         .status(403)
@@ -85,7 +85,7 @@ const createGym = async (req, res) => {
     });
 
     await newGym.save();
-
+    await sendGymCreationSuccessful(user.email, gymName);
     return res.status(201).json({
       success: true,
       message: "Gym created successfully",
@@ -201,12 +201,10 @@ const editGyms = async (req, res) => {
 
     // Check if user is the owner and an admin
     if (String(gym.owner._id) !== userId && user.role !== "admin") {
-      return res
-        .status(403)
-        .json({
-          success: false,
-          message: "You are not authorized to edit this gym",
-        });
+      return res.status(403).json({
+        success: false,
+        message: "You are not authorized to edit this gym",
+      });
     }
 
     // Update fields only if they are provided
@@ -214,7 +212,7 @@ const editGyms = async (req, res) => {
     if (editedlocation) gym.location = editedlocation;
     if (editedbasePrice) gym.basePrice = editedbasePrice;
     if (editedequipments)
-      gym.equipments =  [
+      gym.equipments = [
         ...gym.equipments,
         ...editedequipments.split(",").map((e) => e.trim()),
       ];
@@ -266,12 +264,10 @@ const deleteGyms = async (req, res) => {
 
     // Check if user is the owner and an admin
     if (String(gym.owner._id) !== userId && user.role !== "admin") {
-      return res
-        .status(403)
-        .json({
-          success: false,
-          message: "You are not authorized to edit this gym",
-        });
+      return res.status(403).json({
+        success: false,
+        message: "You are not authorized to edit this gym",
+      });
     }
     await gym.deleteOne();
     return res.status(200).json({
