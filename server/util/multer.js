@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
             let folder = 'uploads/'; // Default folder
 
             // Check if the upload is for shop images
-            if (file.fieldname === 'gym') {
+            if (file.fieldname === 'gymImages') {
                 folder = 'uploads/gym_images/';
             }
             // else if(file.fieldname === 'product_image'){

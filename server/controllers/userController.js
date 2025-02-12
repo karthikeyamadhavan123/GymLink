@@ -101,7 +101,7 @@ const Register = async (req, res) => {
   } catch (e) {
     console.log(e);
     return res
-      .status(400)
+      .status(500)
       .json({ message: "Internal Server Error", success: false });
   }
 };
