@@ -25,11 +25,33 @@ const storage = new CloudinaryStorage({
         public_id: (req, file) => `${Date.now()}-${file.originalname}`,  // Generate unique filename
     },
 });
-
+const imageStorage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+      folder: "trainer_images", // Folder for storing trainer images
+      format: async (req, file) => {
+        const ext = file.mimetype.split("/")[1]; // Extract file extension
+        return ["jpeg", "jpg", "png"].includes(ext) ? ext : "png"; // Default to PNG
+      },
+      public_id: (req, file) => `${Date.now()}-${file.originalname}`, // Unique filename
+    },
+  });
+  const certificationStorage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+      folder: "trainer_certifications", // Folder for storing certification files
+      resource_type: "raw", // Required to handle PDF/DOCX
+      format: async (req, file) => file.mimetype.split("/")[1], // Keep original file format
+      public_id: (req, file) => `${Date.now()}-${file.originalname}`, // Unique filename
+    },
+  });
 // Multer middleware setup
 const upload = multer({
     storage: storage,
     limits: { fileSize: 5 * 1024 * 1024 },  // 5MB file size limit
 });
+const uploadTrainerImage = multer({ storage: imageStorage, limits: { fileSize: 5 * 1024 * 1024 } }); // 5MB limit for images
+const uploadCertification = multer({ storage: certificationStorage, limits: { fileSize: 10 * 1024 * 1024 } }); // 10MB limit for PDFs/DOCX
 
-module.exports = upload;
+
+module.exports = {upload,uploadTrainerImage,uploadCertification};

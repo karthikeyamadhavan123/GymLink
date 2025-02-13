@@ -54,9 +54,38 @@ const gymSchema = new Schema(
       },
     },
     location: {
-      type: String,
-      required: true,
-      trim: true,
+      streetName: {
+        type: String,
+        required: true,
+      },
+      area: {
+        // More specific subdivision within a district
+        type: String,
+        required: false,
+      },
+      landmark: {
+        // Helps in better identification
+        type: String,
+        required: false,
+      },
+      city: {
+        // Ensures proper address hierarchy
+        type: String,
+        required: true,
+      },
+      state: {
+        type: String,
+        required: true,
+      },
+
+      pincode: {
+        type: String,
+        required: true,
+        validate: {
+          validator: (v) => /^[0-9]{6}$/.test(v), // Ensures exactly 6 digits
+          message: "Pincode must be exactly 6 digits and contain only numbers",
+        },
+      },
     },
     basePrice: {
       type: Number,
@@ -64,6 +93,13 @@ const gymSchema = new Schema(
       default: 0,
       min: [0, "Base price cannot be negative"],
     },
+    trainers: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Trainer",
+        unique:true
+      },
+    ],
   },
   {
     timestamps: true,

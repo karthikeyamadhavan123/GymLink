@@ -12,7 +12,16 @@ const createGym = async (req, res) => {
         .json({ message: "Please login to create your gym", success: false });
     }
 
-    const { gymName, location, basePrice } = req.body;
+    const {
+      gymName,
+      basePrice,
+      streetName,
+      area,
+      landmark = "",
+      city,
+      state,
+      pincode,
+    } = req.body;
     const equipments = req.body.equipments.split(",").map((e) => e.trim());
 
     if (!gymName) {
@@ -28,10 +37,30 @@ const createGym = async (req, res) => {
       });
     }
 
-    if (!location) {
+    if (!streetName) {
       return res
         .status(400)
-        .json({ message: "Please enter location of gym", success: false });
+        .json({ message: "Please enter streetName", success: false });
+    }
+    if (!area) {
+      return res
+        .status(400)
+        .json({ message: "Please enter area", success: false });
+    }
+    if (!city) {
+      return res
+        .status(400)
+        .json({ message: "Please enter city", success: false });
+    }
+    if (!state) {
+      return res
+        .status(400)
+        .json({ message: "Please enter state", success: false });
+    }
+    if (!pincode) {
+      return res
+        .status(400)
+        .json({ message: "Please enter valid pincode", success: false });
     }
 
     if (basePrice < 0) {
@@ -77,7 +106,14 @@ const createGym = async (req, res) => {
 
     const newGym = new Gym({
       gymName,
-      location,
+      location: {
+        streetName: streetName,
+        area: area,
+        landmark: landmark,
+        city: city,
+        state: state,
+        pincode: pincode,
+      },
       owner: userId,
       equipments: equipments,
       basePrice,
@@ -283,10 +319,53 @@ const deleteGyms = async (req, res) => {
   }
 };
 
+// fitering by  location, price,state
+// after by ratings and trainers
+const filterBySearch = async (req, res) => {
+  try {
+    const { city, state, price } = req.query;
+    if (!city && !state && !price) {
+      return res.status(400).json({
+        success: false,
+        message: "At least one parameter is required",
+      });
+    }
+    let query = {};
+
+    if (city) {
+      query["location.city"] = city; // Use dot notation to query nested fields
+    }
+    if (state) {
+      query["location.state"] = state;
+    }
+    if (price) {
+      query.basePrice = price;
+    }
+
+    const filteredGyms = await Gym.find(query).select(
+      "gymName location basePrice equipments"
+    );
+    if (!filteredGyms.length) {
+      return res
+        .status(200)
+        .json({ success: true, message: "No Gyms Found with that filters" });
+    }
+
+    res.status(200).json({ success: true, gyms: filteredGyms });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   createGym,
   fetchAllGyms,
   fetchGymsById,
   editGyms,
   deleteGyms,
+  filterBySearch,
 };

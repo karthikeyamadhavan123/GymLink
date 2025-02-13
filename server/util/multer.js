@@ -19,10 +19,12 @@ const storage = multer.diskStorage({
             if (file.fieldname === 'gymImages') {
                 folder = 'uploads/gym_images/';
             }
-            // else if(file.fieldname === 'product_image'){
-            //     folder = 'uploads/product_images/';
-            // }
-
+            else if(file.fieldname === 'trainerImage'){
+                folder = 'uploads/trainer_images/';
+            }
+            else if(file.fieldname === 'trainerCertificate'){
+                folder = 'uploads/trainer_certificates/';
+            }
             ensureDirectoryExistence(folder); // Ensure the folder exists
             cb(null, folder); // Set the appropriate folder
         } catch (error) {
