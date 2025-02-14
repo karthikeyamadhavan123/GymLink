@@ -5,6 +5,7 @@ const registerController = require('../controllers/userController.js');
 const {upload} = require('../util/cloudinary.js');
 const tokenVerification=require('../jwt/tokenVerification')
 router.post('/register', upload.single('avatar'),ExistingUser.existingUser,registerController.Register)
+router.post('/register/admin', upload.single('avatar'),ExistingUser.existingAdmin,registerController.adminRegister)
 router.post('/login',registerController.Login)
 router.post('/logout',tokenVerification,registerController.Logout)
 router.post('/forgot-password',registerController.forgotPassword)

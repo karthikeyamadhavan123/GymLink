@@ -106,6 +106,12 @@ const addCertification = async (req, res) => {
         success: false,
       });
     }
+    if (!gymId) {
+      return res.status(403).json({
+        message: "Please provide a valid gymId",
+        success: false,
+      });
+    }
 
     // Check if gym exists
     const gym = await Gym.findById(gymId);
@@ -154,7 +160,7 @@ const addCertification = async (req, res) => {
     }
 
     // Create certificate routes
-    trainer.certifications=trainerCertification
+    trainer.certifications = trainerCertification;
 
     await trainer.save();
     return res.status(201).json({
@@ -169,4 +175,157 @@ const addCertification = async (req, res) => {
     });
   }
 };
-module.exports = { addTrainer,addCertification };
+
+const getTrainersByGym = async (req, res) => {
+  try {
+    const { gymId } = req.params;
+    if (!gymId) {
+      return res.status(403).json({
+        message: "Please provide a valid gymId",
+        success: false,
+      });
+    }
+    const trainersofGym = await Gym.findById(gymId)
+      .populate({
+        path: "trainers",
+        select:
+          "trainerName expertise certifications experience contactNumber trainerImage description",
+      })
+      .select(
+        "-location -_id -gymName -owner -equipments -gymImages -basePrice -createdAt -updatedAt"
+      );
+    if (trainersofGym.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "There are no trainers currently but we are recurting.",
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      message: "Trainers fetched successfully",
+      trainer: trainersofGym,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
+const editTrainerProfile = async (req, res) => {
+  try {
+    const { userId } = req.userId;
+    if (!userId) {
+      return res.status(403).json({
+        message: "Please log in to add a trainer",
+        success: false,
+      });
+    }
+    const { trainerId, gymId } = req.params;
+
+    const { trainerName, expertise, experience, contactNumber, description } =
+      req.body;
+    if (
+      !trainerName &&
+      !expertise &&
+      !expertise &&
+      !experience &&
+      !contactNumber &&
+      !description
+    ) {
+      return res.status(403).json({
+        message: "Please provide a field to edit ",
+        success: false,
+      });
+    }
+    if (!gymId) {
+      return res.status(403).json({
+        message: "Please provide a valid gymId",
+        success: false,
+      });
+    }
+    const gym = await Gym.findById(gymId);
+    if (!gym) {
+      return res.status(404).json({
+        message: "Gym not found please check for the gym you search!!",
+        success: false,
+      });
+    }
+
+    if (!trainerId) {
+      return res.status(403).json({
+        message: "Please provide a valid trainerId",
+        success: false,
+      });
+    }
+    const edittrainersDetails = await Trainer.findById(trainerId);
+    if (!edittrainersDetails) {
+      return res.status(404).json({
+        message: "Trainer not found please check for the trainer you search!!",
+        success: false,
+      });
+    }
+    if (String(gym._id) !== String(edittrainersDetails.gymId)) {
+      return res.status(401).json({
+        message:
+          "You are not authorized to edit the trainer as you are not the owner!!",
+        success: false,
+      });
+    }
+    if (String(gym.owner._id) !== String(userId)) {
+      return res.status(401).json({
+        message:
+          "You are not authorized to edit the trainer as you are not the owner!!",
+        success: false,
+      });
+    }
+    if (trainerName) {
+      edittrainersDetails.trainerName = trainerName;
+    }
+    if (expertise) {
+      const expertiseArray = expertise.split(",").map((e) => e.trim());
+      if(!edittrainersDetails.expertise.includes(["Chest and shoulders","Legs","Triceps","Back and Biceps","Cardio"])){
+        edittrainersDetails.expertise = [...edittrainersDetails.expertise,...expertiseArray];
+      }
+      else{
+        return res.status(403).json({success:false,message:"Add an other expertise"})
+      }
+     
+   
+    }
+    if (experience) {
+      edittrainersDetails.experience = experience;
+    }
+    if (contactNumber) {
+      edittrainersDetails.contactNumber = contactNumber;
+    }
+    if (description) {
+      edittrainersDetails.description = description;
+    }
+    await edittrainersDetails.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Trainers edited successfully",
+      trainer: edittrainersDetails,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
+
+module.exports = {
+  addTrainer,
+  addCertification,
+  getTrainersByGym,
+  editTrainerProfile,
+};

@@ -237,7 +237,7 @@ const editGyms = async (req, res) => {
 
     // Check if user is the owner and an admin
     if (String(gym.owner._id) !== userId && user.role !== "admin") {
-      return res.status(403).json({
+      return res.status(401).json({
         success: false,
         message: "You are not authorized to edit this gym",
       });
@@ -300,7 +300,7 @@ const deleteGyms = async (req, res) => {
 
     // Check if user is the owner and an admin
     if (String(gym.owner._id) !== userId && user.role !== "admin") {
-      return res.status(403).json({
+      return res.status(401).json({
         success: false,
         message: "You are not authorized to edit this gym",
       });
