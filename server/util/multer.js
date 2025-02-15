@@ -25,6 +25,10 @@ const storage = multer.diskStorage({
             else if(file.fieldname === 'trainerCertificate'){
                 folder = 'uploads/trainer_certificates/';
             }
+            else if(file.fieldname === 'userResume'){
+                folder = 'uploads/userResume/';
+            }
+           
             ensureDirectoryExistence(folder); // Ensure the folder exists
             cb(null, folder); // Set the appropriate folder
         } catch (error) {

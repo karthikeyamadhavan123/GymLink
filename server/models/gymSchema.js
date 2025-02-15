@@ -97,9 +97,12 @@ const gymSchema = new Schema(
       {
         type: Schema.Types.ObjectId,
         ref: "Trainer",
-        unique:true
       },
     ],
+    jobs:[{
+      type: Schema.Types.ObjectId,
+      ref: "JobPosting",
+    }]
   },
   {
     timestamps: true,

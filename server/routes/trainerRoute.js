@@ -7,4 +7,5 @@ router.post('/:gymId/new',tokenVerification,uploadTrainerImage.single('trainerIm
 router.post('/:gymId/:trainerId/add',tokenVerification,uploadCertification.single('trainerCertificate'),trainerRoute.addCertification)
 router.get('/:gymId/all',tokenVerification,trainerRoute.getTrainersByGym)
 router.put('/:gymId/:trainerId/edit',tokenVerification,trainerRoute.editTrainerProfile)
+router.delete('/:gymId/:trainerId/delete',tokenVerification,trainerRoute.deleteTrainerProfile)
 module.exports=router

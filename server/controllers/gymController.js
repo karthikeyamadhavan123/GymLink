@@ -190,7 +190,7 @@ const fetchGymsById = async (req, res) => {
   }
 };
 
-const editGyms = async (req, res) => {
+const editGyms = async (req, res) => { // should change
   try {
     const { gymId } = req.params;
     const { userId } = req.userId; // Extract userId correctly
@@ -206,14 +206,15 @@ const editGyms = async (req, res) => {
         .json({ success: false, message: "No user ID provided" });
     }
 
-    const { editedgymName, editedlocation, editedbasePrice, editedequipments } =
+    const { editedgymName, editedstreetName,editedarea,editedlandmark,editedcity,editedstate,editedpincode, editedbasePrice, editedequipments } =
       req.body;
 
     if (
       !editedgymName &&
-      !editedlocation &&
+      !editedstreetName &&
       !editedbasePrice &&
-      !editedequipments
+      !editedequipments&& !editedarea&&!editedlandmark && !editedcity
+      &&!editedstate && !editedpincode
     ) {
       return res.status(400).json({
         success: false,
@@ -236,7 +237,7 @@ const editGyms = async (req, res) => {
     }
 
     // Check if user is the owner and an admin
-    if (String(gym.owner._id) !== userId && user.role !== "admin") {
+    if (String(gym.owner._id) !== userId || user.role !== "admin") {
       return res.status(401).json({
         success: false,
         message: "You are not authorized to edit this gym",
@@ -245,7 +246,12 @@ const editGyms = async (req, res) => {
 
     // Update fields only if they are provided
     if (editedgymName) gym.gymName = editedgymName;
-    if (editedlocation) gym.location = editedlocation;
+    if (editedstreetName) gym.location.streetName = editedstreetName;
+    if (editedarea) gym.location.area = editedarea;
+    if (editedlandmark) gym.location.landmark = editedlandmark;
+    if (editedcity) gym.location.city = editedcity;
+    if (editedstate) gym.location.state = editedstate;
+    if (editedpincode) gym.location.pincode = editedpincode;
     if (editedbasePrice) gym.basePrice = editedbasePrice;
     if (editedequipments)
       gym.equipments = [
@@ -258,7 +264,6 @@ const editGyms = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Gym edited successfully",
-      gym,
     });
   } catch (error) {
     return res.status(500).json({
@@ -299,10 +304,10 @@ const deleteGyms = async (req, res) => {
     }
 
     // Check if user is the owner and an admin
-    if (String(gym.owner._id) !== userId && user.role !== "admin") {
+    if (String(gym.owner._id) !== userId || user.role !== "admin") {
       return res.status(401).json({
         success: false,
-        message: "You are not authorized to edit this gym",
+        message: "You are not authorized to delete this gym",
       });
     }
     await gym.deleteOne();

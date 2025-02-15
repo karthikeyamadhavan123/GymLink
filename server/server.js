@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoute');
 const gymRoutes = require('./routes/gymRoute')
 const trainerRoutes = require('./routes/trainerRoute')
+const JobPostingRoutes = require('./routes/jobRoute')
+const JobApplicantsRoutes = require('./routes/jobApplicationRoute')
 require("dotenv").config();
 
 
@@ -20,6 +22,8 @@ app.use(cors())
 app.use('/api/users', userRoutes);
 app.use('/gym', gymRoutes);
 app.use('/trainers', trainerRoutes);
+app.use('/jobs', JobPostingRoutes);
+app.use('/applicants', JobApplicantsRoutes);
 app.listen(process.env.PORT, () => {
     console.log("Server running on port: " + process.env.PORT);
 })

@@ -45,13 +45,27 @@ const imageStorage = new CloudinaryStorage({
       public_id: (req, file) => `${Date.now()}-${file.originalname}`, // Unique filename
     },
   });
+  const resumeStorage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+      folder: "user_resume", // Folder for storing certification files
+      resource_type: "raw", // Required to handle PDF/DOCX
+      format: async (req, file) => file.mimetype.split("/")[1], // Keep original file format
+      public_id: (req, file) => `${Date.now()}-${file.originalname}`, // Unique filename
+    },
+  });
 // Multer middleware setup
 const upload = multer({
     storage: storage,
-    limits: { fileSize: 5 * 1024 * 1024 },  // 5MB file size limit
+    limits: { fileSize: 10 * 1024 * 1024 },  // 5MB file size limit
 });
 const uploadTrainerImage = multer({ storage: imageStorage, limits: { fileSize: 5 * 1024 * 1024 } }); // 5MB limit for images
 const uploadCertification = multer({ storage: certificationStorage, limits: { fileSize: 10 * 1024 * 1024 } }); // 10MB limit for PDFs/DOCX
+const uploadResume=multer({
+  storage:resumeStorage,
+  limits:{
+    fileSize:5*1024*1024
+  }
+})
 
-
-module.exports = {upload,uploadTrainerImage,uploadCertification};
+module.exports = {upload,uploadTrainerImage,uploadCertification,uploadResume};

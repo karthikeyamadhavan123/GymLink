@@ -322,10 +322,82 @@ const editTrainerProfile = async (req, res) => {
   }
 };
 
+const deleteTrainerProfile=async (req,res) => {
+  try {
+    const { userId } = req.userId;
+    if (!userId) {
+      return res.status(403).json({
+        message: "Please log in to add a trainer",
+        success: false,
+      });
+    }
+    const { trainerId, gymId } = req.params;
+
+   
+    if (!gymId) {
+      return res.status(403).json({
+        message: "Please provide a valid gymId",
+        success: false,
+      });
+    }
+    const gym = await Gym.findById(gymId);
+    if (!gym) {
+      return res.status(404).json({
+        message: "Gym not found please check for the gym you search!!",
+        success: false,
+      });
+    }
+
+    if (!trainerId) {
+      return res.status(403).json({
+        message: "Please provide a valid trainerId",
+        success: false,
+      });
+    }
+    const deletetrainer = await Trainer.findById(trainerId);
+    if (!deletetrainer) {
+      return res.status(404).json({
+        message: "Trainer not found please check for the trainer you search!!",
+        success: false,
+      });
+    }
+    if (String(gym._id) !== String(deletetrainer.gymId)) {
+      return res.status(401).json({
+        message:
+          "You are not authorized to delete the trainer as you are not the owner!!",
+        success: false,
+      });
+    }
+    if (String(gym.owner._id) !== String(userId)) {
+      return res.status(401).json({
+        message:
+          "You are not authorized to delete the trainer as you are not the owner!!",
+        success: false,
+      });
+    }
+    await gym.trainers.pull(trainerId)
+    await gym.save()
+    await deletetrainer.deleteOne()
+
+    return res.status(200).json({
+      success: true,
+      message: "Trainers deleted successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+      success: false,
+      error: error.message,
+    });
+  }
+}
+
 
 module.exports = {
   addTrainer,
   addCertification,
   getTrainersByGym,
   editTrainerProfile,
+  deleteTrainerProfile
 };
