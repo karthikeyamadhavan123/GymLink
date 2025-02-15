@@ -11,13 +11,13 @@ const jobApplicationSchema = new Schema(
     previousWork: {
       type: String,
       default: "No where",
-      required:true
+      required: true,
     },
     previousExperience: {
       type: Number,
       min: 0,
       default: 0,
-      required:true
+      required: true,
     },
     invoiceDays: {
       type: Number,
@@ -28,11 +28,16 @@ const jobApplicationSchema = new Schema(
       type: String,
       required: true,
     },
-    status:{
-      type:String,
-      enum:["Pending","Rejected","Accepted"],
-      default:"Pending"
-    }
+    status: {
+      type: String,
+      enum: ["Pending", "Rejected", "Accepted"],
+      default: "Pending",
+    },
+    gym: {
+      type: Schema.Types.ObjectId,
+      ref: "Gym",
+      required: true,
+    },
   },
   { timestamps: true }
 );

@@ -1,5 +1,6 @@
 const Trainer = require("../models/TrainerSchema");
 const Gym = require("../models/gymSchema");
+const User = require("../models/userSchema");
 const cloudinary = require("cloudinary").v2;
 
 const addTrainer = async (req, res) => {
@@ -10,6 +11,13 @@ const addTrainer = async (req, res) => {
     if (!userId) {
       return res.status(403).json({
         message: "Please log in to add a trainer",
+        success: false,
+      });
+    }
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
         success: false,
       });
     }
@@ -44,9 +52,9 @@ const addTrainer = async (req, res) => {
     }
 
     // Ensure user is the gym owner
-    if (String(gym.owner._id) !== userId) {
+    if (String(gym.owner._id) !== String(userId) ||user.role!=="admin") {
       return res.status(403).json({
-        message: "Only the gym owner can add trainers",
+        message: "Only the gym admins or owners can add trainers",
         success: false,
       });
     }
@@ -287,14 +295,24 @@ const editTrainerProfile = async (req, res) => {
     }
     if (expertise) {
       const expertiseArray = expertise.split(",").map((e) => e.trim());
-      if(!edittrainersDetails.expertise.includes(["Chest and shoulders","Legs","Triceps","Back and Biceps","Cardio"])){
-        edittrainersDetails.expertise = [...edittrainersDetails.expertise,...expertiseArray];
+      if (
+        !edittrainersDetails.expertise.includes([
+          "Chest and shoulders",
+          "Legs",
+          "Triceps",
+          "Back and Biceps",
+          "Cardio",
+        ])
+      ) {
+        edittrainersDetails.expertise = [
+          ...edittrainersDetails.expertise,
+          ...expertiseArray,
+        ];
+      } else {
+        return res
+          .status(403)
+          .json({ success: false, message: "Add an other expertise" });
       }
-      else{
-        return res.status(403).json({success:false,message:"Add an other expertise"})
-      }
-     
-   
     }
     if (experience) {
       edittrainersDetails.experience = experience;
@@ -322,7 +340,7 @@ const editTrainerProfile = async (req, res) => {
   }
 };
 
-const deleteTrainerProfile=async (req,res) => {
+const deleteTrainerProfile = async (req, res) => {
   try {
     const { userId } = req.userId;
     if (!userId) {
@@ -333,7 +351,6 @@ const deleteTrainerProfile=async (req,res) => {
     }
     const { trainerId, gymId } = req.params;
 
-   
     if (!gymId) {
       return res.status(403).json({
         message: "Please provide a valid gymId",
@@ -375,9 +392,9 @@ const deleteTrainerProfile=async (req,res) => {
         success: false,
       });
     }
-    await gym.trainers.pull(trainerId)
-    await gym.save()
-    await deletetrainer.deleteOne()
+    await gym.trainers.pull(trainerId);
+    await gym.save();
+    await deletetrainer.deleteOne();
 
     return res.status(200).json({
       success: true,
@@ -391,13 +408,12 @@ const deleteTrainerProfile=async (req,res) => {
       error: error.message,
     });
   }
-}
-
+};
 
 module.exports = {
   addTrainer,
   addCertification,
   getTrainersByGym,
   editTrainerProfile,
-  deleteTrainerProfile
+  deleteTrainerProfile,
 };

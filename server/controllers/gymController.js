@@ -273,6 +273,7 @@ const editGyms = async (req, res) => { // should change
     });
   }
 };
+
 const deleteGyms = async (req, res) => {
   try {
     const { gymId } = req.params;
@@ -303,14 +304,17 @@ const deleteGyms = async (req, res) => {
         .json({ success: false, message: "No gym found with this ID" });
     }
 
-    // Check if user is the owner and an admin
+    // Check if user is the owner and an admin BEFORE deleting
     if (String(gym.owner._id) !== userId || user.role !== "admin") {
       return res.status(401).json({
         success: false,
         message: "You are not authorized to delete this gym",
       });
     }
-    await gym.deleteOne();
+
+    // Now delete the gym
+    await Gym.findByIdAndDelete(gymId);
+
     return res.status(200).json({
       success: true,
       message: "Gym deleted successfully",

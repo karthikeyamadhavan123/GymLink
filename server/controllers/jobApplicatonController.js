@@ -1,3 +1,4 @@
+const Gym = require("../models/gymSchema");
 const jobApplication = require("../models/jobApplicationSchema");
 const JobPosting = require("../models/jobSchema"); // Import JobPosting model
 const User = require("../models/userSchema");
@@ -20,9 +21,18 @@ const applyforJobPosting = async (req, res) => {
     }
 
     // Extract gymId from request parameters
-    const { jobId } = req.params;
+    const { jobId, gymId } = req.params;
     if (!jobId) {
       return res.status(400).json({ message: "jobId is required." });
+    }
+    if (!gymId) {
+      return res.status(400).json({ message: "jobId is required." });
+    }
+    const gym = await Gym.findById(gymId);
+    if (!gym) {
+      return res
+        .status(404)
+        .json({ message: "User not found. Please register first." });
     }
 
     // Check if the gym exists
@@ -62,6 +72,7 @@ const applyforJobPosting = async (req, res) => {
       invoiceDays,
       resume: application,
       appliedUser: userId,
+      gym:gymId
     });
 
     await newJobApplication.save();
@@ -69,7 +80,7 @@ const applyforJobPosting = async (req, res) => {
     // Update the gym document to include this job posting
     postedJob.appliedJobApplicants.push(newJobApplication._id);
     await postedJob.save();
-
+// mail send to user
     return res.status(201).json({ message: "Job Applied successfully!" });
   } catch (error) {
     console.error("Error posting job:", error);
@@ -252,12 +263,11 @@ const AcceptjobApplication = async (req, res) => {
     }
     acceptApplication.status = "Accepted";
     await acceptApplication.save();
-    return res
-      .status(200)
-      .json({
-        message: "The owner  has accepted your application",
-        success: true,
-      });
+    // mail send to user
+    return res.status(200).json({
+      message: "The owner  has accepted your application",
+      success: true,
+    });
   } catch (error) {
     return res
       .status(500)
@@ -317,12 +327,11 @@ const RejectjobApplication = async (req, res) => {
     }
     rejectApplication.status = "Rejected";
     await rejectApplication.save();
-    return res
-      .status(200)
-      .json({
-        message: "The owner  has rejected your application",
-        success: true,
-      });
+    // mail send to user
+    return res.status(200).json({
+      message: "The owner  has rejected your application",
+      success: true,
+    });
   } catch (error) {
     return res
       .status(500)
@@ -330,12 +339,11 @@ const RejectjobApplication = async (req, res) => {
   }
 };
 
-
 module.exports = {
   applyforJobPosting,
   getJobApplicationofCurrentUser,
   getApplicationsOfGym,
   deleteForUser,
   AcceptjobApplication,
-  RejectjobApplication
+  RejectjobApplication,
 };

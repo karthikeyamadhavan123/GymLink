@@ -1,4 +1,7 @@
 const mongoose = require("mongoose");
+const jobApplication = require("./jobApplicationSchema");
+const JobPosting = require("../models/jobSchema");
+const Trainer = require('../models/TrainerSchema')
 const { Schema } = mongoose;
 
 const gymSchema = new Schema(
@@ -99,14 +102,24 @@ const gymSchema = new Schema(
         ref: "Trainer",
       },
     ],
-    jobs:[{
-      type: Schema.Types.ObjectId,
-      ref: "JobPosting",
-    }]
+    jobs: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "JobPosting",
+      },
+    ],
   },
   {
     timestamps: true,
   }
 );
+gymSchema.post("findOneAndDelete", async function (doc) {
+
+  const gymId = doc._id;
+  await jobApplication.deleteMany({ gym: gymId });
+  await JobPosting.deleteMany({ postedBy: gymId });
+  await Trainer.deleteMany({gymId:gymId})
+  
+});
 
 module.exports = mongoose.model("Gym", gymSchema);
