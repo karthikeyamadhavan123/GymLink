@@ -46,7 +46,7 @@ const createJobPosting = async (req, res) => {
 
     // Create and save the new job posting
     if (
-      String(postedGym.owner._id) !== String(userId) &&
+      String(postedGym.owner._id) !== String(userId) ||
       user.role !== "admin"
     ) {
       return res

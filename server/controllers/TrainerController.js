@@ -52,7 +52,7 @@ const addTrainer = async (req, res) => {
     }
 
     // Ensure user is the gym owner
-    if (String(gym.owner._id) !== String(userId) ||user.role!=="admin") {
+    if (String(gym.owner._id) !== String(userId) || user.role !== "admin") {
       return res.status(403).json({
         message: "Only the gym admins or owners can add trainers",
         success: false,
@@ -202,6 +202,12 @@ const getTrainersByGym = async (req, res) => {
       .select(
         "-location -_id -gymName -owner -equipments -gymImages -basePrice -createdAt -updatedAt"
       );
+    if (!trainersofGym) {
+      return res.status(400).json({
+        success: false,
+        message: "There are no gyms with the following id",
+      });
+    }
     if (trainersofGym.length === 0) {
       return res.status(400).json({
         success: false,
@@ -228,7 +234,7 @@ const editTrainerProfile = async (req, res) => {
     const { userId } = req.userId;
     if (!userId) {
       return res.status(403).json({
-        message: "Please log in to add a trainer",
+        message: "Please log in to edit a trainer",
         success: false,
       });
     }
@@ -345,7 +351,7 @@ const deleteTrainerProfile = async (req, res) => {
     const { userId } = req.userId;
     if (!userId) {
       return res.status(403).json({
-        message: "Please log in to add a trainer",
+        message: "Please log in to delete a trainer",
         success: false,
       });
     }
