@@ -65,6 +65,7 @@ const createJobPosting = async (req, res) => {
     await newJob.save();
 
     // Update the gym document to include this job posting
+    // create a new notification
     postedGym.jobs.push(newJob._id);
     await postedGym.save();
 
