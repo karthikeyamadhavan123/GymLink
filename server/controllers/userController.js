@@ -1,6 +1,6 @@
 const User = require("../models/userSchema");
 const cloudinary = require("cloudinary").v2;
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const jwt = require("../jwt/jwt");
 const {welcomeEmail,sendVerificationEmail,sendResetEmailSuccessful} = require('../nodemailer/nodemailer')
