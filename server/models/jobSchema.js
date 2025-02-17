@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
-
+const Notification = require('../models/notificationSchema')
 const jobSchema = new Schema(
   {
     jobTitle: {
