@@ -43,8 +43,6 @@ const jobSchema = new Schema(
 
 jobSchema.post("save", async function (doc, next) {
   try {
-    const Notification = mongoose.model("Notification");
-
     // Create a notification when a job is posted
     const notification = new Notification({
       notificationMessage: `New job posted: ${doc.jobTitle}`,
