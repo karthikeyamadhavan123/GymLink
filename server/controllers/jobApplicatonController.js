@@ -72,7 +72,8 @@ const applyforJobPosting = async (req, res) => {
       invoiceDays,
       resume: application,
       appliedUser: userId,
-      gym:gymId
+      gym:gymId,
+      jobId:jobId
     });
 
     await newJobApplication.save();

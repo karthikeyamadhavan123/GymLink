@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
-const Notification = require('../models/notificationSchema')
+const Notification = require("../models/notificationSchema");
+const jobApplication = require("./jobApplicationSchema");
 const jobSchema = new Schema(
   {
     jobTitle: {
@@ -45,12 +46,26 @@ jobSchema.post("save", async function (doc, next) {
   try {
     // Create a notification when a job is posted
     const notification = new Notification({
-      notificationMessage: `New job posted: ${doc.jobTitle}`,
-      postedBy: doc._id, // Associate the notification with the job
+      notificationMessage: `New job alert:${doc.jobTitle}`,
+      jobNotification: doc._id, // Associate the notification with the job
     });
-
+// will create a socket connection after the successful completion of frontend
     await notification.save();
     next();
+  } catch (error) {
+    console.error("Error creating notification:", error);
+    next(error);
+  }
+});
+
+jobSchema.post("findOneAndDelete", async function (doc) {
+  try {
+    const jobId = doc._id;
+    await jobApplication.deleteMany({ jobId: jobId });
+    await Notification.deleteMany({ jobNotification: jobId });
+    console.log(
+      `successfully deleted job and its applicants and notifications ${doc}`
+    );
   } catch (error) {
     console.error("Error creating notification:", error);
     next(error);

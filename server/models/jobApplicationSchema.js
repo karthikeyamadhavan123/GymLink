@@ -38,6 +38,11 @@ const jobApplicationSchema = new Schema(
       ref: "Gym",
       required: true,
     },
+    jobId:{
+      type: Schema.Types.ObjectId,
+      ref: "JobPosting",
+      required: true,
+    }
   },
   { timestamps: true }
 );

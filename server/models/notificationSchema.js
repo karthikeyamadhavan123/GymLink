@@ -6,7 +6,7 @@ const notificationSchema = new Schema({
         type:String,
         required:true
     },
-    postedBy:{
+    jobNotification:{
         type:Schema.Types.ObjectId,
         ref:"JobPosting",
         required:true

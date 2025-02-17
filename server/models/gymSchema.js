@@ -114,7 +114,6 @@ const gymSchema = new Schema(
   }
 );
 gymSchema.post("findOneAndDelete", async function (doc) {
-
   const gymId = doc._id;
   await jobApplication.deleteMany({ gym: gymId });
   await JobPosting.deleteMany({ postedBy: gymId });

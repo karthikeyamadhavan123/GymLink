@@ -7,6 +7,7 @@ const gymRoutes = require('./routes/gymRoute')
 const trainerRoutes = require('./routes/trainerRoute')
 const JobPostingRoutes = require('./routes/jobRoute')
 const JobApplicantsRoutes = require('./routes/jobApplicationRoute')
+const AichatRoutes = require('./routes/chatRoute')
 require("dotenv").config();
 
 
@@ -24,6 +25,7 @@ app.use('/gym', gymRoutes);
 app.use('/trainers', trainerRoutes);
 app.use('/jobs', JobPostingRoutes);
 app.use('/applicants', JobApplicantsRoutes);
+app.use('/chat', AichatRoutes);
 app.listen(process.env.PORT, () => {
     console.log("Server running on port: " + process.env.PORT);
 })

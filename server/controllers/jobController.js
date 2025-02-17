@@ -1,7 +1,7 @@
 const Gym = require("../models/gymSchema");
 const JobPosting = require("../models/jobSchema"); // Import JobPosting model
 const User = require("../models/userSchema");
-
+const Notification = require("../models/notificationSchema");
 const createJobPosting = async (req, res) => {
   try {
     const { userId } = req.userId; // Extract userId from request (Ensure it's passed via middleware)
@@ -263,10 +263,38 @@ const deleteJobPosting = async (req, res) => {
     }
     gym.jobs.pull(jobId);
     await gym.save();
-    await deletejob.deleteOne();
+    await JobPosting.findByIdAndDelete(jobId);
     return res
       .status(200)
       .json({ message: "Job deleted successfully!", success: true });
+  } catch (error) {
+    console.error("Error posting job:", error);
+    return res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
+  }
+};
+
+const getNotifications = async (req, res) => {
+  try {
+    const notifications = await Notification.find({}).populate({
+      path: "jobNotification",
+      select: "createdAt updatedAt",
+      populate: {
+        path: "postedBy",
+        select: "gymName -_id",
+      },
+    });
+    if (!notifications.length) {
+      return res.status(200).json({
+        message:
+          "There no upcoming alerts we will send you notification when a new  job is posted",
+      });
+    }
+    return res.status(200).json({
+      message: "Notifications fetched successfully!",
+      notifications: notifications,
+    });
   } catch (error) {
     console.error("Error posting job:", error);
     return res
@@ -280,4 +308,5 @@ module.exports = {
   getJobPostingByGym,
   editJobPosting,
   deleteJobPosting,
+  getNotifications,
 };
