@@ -1,11 +1,13 @@
 
 import './App.css'
+import Page from './Layout/Page'
 
 
 function App() {
 
   return (
-    <div className='text-rose-500 bg-white backdrop-blur-2xl'>
+    <div className='bg-black text-white'>
+      <Page />
     </div>
   )
 }
