@@ -3,7 +3,11 @@ const cloudinary = require("cloudinary").v2;
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const jwt = require("../jwt/jwt");
-const {welcomeEmail,sendVerificationEmail,sendResetEmailSuccessful} = require('../nodemailer/nodemailer')
+const {
+  welcomeEmail,
+  sendVerificationEmail,
+  sendResetEmailSuccessful,
+} = require("../nodemailer/nodemailer");
 // register functionality
 
 const Register = async (req, res) => {
@@ -15,7 +19,7 @@ const Register = async (req, res) => {
       password,
       avatar,
       phone_number,
-      role="user",
+      role = "user",
       location,
       age,
       gender,
@@ -84,19 +88,10 @@ const Register = async (req, res) => {
       verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000,
     });
     await newUser.save();
-    const id = newUser._id;
-    const token = jwt.createToken({ id });
-    await welcomeEmail(email)
+    await welcomeEmail(email);
     return res.status(201).json({
-      details:{
-        firstName,
-        email,
-        phone_number,
-        role,
-        avatar,
-        token,
-        location
-      },
+      success: true,
+      message: "User registered Successfully",
     });
   } catch (e) {
     console.log(e);
@@ -114,7 +109,7 @@ const adminRegister = async (req, res) => {
       password,
       avatar,
       phone_number,
-      role="admin",
+      role = "admin",
       location,
       age,
       gender,
@@ -183,19 +178,10 @@ const adminRegister = async (req, res) => {
       verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000,
     });
     await newUser.save();
-    const id = newUser._id;
-    const token = jwt.createToken({ id });
-    await welcomeEmail(email)
+    await welcomeEmail(email);
     return res.status(201).json({
-      details:{
-        firstName,
-        email,
-        phone_number,
-        role,
-        avatar,
-        token,
-        location
-      },
+      success: true,
+      message: "Admin registered Successfully",
     });
   } catch (e) {
     console.log(e);
@@ -228,20 +214,26 @@ const Login = async (req, res) => {
     const token = jwt.createToken({ userId });
     const firstName = user.firstName;
     const avatar = user.avatar;
-    const role = user.role
-    const location=user.location
-    const phone_number= user.phone_number
-    return res
-      .status(200)
-      .json({ success:true, message: "Login successful",details:{
-        token,
+    const role = user.role;
+    const location = user.location;
+    const phone_number = user.phone_number;
+    res.cookie("login", token, {
+      httpOnly: true,
+      maxAge: 2 * 60 * 60 * 1000,
+      sameSite: "Strict",
+    });
+    return res.status(200).json({
+      success: true,
+      message: "Login successful",
+      details: {
         firstName,
         avatar,
         role,
         location,
         phone_number,
-        email
-      } });
+        email,
+      },
+    });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ success: false, error: error.message });
@@ -250,6 +242,7 @@ const Login = async (req, res) => {
 
 const Logout = async (req, res) => {
   try {
+    res.clearCookie('login')
     return res
       .status(200)
       .json({ success: true, message: "Logout successful!" });
@@ -277,15 +270,13 @@ const forgotPassword = async (req, res) => {
     const resetPasswordTokenexpires = Date.now() + 1 * 60 * 60 * 1000; // 1 hr expiry
     user.resetPasswordToken = token;
     user.resetPasswordExpiresAt = resetPasswordTokenexpires;
-    await user.save()
-    await sendVerificationEmail(user.email,token)
-    return res
-      .status(200)
-      .json({
-        message: "Reset Password Email Successfully sent",
-        success: true,
-        resetToken: token,
-      });
+    await user.save();
+    await sendVerificationEmail(user.email, token);
+    return res.status(200).json({
+      message: "Reset Password Email Successfully sent",
+      success: true,
+      resetToken: token,
+    });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ success: false, error: error.message });
@@ -300,7 +291,7 @@ const resetPassword = async (req, res) => {
         .status(400)
         .json({ message: "Please provide token", success: false });
     }
-    const { password } = req.body;    
+    const { password } = req.body;
     if (!password) {
       return res
         .status(400)
@@ -315,7 +306,7 @@ const resetPassword = async (req, res) => {
     user.resetPasswordToken = undefined;
     user.resetPasswordExpiresAt = undefined;
     await user.save();
-    await sendResetEmailSuccessful(user.email)
+    await sendResetEmailSuccessful(user.email);
     return res
       .status(200)
       .json({ success: true, message: "Password Reset Successful" });
@@ -325,4 +316,11 @@ const resetPassword = async (req, res) => {
   }
 };
 
-module.exports = { Register, Login, Logout, forgotPassword,resetPassword,adminRegister };
+module.exports = {
+  Register,
+  Login,
+  Logout,
+  forgotPassword,
+  resetPassword,
+  adminRegister,
+};

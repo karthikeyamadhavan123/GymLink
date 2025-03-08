@@ -9,7 +9,7 @@ const JobPostingRoutes = require('./routes/jobRoute')
 const JobApplicantsRoutes = require('./routes/jobApplicationRoute')
 const AichatRoutes = require('./routes/chatRoute')
 require("dotenv").config();
-
+const cookieParser = require('cookie-parser')
 
 main().catch(err => console.log(err));
 async function main() {
@@ -20,6 +20,7 @@ async function main() {
 // middlewares
 app.use(express.json());
 app.use(cors({ origin: "http://localhost:5173" }));
+app.use(cookieParser())
 app.use('/api/users', userRoutes);
 app.use('/gym', gymRoutes);
 app.use('/trainers', trainerRoutes);
