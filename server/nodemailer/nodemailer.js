@@ -86,7 +86,7 @@ async function sendVerificationEmail(email, token) {
           <p style="font-size: 18px; font-weight: bold;">Hello! 👋</p>
           <p>We received a request to reset your GymLink password. Click below to set up a new password:</p>
           <div style="text-align: center; margin: 30px 0;">
-            <a href="${process.env.CLIENT_URL}/api/reset-password/${token}" 
+            <a href="${process.env.CLIENT_URL}/api/auth/reset-password/${token}" 
                style="background: linear-gradient(to right, #2193b0, #6dd5ed); color: white; padding: 15px 30px; text-decoration: none; border-radius: 25px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">
                Reset Password
             </a>

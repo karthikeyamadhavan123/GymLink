@@ -4,7 +4,7 @@ export default function Contact() {
       <h1 className="text-3xl sm:text-4xl font-bold text-lime-400 mb-4 sm:mb-6 text-center">Contact Us</h1>
       
       <p className="text-base sm:text-lg text-gray-700 mb-8 text-center max-w-2xl mx-auto">
-        Have questions about GymLink? We're here to help! Reach out to our team and we'll get back to you as soon as possible.
+        Have questions about GymLink? We&apos;re here to help! Reach out to our team and we&apos;ll get back to you as soon as possible.
       </p>
       
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
@@ -160,7 +160,7 @@ export default function Contact() {
           
           <div className="bg-white p-5 rounded-lg shadow-sm border border-gray-200">
             <h3 className="text-lg font-semibold text-gray-800">Can I schedule a demo?</h3>
-            <p className="mt-2 text-gray-600">Yes! Select "Partnership Opportunity" from the dropdown and mention you'd like a demo in your message.</p>
+            <p className="mt-2 text-gray-600">Yes! &quot;Select Partnership Opportunity&quot; from the dropdown and mention you&apos;d like a demo in your message.</p>
           </div>
           
           <div className="bg-white p-5 rounded-lg shadow-sm border border-gray-200">

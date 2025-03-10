@@ -50,7 +50,7 @@ const Navbar = () => {
 
                             <div className='flex items-center justify-around gap-2 hover:border-2 hover:border-dashed hover:rounded-tl-lg'>
                                 <LogIn />
-                                <Link href="#" className="py-2 pr-2 font-medium text-white text-xl hover:underline">
+                                <Link href="/api/auth/login" className="py-2 pr-2 font-medium text-white text-xl hover:underline">
                                     Enter Arena
                                 </Link>
                             </div>
@@ -63,14 +63,14 @@ const Navbar = () => {
                                 type="button"
                                 variant="ghost"
                                 size="icon"
-                                className="text-white hover:text-gray-500 hover:bg-gray-100"
+                                className="text-white hover:text-gray-500 hover:bg-gray-100 cursor-pointer"
                                 onClick={toggleMenu}
                             >
-                                <span className="sr-only">{isOpen ? 'Close menu' : 'Open menu'}</span>
+                                <span className="sr-only cursor-pointer">{isOpen ? 'Close menu' : 'Open menu'}</span>
                                 {isOpen ? (
-                                    <X className="h-6 w-6" />
+                                    <X className="h-6 w-6 cursor-pointer" />
                                 ) : (
-                                    <Menu className="h-6 w-6" />
+                                    <Menu className="h-6 w-6 cursor-pointer" />
                                 )}
                             </Button>
                         </div>
@@ -88,7 +88,7 @@ const Navbar = () => {
                         type="button"
                         variant="ghost"
                         size="icon"
-                        className="text-gray-400 hover:text-gray-500 hover:bg-gray-100"
+                        className="text-gray-400 hover:text-gray-500 hover:bg-gray-100 cursor-pointer"
                         onClick={toggleMenu}
                     >
                         <span className="sr-only">Close menu</span>

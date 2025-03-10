@@ -17,7 +17,7 @@ const Footer = () => {
           
           <nav className="flex flex-col space-y-4">
             <Link href="/faq" className="hover:text-gray-300 transition-colors">
-              FAQ's
+              FAQ&apos;s
             </Link>
             <Link href="/tips" className="hover:text-gray-300 transition-colors">
               Fitness Tips

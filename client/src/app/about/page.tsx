@@ -74,7 +74,7 @@ export default function About() {
           <div className="bg-teal-50 p-4 sm:p-5 rounded-lg border border-teal-100">
             <h3 className="text-base sm:text-lg font-semibold text-teal-600 mb-2">Community Forum</h3>
             <p className="text-sm sm:text-base text-gray-700">
-              Connect with like-minded fitness enthusiasts, share tips, and get motivated by others' success stories.
+              Connect with like-minded fitness enthusiasts, share tips, and get motivated by others success stories.
             </p>
           </div>
           

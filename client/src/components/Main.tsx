@@ -15,7 +15,7 @@ const Main = () => {
                     ))}</motion.h1>
                     <p className="text-sm text-start">
                         Find the best gyms, top trainers, and exciting job opportunities in the fitness industry—all in one place. 
-                        Whether you're looking to train, hire, or grow your gym, GymLink connects you with the right 
+                        Whether you&apos;re looking to train, hire, or grow your gym, GymLink connects you with the right 
                         options. Enjoy real-time chat with gym owners and trainers, and seamless 
                         applications. Discover AI-powered recommendations and take the next step in your fitness journey today!
                     </p>
