@@ -138,13 +138,11 @@ const createGym = async (req, res) => {
 const fetchAllGyms = async (req, res) => {
   try {
     const gyms = await Gym.find({}).select(
-      "gymName location basePrice equipments"
+      "gymName location basePrice equipments gymImages"
     );
-
     if (!gyms.length) {
       return res.status(404).json({ success: false, message: "No gyms found" });
     }
-
     return res.status(200).json({
       success: true,
       message: "Gyms fetched successfully",
@@ -162,6 +160,8 @@ const fetchAllGyms = async (req, res) => {
 const fetchGymsById = async (req, res) => {
   try {
     const { gymId } = req.params;
+    console.log(gymId);
+    
     if (!gymId) {
       return res
         .status(400)

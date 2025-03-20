@@ -1,5 +1,4 @@
-"use client"
-import Navbar from "@/components/Navbar";
+import Navbar from "../Components/Navbar";
 import { Button } from "./ui/button";
 import {motion} from 'framer-motion'
 const Main = () => {
@@ -20,7 +19,7 @@ const Main = () => {
                         applications. Discover AI-powered recommendations and take the next step in your fitness journey today!
                     </p>
                     <div className="flex space-x-4">
-                    <Button className="bg-[#8fe60f] rounded-tl-lg text-lg cursor-pointer hover:underline" variant='arena'>Join the Arena</Button>
+                    <Button className="bg-[#8fe60f] rounded-tl-lg text-lg cursor-pointer hover:underline text-black" variant='arena'>Join the Arena</Button>
                     <Button className="border-dashed bg-transparent text-lg hover:underline cursor-pointer" variant='arenaOutline'>Enter Arena</Button>
                     </div>
                 </motion.div>

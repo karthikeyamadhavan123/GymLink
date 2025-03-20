@@ -1,5 +1,5 @@
 
-import FitnessStory from "./Card/Card";
+import FitnessStory from "../Card/Card";
 
 const FitnessStoriesPage = () => {
 

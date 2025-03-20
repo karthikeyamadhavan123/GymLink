@@ -34,4 +34,4 @@ const useIndianStates = () => {
     return states;
 }
 
-export default useIndianStates
+export default useIndianStates;

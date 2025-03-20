@@ -1,6 +1,4 @@
-"use client"
-import React, { useRef } from 'react'
-import Image from 'next/image'
+import  { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 
 const Path = () => {
@@ -36,14 +34,14 @@ const Path = () => {
                     className='w-full lg:w-1/2 flex justify-center lg:justify-end mt-6 lg:mt-0'
                     style={{ scale: imageScale }}
                 >
-                    <Image 
+                    <img
                         src='/lift.jpg' 
                         width={400} 
                         height={400} 
                         alt='lift' 
                         className='rounded-lg hover:scale-105 cursor-pointer transition-all ease-in-out
                                   w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96
-                                  object-cover'
+                                  object-cover' loading='lazy'
                     />
                 </motion.div>
             </div>
