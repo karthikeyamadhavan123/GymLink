@@ -26,7 +26,7 @@ const Gyms = () => {
     }
     useEffect(() => {
         const fetchGyms = async () => {
-            const response = await axios.get('http://localhost:8080/gym/all', { withCredentials: true });
+            const response = await axios.get('https://gymlink.onrender.com/gym/all', { withCredentials: true });
             const { gyms } = response.data;
             setGyms(gyms);
         };
@@ -44,7 +44,7 @@ const Gyms = () => {
                 <meta property="og:description" content="Discover the best gyms in your locality, explore facilities, and connect with top trainers through GymLink." />
                 <meta property="og:type" content="website" />
             </Helmet>
-            <div className='bg-black'>
+            <div className='bg-black font-stencil'>
                 <div className="flex flex-col gap-4 p-4">
                     {gyms.map((gym, index) => (
                         <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden w-full flex">

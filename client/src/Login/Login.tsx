@@ -12,10 +12,9 @@ const LoginForm = () => {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const router = useNavigate();
-    const loginUrl = import.meta.env.VITE_DB_URL + '/api/users/login';
-
+    const loginUrl ='https://gymlink.onrender.com/api/users/login' ;
     const setUserDetails = useUserStore((state: any) => state.setUserDetails);
-
+// import.meta.env.VITE_DB_URL + '/api/users/login'
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {

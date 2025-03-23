@@ -6,11 +6,11 @@ import About from './About/About';
 import Contact from './Contact/Contact';
 import Pricing from './Pricing/Pricing';
 import { HashLoader } from 'react-spinners';
+import GymMain from './Gyms/GymMain';
 const Register = lazy(() => import('./Register/Register'))
 const Login = lazy(() => import('./Login/Login'))
 const ForgotPassword = lazy(() => import('./Forgot-password/forgotPassword'))
 const ResetPassword = lazy(() => import('./Reset-password/ResetPassword'))
-const Gyms = lazy(() => import('./Gyms/Gyms'))
 function App() {
   return (
     <Suspense fallback={
@@ -28,7 +28,7 @@ function App() {
           <Route path='/api/auth/login' element={<Login />} />
           <Route path='/api/auth/forgot-password' element={<ForgotPassword />} />
           <Route path='/api/auth/reset-password/:token' element={<ResetPassword />} />
-          <Route path='/dashboard/gyms' element={<Gyms />} />
+          <Route path='/dashboard/gyms' element={<GymMain />} />
         </Routes>
       </Router>
     </Suspense>
