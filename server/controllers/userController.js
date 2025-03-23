@@ -220,6 +220,7 @@ const Login = async (req, res) => {
     res.cookie("login", token, {
       httpOnly: true,
       maxAge: 2 * 60 * 60 * 1000,
+      sameSite: "None",
     });
     return res.status(200).json({
       success: true,
