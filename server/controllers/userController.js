@@ -221,6 +221,7 @@ const Login = async (req, res) => {
       httpOnly: true,
       maxAge: 2 * 60 * 60 * 1000,
       sameSite: "None",
+      path:'/'
     });
     return res.status(200).json({
       success: true,
