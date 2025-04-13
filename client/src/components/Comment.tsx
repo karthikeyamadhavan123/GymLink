@@ -6,12 +6,12 @@ const FitnessStoriesPage = () => {
   const stories = [
     {
       storyNumber: "01",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      description: "Discover the best gyms near you with GymLink. Whether you're into weightlifting, yoga, or HIIT, our platform helps you find the perfect place to reach your fitness goals. Compare amenities, explore membership options, and read real reviews from fitness enthusiasts like you.Join our community today and take the first step towards a healthier, happier you. With GymLink, finding your ideal gym has never been easier. Start your fitness journey now and unlock exclusive deals and offers tailored just for you.",
       image: "/card1.jpg" // Replace with your actual image path
     },
     {
       storyNumber: "02",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      description: "Join a growing fitness community with GymLink. Connect with top-rated trainers, receive personalized workout plans, and stay motivated through our built-in AI gym assistant and real-time chat support. GymLink is more than just a gym finder—it's your partner in fitness.Whether you're a beginner or a seasoned athlete, our platform provides the tools and resources you need to succeed. Explore our extensive database of gyms, read reviews, and find the perfect match for your fitness journey. Sign up today and experience the GymLink difference.",
       image: "/card2.jpg" // Replace with your actual image path
     }
   ];
