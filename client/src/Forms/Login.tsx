@@ -29,7 +29,8 @@ const LoginForm = () => {
                     role: userData.role || "user",
                     location: userData.location || "",
                     phone_number: userData.phone_number || "",
-                    email: userData.email
+                    email: userData.email,
+                    userId:userData.userId
                 });
                 toast.success('Login Successful')
                 setEmail('')

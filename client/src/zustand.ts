@@ -9,6 +9,7 @@ interface UserDetails {
   location: string;
   phone_number: string;
   email: string;
+  userId:string
 }
 
 interface UserState {

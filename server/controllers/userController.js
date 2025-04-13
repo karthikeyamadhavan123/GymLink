@@ -220,7 +220,6 @@ const Login = async (req, res) => {
     res.cookie("login", token, {
       httpOnly: true,
       maxAge: 2 * 60 * 60 * 1000,
-      sameSite: "None",
       path:'/'
     });
     return res.status(200).json({
@@ -233,6 +232,7 @@ const Login = async (req, res) => {
         location,
         phone_number,
         email,
+        userId
       },
     });
   } catch (error) {
