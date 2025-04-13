@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { HashLoader } from 'react-spinners';
 import { Helmet } from 'react-helmet-async';
-
+import { Link } from 'react-router-dom';
 enum STEPS {
     BASIC = 1,
     CONTACT = 2,
@@ -444,9 +444,9 @@ export default function Register() {
                     <div className="text-center mt-6 text-gray-500 text-sm">
                         <p>
                             Already have an account?{' '}
-                            <a href="/api/auth/login" className="text-lime-400 hover:underline">
+                            <Link to="/api/auth/login" className="text-lime-400 hover:underline">
                                 Log In
-                            </a>
+                            </Link>
                         </p>
                     </div>
                 </div>
