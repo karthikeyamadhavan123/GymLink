@@ -159,9 +159,7 @@ const fetchAllGyms = async (req, res) => {
 
 const fetchGymsById = async (req, res) => {
   try {
-    const { gymId } = req.params;
-    console.log(gymId);
-    
+    const { gymId } = req.params;    
     if (!gymId) {
       return res
         .status(400)
