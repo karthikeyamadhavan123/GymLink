@@ -54,6 +54,7 @@ const ChatModal = () => {
                 ? `https://gymlink.onrender.com/chat/${chatId}/new`
                 : `https://gymlink.onrender.com/chat/new`;
 
+                
             // Call API
             const res = await axios.post(
                 endpoint,
