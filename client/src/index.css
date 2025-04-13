@@ -1,11 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil:opsz,wght@10..72,100..900&display=swap');
 @import "tailwindcss";
-<<<<<<< HEAD
-
-@theme{
-    --font-stencil:"Big Shoulders Stencil", sans-serif
-}
-=======
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
@@ -125,4 +119,3 @@
     @apply border-border outline-ring/50;}
   body {
     @apply bg-background text-foreground;}}
->>>>>>> 867beb7 (Checking Frontend and Backend)

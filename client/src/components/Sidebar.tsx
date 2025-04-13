@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-const Sidebar = () => {
-  return (
-    <div className="bg-gray-50">
-      Sidebar
-    </div>
-  )
-}
-
-export default Sidebar
-=======
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X, ChevronUp, ChevronDown } from 'lucide-react';
@@ -139,4 +128,3 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
->>>>>>> 867beb7 (Checking Frontend and Backend)
