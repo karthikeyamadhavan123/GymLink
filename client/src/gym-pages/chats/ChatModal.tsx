@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from 'react';
 import { FiMessageSquare, FiX, FiSend } from 'react-icons/fi';
 
 const ChatModal = () => {
-    const aiurl = import.meta.env.VITE_DB_URL
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [chatInput, setChatInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -52,8 +51,8 @@ const ChatModal = () => {
 
             // Prepare the endpoint URL based on whether we're updating an existing chat
             const endpoint = chatId
-                ? `${aiurl}/chat/${chatId}`
-                : `${aiurl}/chat/new`;
+                ? `https://gymlink.onrender.com/chat/${chatId}`
+                : `https://gymlink.onrender.com/chat/new`;
 
             // Call API
             const res = await axios.post(
@@ -131,8 +130,8 @@ const ChatModal = () => {
                                 >
                                     <div
                                         className={`inline-block max-w-[80%] px-4 py-2 rounded-lg ${message.type === 'user'
-                                                ? 'bg-lime-400 text-black'
-                                                : 'bg-gray-200 text-gray-800'
+                                            ? 'bg-lime-400 text-black'
+                                            : 'bg-gray-200 text-gray-800'
                                             }`}
                                     >
                                         {message.content}
