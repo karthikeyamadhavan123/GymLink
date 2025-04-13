@@ -223,7 +223,6 @@ const Login = async (req, res) => {
       path: "/",
       sameSite: "none", // Important for cross-site requests
       secure: true,
-      domain: "gym-link.vercel.app"
     });
     return res.status(200).json({
       success: true,
