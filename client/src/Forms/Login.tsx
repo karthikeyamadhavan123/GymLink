@@ -74,7 +74,7 @@ const LoginForm = () => {
                         className="w-full h-full object-cover"
                     />
                 </div>
-                <div className="absolute inset-0 w-1/2 bg-black opacity-35 sm:hidden lg:block"></div>
+                <div className="absolute inset-0 w-1/2 bg-black opacity-35 sm:hidden lg:block xs:hidden"></div>
                 {/* Right side - Login form */}
                 <div className="w-full md:w-1/2 flex items-center justify-center bg-black p-8">
                     <motion.div
