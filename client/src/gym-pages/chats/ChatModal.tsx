@@ -1,6 +1,6 @@
 import useUserStore from '@/zustand';
 import axios from 'axios';
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FiMessageSquare, FiX, FiSend } from 'react-icons/fi';
 
 const ChatModal = () => {
@@ -25,8 +25,8 @@ const ChatModal = () => {
         }
     }, [messages]);
 
-    // Load existing chat if chatId is available
-    const handleChatSubmit = async (e: React.FormEvent) => {
+    // Handle chat submission
+    const handleChatSubmit = async (e:React.FormEvent) => {
         e.preventDefault();
 
         if (!chatInput.trim() || isLoading) return;
@@ -51,8 +51,8 @@ const ChatModal = () => {
 
             // Prepare the endpoint URL based on whether we're updating an existing chat
             const endpoint = chatId
-                ? `https://gymlink.onrender.com/chat/${chatId}/new`
-                : `https://gymlink.onrender.com/chat/new`;
+                ? `http://localhost:8080/chat/${chatId}/new`
+                : `http://localhost:8080/chat/new`;
 
             // Call API
             const res = await axios.post(
@@ -63,18 +63,29 @@ const ChatModal = () => {
 
             // Check response
             if (res.status === 200 && res.data.success) {
-                const botResponse = res.data.chat.Airesponse;
-
                 // If this is a new chat, store the chatId for future messages
-                if (!chatId && res.data.chat.id) {
-                    setChatId(res.data.chat.id);
+                if (!chatId && res.data.chat._id) {
+                    setChatId(res.data.chat._id);
                 }
 
-                // Add bot response to chat
-                setMessages(prev => [
-                    ...prev,
-                    { type: 'bot', content: botResponse }
-                ]);
+                // Update messages from the API response
+                if (res.data.chat.messages && Array.isArray(res.data.chat.messages)) {
+                    // Convert the backend message format to our frontend format
+                    const formattedMessages = res.data.chat.messages.map((msg: { isUser: boolean; content?: string; text?: string }) => ({
+                        type: msg.isUser ? 'user' : 'bot',
+                        content: msg.content || msg.text || ''
+                    }));
+                    
+                    setMessages(formattedMessages);
+                } else {
+                    // Fallback to the old way if messages array isn't available
+                    const botResponse = res.data.chat.Airesponse || "I received your message";
+                    
+                    setMessages(prev => [
+                        ...prev,
+                        { type: 'bot', content: botResponse }
+                    ]);
+                }
             }
         } catch (error) {
             console.error('Chat submission error:', error);
@@ -129,10 +140,11 @@ const ChatModal = () => {
                                     className={`mb-3 ${message.type === 'user' ? 'text-right' : 'text-left'}`}
                                 >
                                     <div
-                                        className={`inline-block max-w-[80%] px-4 py-2 rounded-lg ${message.type === 'user'
-                                            ? 'bg-lime-400 text-black'
-                                            : 'bg-gray-200 text-gray-800'
-                                            }`}
+                                        className={`inline-block max-w-[80%] px-4 py-2 rounded-lg ${
+                                            message.type === 'user'
+                                                ? 'bg-lime-400 text-black'
+                                                : 'bg-gray-200 text-gray-800'
+                                        }`}
                                     >
                                         {message.content}
                                     </div>
@@ -168,8 +180,9 @@ const ChatModal = () => {
                                 />
                                 <button
                                     type="submit"
-                                    className={`${isLoading || !chatInput.trim() ? 'bg-gray-400' : 'bg-lime-400 hover:bg-lime-500'
-                                        } text-black px-4 py-2 rounded-r-lg flex items-center justify-center`}
+                                    className={`${
+                                        isLoading || !chatInput.trim() ? 'bg-gray-400' : 'bg-lime-400 hover:bg-lime-500'
+                                    } text-black px-4 py-2 rounded-r-lg flex items-center justify-center`}
                                     disabled={isLoading || !chatInput.trim()}
                                 >
                                     <FiSend size={18} />
