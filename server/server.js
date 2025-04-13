@@ -20,7 +20,7 @@ async function main() {
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:5173","https://gym-link-p2bjuglv4-karthikeya-madhavans-projects.vercel.app/"],
+    origin: ["http://localhost:5173","https://gym-link.vercel.app/"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
