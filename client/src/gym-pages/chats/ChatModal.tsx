@@ -51,7 +51,7 @@ const ChatModal = () => {
 
             // Prepare the endpoint URL based on whether we're updating an existing chat
             const endpoint = chatId
-                ? `https://gymlink.onrender.com/chat/${chatId}`
+                ? `https://gymlink.onrender.com/chat/${chatId}/new`
                 : `https://gymlink.onrender.com/chat/new`;
 
             // Call API
