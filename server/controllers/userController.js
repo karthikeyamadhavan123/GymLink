@@ -220,7 +220,9 @@ const Login = async (req, res) => {
     res.cookie("login", token, {
       httpOnly: true,
       maxAge: 2 * 60 * 60 * 1000,
-      path:'/'
+      path: "/",
+      sameSite: "none", // Important for cross-site requests
+      secure: true,
     });
     return res.status(200).json({
       success: true,
@@ -232,7 +234,7 @@ const Login = async (req, res) => {
         location,
         phone_number,
         email,
-        userId
+        userId,
       },
     });
   } catch (error) {
@@ -243,7 +245,7 @@ const Login = async (req, res) => {
 
 const Logout = async (req, res) => {
   try {
-    res.clearCookie('login')
+    res.clearCookie("login");
     return res
       .status(200)
       .json({ success: true, message: "Logout successful!" });
