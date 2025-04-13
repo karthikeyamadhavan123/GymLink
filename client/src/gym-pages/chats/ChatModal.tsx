@@ -4,13 +4,14 @@ import { useState, useEffect, useRef } from 'react';
 import { FiMessageSquare, FiX, FiSend } from 'react-icons/fi';
 
 const ChatModal = () => {
+    const aiurl = import.meta.env.VITE_DB_URL
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [chatInput, setChatInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [chatId, setChatId] = useState(null);
     const userId = useUserStore((state) => state.details?.userId);
     const messagesEndRef = useRef<HTMLDivElement>(null);
-    
+
     const [messages, setMessages] = useState([
         {
             type: 'bot',
@@ -26,50 +27,50 @@ const ChatModal = () => {
     }, [messages]);
 
     // Load existing chat if chatId is available
-    const handleChatSubmit = async (e:React.FormEvent) => {
+    const handleChatSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        
+
         if (!chatInput.trim() || isLoading) return;
         if (!userId) {
             alert('Please login to chat with the assistant');
             return;
         }
-        
+
         try {
             // Add user message to chat
             setMessages(prev => [
                 ...prev,
                 { type: 'user', content: chatInput }
             ]);
-            
+
             // Set loading state
             setIsLoading(true);
-            
+
             // Save current input and clear the input field
             const userPrompt = chatInput;
             setChatInput('');
-            
+
             // Prepare the endpoint URL based on whether we're updating an existing chat
-            const endpoint = chatId 
-                ? `http://localhost:8080/chat/${chatId}`
-                : 'http://localhost:8080/chat/new';
-            
+            const endpoint = chatId
+                ? `${aiurl}/chat/${chatId}`
+                : `${aiurl}/chat/new`;
+
             // Call API
             const res = await axios.post(
-                endpoint, 
-                { prompt: userPrompt }, 
+                endpoint,
+                { prompt: userPrompt },
                 { withCredentials: true }
             );
-            
+
             // Check response
             if (res.status === 200 && res.data.success) {
                 const botResponse = res.data.chat.Airesponse;
-                
+
                 // If this is a new chat, store the chatId for future messages
                 if (!chatId && res.data.chat.id) {
                     setChatId(res.data.chat.id);
                 }
-                
+
                 // Add bot response to chat
                 setMessages(prev => [
                     ...prev,
@@ -78,7 +79,7 @@ const ChatModal = () => {
             }
         } catch (error) {
             console.error('Chat submission error:', error);
-            
+
             // Add error message to chat
             setMessages(prev => [
                 ...prev,
@@ -101,7 +102,7 @@ const ChatModal = () => {
                     <FiMessageSquare size={24} className="cursor-pointer" />
                 </button>
             </div>
-            
+
             {/* Chat modal */}
             {isModalOpen && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -124,16 +125,15 @@ const ChatModal = () => {
                         {/* Chat messages */}
                         <div className="p-4 bg-gray-50 flex-1 overflow-y-auto">
                             {messages.map((message, index) => (
-                                <div 
-                                    key={index} 
+                                <div
+                                    key={index}
                                     className={`mb-3 ${message.type === 'user' ? 'text-right' : 'text-left'}`}
                                 >
-                                    <div 
-                                        className={`inline-block max-w-[80%] px-4 py-2 rounded-lg ${
-                                            message.type === 'user' 
-                                                ? 'bg-lime-400 text-black' 
+                                    <div
+                                        className={`inline-block max-w-[80%] px-4 py-2 rounded-lg ${message.type === 'user'
+                                                ? 'bg-lime-400 text-black'
                                                 : 'bg-gray-200 text-gray-800'
-                                        }`}
+                                            }`}
                                     >
                                         {message.content}
                                     </div>
@@ -169,9 +169,8 @@ const ChatModal = () => {
                                 />
                                 <button
                                     type="submit"
-                                    className={`${
-                                        isLoading || !chatInput.trim() ? 'bg-gray-400' : 'bg-lime-400 hover:bg-lime-500'
-                                    } text-black px-4 py-2 rounded-r-lg flex items-center justify-center`}
+                                    className={`${isLoading || !chatInput.trim() ? 'bg-gray-400' : 'bg-lime-400 hover:bg-lime-500'
+                                        } text-black px-4 py-2 rounded-r-lg flex items-center justify-center`}
                                     disabled={isLoading || !chatInput.trim()}
                                 >
                                     <FiSend size={18} />
