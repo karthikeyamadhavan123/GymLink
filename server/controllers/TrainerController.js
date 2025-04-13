@@ -228,6 +228,40 @@ const getTrainersByGym = async (req, res) => {
     });
   }
 };
+const getAllTrainers = async (req, res) => {
+  try {
+  
+    const alltrainers = await Trainer.find({}).populate({
+      path:'gymId',
+      select:'gymName location -_id'
+    }).select('certifications trainerName expertise experience contactNumber trainerImage description -_id');
+    if (!alltrainers) {
+      return res.status(400).json({
+        success: false,
+        message: "There are no trainers currently but we are recurting.",
+      });
+    }
+    if (alltrainers.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "There are no trainers currently but we are recurting.",
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      message: "Trainers fetched successfully",
+      trainer: alltrainers,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
 
 const editTrainerProfile = async (req, res) => {
   try {
@@ -422,4 +456,5 @@ module.exports = {
   getTrainersByGym,
   editTrainerProfile,
   deleteTrainerProfile,
+  getAllTrainers,
 };

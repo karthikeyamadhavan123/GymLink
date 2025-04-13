@@ -97,7 +97,7 @@ const AllTrainers = () => {
               </div>
               <input
                 type="text"
-                className="bg-gray-900 rounded-lg w-full py-3 pl-10 pr-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                className="bg-gray-900 rounded-lg w-full py-3 pl-10 pr-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-lime-500"
                 placeholder="Search by trainer name, gym or location..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
