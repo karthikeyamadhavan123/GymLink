@@ -67,9 +67,8 @@ const createGym = async (req, res) => {
       return res
         .status(400)
         .json({ message: "Please enter a valid base price", success: false });
-    }
-
-    if (!req.files || req.files.length === 0) {
+    }    
+    if (!req.files|| req.files.length === 0) {
       return res
         .status(400)
         .json({ success: false, message: "Image is required" });
@@ -188,7 +187,35 @@ const fetchGymsById = async (req, res) => {
   }
 };
 
-const editGyms = async (req, res) => { // should change
+const fetchAllUserGyms=async (req, res) => {
+  try {
+    const { userId } = req.userId;
+    if (!userId) {
+      return res
+        .status(403)
+        .json({ message: "Please login to create your gym", success: false });
+    }
+    const gyms = await Gym.find({owner:userId}).select(
+      "gymName location basePrice equipments gymImages"
+    );
+    if (!gyms.length) {
+      return res.status(404).json({ success: false, message: "No gyms found" });
+    }
+    return res.status(200).json({
+      success: true,
+      message: "Gyms fetched successfully",
+      gyms,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+      error: error.message,
+    });
+  }
+}
+
+const editGyms = async (req, res) => { 
   try {
     const { gymId } = req.params;
     const { userId } = req.userId; // Extract userId correctly
@@ -252,16 +279,16 @@ const editGyms = async (req, res) => { // should change
     if (editedpincode) gym.location.pincode = editedpincode;
     if (editedbasePrice) gym.basePrice = editedbasePrice;
     if (editedequipments)
-      gym.equipments = [
-        ...gym.equipments,
-        ...editedequipments.split(",").map((e) => e.trim()),
-      ];
+      gym.equipments = Array.isArray(editedequipments) 
+    ? editedequipments 
+    : editedequipments.split(",").map((e) => e.trim());
 
     await gym.save();
 
     return res.status(200).json({
       success: true,
       message: "Gym edited successfully",
+      gym:gym
     });
   } catch (error) {
     return res.status(500).json({
@@ -276,7 +303,6 @@ const deleteGyms = async (req, res) => {
   try {
     const { gymId } = req.params;
     const { userId } = req.userId; // Extract userId correctly
-
     if (!gymId) {
       return res
         .status(400)
@@ -328,45 +354,7 @@ const deleteGyms = async (req, res) => {
 
 // fitering by  location, price,state
 // after by ratings and trainers
-const filterBySearch = async (req, res) => {
-  try {
-    const { city, state, price } = req.query;
-    if (!city && !state && !price) {
-      return res.status(400).json({
-        success: false,
-        message: "At least one parameter is required",
-      });
-    }
-    let query = {};
 
-    if (city) {
-      query["location.city"] = city; // Use dot notation to query nested fields
-    }
-    if (state) {
-      query["location.state"] = state;
-    }
-    if (price) {
-      query.basePrice = price;
-    }
-
-    const filteredGyms = await Gym.find(query).select(
-      "gymName location basePrice equipments"
-    );
-    if (!filteredGyms.length) {
-      return res
-        .status(200)
-        .json({ success: true, message: "No Gyms Found with that filters" });
-    }
-
-    res.status(200).json({ success: true, gyms: filteredGyms });
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: "Internal Server Error",
-      error: error.message,
-    });
-  }
-};
 
 module.exports = {
   createGym,
@@ -374,5 +362,5 @@ module.exports = {
   fetchGymsById,
   editGyms,
   deleteGyms,
-  filterBySearch,
+  fetchAllUserGyms
 };

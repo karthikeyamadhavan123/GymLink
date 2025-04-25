@@ -63,9 +63,6 @@ jobSchema.post("findOneAndDelete", async function (doc) {
     const jobId = doc._id;
     await jobApplication.deleteMany({ jobId: jobId });
     await Notification.deleteMany({ jobNotification: jobId });
-    console.log(
-      `successfully deleted job and its applicants and notifications ${doc}`
-    );
   } catch (error) {
     console.error("Error creating notification:", error);
     next(error);

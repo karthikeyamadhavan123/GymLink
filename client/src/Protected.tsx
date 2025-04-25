@@ -6,12 +6,18 @@ interface ProtectedProps {
 }
 const Protected: React.FC<ProtectedProps> = ({ component }) => {
     const router = useNavigate();
-    useEffect(()=>{
+    useEffect(() => {
         const islogin = localStorage.getItem('user-storage');
         if (!islogin) {
             router('/api/auth/login')
         }
-    },[])
+        if (islogin) {
+            const role = JSON.parse(islogin)?.state.details.role;
+            if (role === 'admin') {
+                router('/admin-dashboard')
+            }
+        }
+    }, [])
     return (
         <div>
             {component}

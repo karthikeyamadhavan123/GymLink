@@ -144,19 +144,20 @@ const getApplicationsOfGym = async (req, res) => {
     if (user.role !== "admin") {
       return res.status(400).json({ message: "Admins can only view" });
     }
-    const myApplications = await JobPosting.findById(jobId)
-      .populate({
-        path: "appliedJobApplicants",
-      })
-      .select(
-        "-jobTitle -requirements -jobDetails -experienceRequired -salary -_id -postedBy"
-      );
-    if (!myApplications) {
-      return res.status(400).json({ message: "You have no applications" });
+    const myApplications = await jobApplication.find({}).populate({
+      path:'appliedUser',
+      select:'firstName email phone_number gender -_id'
+    }).populate({
+      path:'gym',
+      select:'gymName location.state'
+    }).select('invoiceDays jobId _id previousExperience previousWork status resume')
+    if (myApplications.length===0) {
+      return res.status(200).json({ message: "You have no applications" });
     }
+    const allApplicantsJob=myApplications.filter((application)=>String(application.jobId) === jobId)
     return res.status(200).json({
       message: "Applications fetched successfully!",
-      applications: myApplications,
+      applications: allApplicantsJob,
     });
   } catch (error) {
     console.error("Error posting job:", error);

@@ -61,44 +61,5 @@ const newChat = async (req, res) => {
   }
 };
 
-const getChat = async (req, res) => {
-  try {
-    const { chatId } = req.params;
-    const { userId } = req.userId;
-
-    if (!userId) {
-      return res
-        .status(403)
-        .json({ message: "Please login to chat", success: false });
-    }
-    if (!chatId) {
-      return res
-        .status(403)
-        .json({ message: "Chat Id is required", success: false });
-    }
-    const getConversation = await Conversation.find({
-      _id: chatId,
-      userId: userId,
-    });
-    if (!getConversation) {
-      return res
-        .status(200)
-        .json({ message: "Please intialize a chat", success: true });
-    }
-    const allMessages = getConversation.map((convo) => convo.messages);
-    if (allMessages.length === 0) {
-      return res
-        .status(200)
-        .json({ message: "Please intialize a chat", success: true });
-    }
-    return res.status(200).json({ success: true, message: allMessages });
-  } catch (error) {
-    console.error("Error creating new chat:", error);
-    return res
-      .status(500)
-      .json({ message: "Internal server error", error: error.message });
-  }
-};
-
 //socket at last
-module.exports = { newChat, getChat };
+module.exports = { newChat };

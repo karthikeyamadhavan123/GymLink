@@ -2,6 +2,7 @@ const Gym = require("../models/gymSchema");
 const JobPosting = require("../models/jobSchema"); // Import JobPosting model
 const User = require("../models/userSchema");
 const Notification = require("../models/notificationSchema");
+
 const createJobPosting = async (req, res) => {
   try {
     const { userId } = req.userId; // Extract userId from request (Ensure it's passed via middleware)
@@ -116,10 +117,10 @@ const getJobPostingByGym = async (req, res) => {
         select: "jobTitle requirements jobDetails experienceRequired salary",
       })
       .select(
-        "-gymName -owner -equipments -gymImages -basePrice -trainers -owner -_id"
+        "-gymName -owner -equipments -gymImages -basePrice -trainers -owner -_id -location"
       );
     if (jobs.length === 0) {
-      res.status(400).json({ message: "You have no jobs posted!", job: jobs });
+      res.status(400).json({ message: "You have no jobs posted!"});
     }
     return res
       .status(200)

@@ -1,20 +1,23 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-interface ProtectedProps {
+interface AdminProtectedProps {
     component: React.ReactNode
 }
-const Protected: React.FC<ProtectedProps> = ({ component }) => {
+const AdminProtected: React.FC<AdminProtectedProps> = ({ component }) => {
     const router = useNavigate();
     useEffect(()=>{
         const user = localStorage.getItem('user-storage');
+        if(!user){
+            router('/api/auth/login')
+        }
         if(user){
-            const role = JSON.parse(user)?.role;
+            const role = JSON.parse(user)?.state.details.role;      
             if (role !=='admin') {
-                router('/')
+                router('/not-authorized')
             }
         }
-    },[])
+    },[router])
     return (
         <div>
             {component}
@@ -22,4 +25,4 @@ const Protected: React.FC<ProtectedProps> = ({ component }) => {
     )
 }
 
-export default Protected
+export default AdminProtected

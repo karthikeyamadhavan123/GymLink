@@ -100,7 +100,6 @@ const ChatModal = () => {
             setIsLoading(false);
         }
     };
-
     return (
         <div>
             {/* Chat icon button */}

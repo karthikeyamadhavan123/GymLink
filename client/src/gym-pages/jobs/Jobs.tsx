@@ -199,7 +199,7 @@ const Jobs = () => {
                                     <div className="flex items-center mb-4">
                                         <FiDollarSign className="text-gray-400 mr-2" />
                                         <span className="text-lime-400 font-bold">
-                                            ${job.salary} per month
+                                        ₹{job.salary} per month
                                         </span>
                                     </div>
 
@@ -243,19 +243,19 @@ const Jobs = () => {
                 jobModal && (
                     <div className="fixed inset-0 flex items-center justify-center ">
                         <div className="bg-gray-800 rounded-lg shadow-xl p-8 w-full max-w-md">
-                            <h2 className="text-2xl font-bold text-white mb-6 text-center">Job Application</h2>
+                            <h2 className="text-2xl font-bold text-white mb-6 text-center ">Job Application</h2>
 
                             <form className="space-y-4" onSubmit={(e)=>handleSubmit(e)}>
                                 {/* Previous Work */}
                                 <div>
-                                    <label htmlFor="previousWork" className="block text-sm font-medium text-white mb-1">
+                                    <label htmlFor="previousWork" className="block text-sm font-medium text-white mb-1 ">
                                         Previous Work
                                     </label>
                                     <input
                                         type="text"
                                         id="previousWork"
                                         name="previousWork"
-                                        className="w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-lime-300"
+                                        className="w-full px-3 py-2 rounded-md border focus:outline-none focus:ring-2 focus:ring-lime-300  border-gray-200 focus:border-transparent"
                                         placeholder="Where have you worked before?"
                                         required
                                         onChange={(e) => handleChange(e)}
@@ -272,7 +272,7 @@ const Jobs = () => {
                                         id="previousExperience"
                                         name="previousExperience"
                                         min="0"
-                                        className="w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-lime-300"
+                                        className="w-full px-3 py-2 rounded-md border focus:outline-none focus:ring-2 focus:ring-lime-300  border-gray-200 focus:border-transparent"
                                         required
                                         placeholder="No of years in experience in previous work.."
                                         onChange={(e) => handleChange(e)}
@@ -289,7 +289,7 @@ const Jobs = () => {
                                         id="invoiceDays"
                                         name="invoiceDays"
                                         min="0"
-                                        className="w-full px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-lime-300"
+                                        className="w-full px-3 py-2 rounded-md border focus:outline-none focus:ring-2 focus:ring-lime-300  border-gray-200 focus:border-transparent"
                                         placeholder="How soon you can join?"
                                         onChange={(e) => handleChange(e)}
                                     />
@@ -304,7 +304,7 @@ const Jobs = () => {
                                         type="file"
                                         id="resume"
                                         name="userResume"
-                                        className="w-full px-3 py-2  rounded-md focus:outline-none focus:ring-2 focus:ring-lime-300"
+                                        className="w-full px-3 py-2  rounded-md border focus:outline-none focus:ring-2 focus:ring-lime-300  border-gray-200 focus:border-transparent"
                                         required
                                         onChange={(e) => handleChange(e)}
                                         placeholder="Only docx(document) file is allowed"

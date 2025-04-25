@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X, ChevronUp, ChevronDown } from 'lucide-react';
-import sidebarLinks from '../actions/getIcons';
+import adminSidebarLinks from '../../actions/getAdminIcons';
 import useUserStore from '@/zustand';
 import axios from 'axios';
 
-const Sidebar = () => {
+const AdminSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const router = useNavigate()
@@ -65,7 +65,7 @@ const Sidebar = () => {
         {/* Links in the middle - grows to take available space */}
         <div className="flex-grow overflow-y-auto px-4">
           <div className="flex flex-col space-y-4">
-            {sidebarLinks.map((item, index) => {
+            {adminSidebarLinks.map((item, index) => {
               const Icon = item.icon;
               return (
                 <Link
@@ -128,4 +128,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default AdminSidebar;
