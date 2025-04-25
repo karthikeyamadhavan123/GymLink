@@ -1,4 +1,4 @@
-import { Home, Users, Briefcase, BriefcaseBusiness, CalendarCheck } from "lucide-react";
+import { Home, Users, BriefcaseBusiness, CalendarCheck } from "lucide-react";
 
 const adminSidebarLinks = [
     {
