@@ -43,7 +43,7 @@ export default function Register() {
     const states = useIndianStates();
     const [loading, setLoading] = useState(false)
     const router = useNavigate()
-    const RUrl = formDetails.role === 'admin' ? import.meta.env.VITE_DB_URL + '/api/users/register/admin' : import.meta.env.VITE_DB_URL + '/api/users/register'
+    const RUrl = import.meta.env.VITE_DB_URL + '/api/users/register'
     const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormDetails((prev) => ({

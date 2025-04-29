@@ -40,7 +40,7 @@ const Applications = () => {
             try {
                 setLoading(true);
                 // Fetch applications for the specific job ID
-                const response = await axios.get(`http://localhost:8080/applicants/${id}/all/admins`, {
+                const response = await axios.get(`${import.meta.env.VITE_DB_URL}/applicants/${id}/all/admins`, {
                     withCredentials: true
                 });
                 setApplications(response.data.applications || []);
@@ -78,7 +78,7 @@ const Applications = () => {
 
     const handleAccept = async (applicationId: string, jobId: string) => {
         try {
-            await axios.put(`http://localhost:8080/applicants/accept/${jobId}/${applicationId}`,
+            await axios.put(`${import.meta.env.VITE_DB_URL}/applicants/accept/${jobId}/${applicationId}`,
                 { status: 'accepted' },
                 { withCredentials: true }
             );
@@ -94,7 +94,7 @@ const Applications = () => {
 
     const handleReject = async (applicationId: string, jobId: string) => {
         try {
-            const res = await axios.put(`http://localhost:8080/applicants/reject/${jobId}/${applicationId}`,
+            const res = await axios.put(`${import.meta.env.VITE_DB_URL}/reject/${jobId}/${applicationId}`,
                 { status: 'rejected' },
                 { withCredentials: true }
             );

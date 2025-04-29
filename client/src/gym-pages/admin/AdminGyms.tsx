@@ -24,8 +24,8 @@ interface GymProps {
 const gymUrl = import.meta.env.VITE_DB_URL + '/gym/all/admin'
 const AdminGyms = () => {
     const [gyms, setGyms] = useState<GymProps[]>([]);
-    const [editGymDetails,seteditGymDetails]=useState<GymProps>()
-    const[editModal,setEditModal]=useState(false)
+    const [editGymDetails, seteditGymDetails] = useState<GymProps>()
+    const [editModal, setEditModal] = useState(false)
     const [searchTerm, setSearchTerm] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const router = useNavigate();
@@ -59,7 +59,7 @@ const AdminGyms = () => {
         )
     });
 
-    const handleEdit=async(gym:GymProps)=>{
+    const handleEdit = async (gym: GymProps) => {
         seteditGymDetails(gym)
         setEditModal(true)
     }
@@ -70,14 +70,14 @@ const AdminGyms = () => {
         setEditModal(false);
         seteditGymDetails(undefined);
     };
-    
+
     const handleDeletion = async (id: string) => {
         if (!id) {
             return;
         }
         try {
             setIsLoading(true);
-            const response = await axios.delete(`http://localhost:8080/gym/${id}/delete`, { withCredentials: true })
+            const response = await axios.delete(`${import.meta.env.VITE_DB_URL}/gym/${id}/delete`, { withCredentials: true })
             if (response.status === 200) {
                 setGyms(gyms.filter(gym => gym._id !== id));
             }
@@ -197,7 +197,7 @@ const AdminGyms = () => {
                                             {/* Admin Action Buttons */}
                                             <div className="flex gap-2 mb-4">
                                                 <button
-                                                    className="flex-1 flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white py-2 px-3 rounded-lg transition-colors duration-300 cursor-pointer" onClick={()=>handleEdit(gym)}
+                                                    className="flex-1 flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white py-2 px-3 rounded-lg transition-colors duration-300 cursor-pointer" onClick={() => handleEdit(gym)}
                                                 >
                                                     <FiEdit className="mr-1" /> Edit
                                                 </button>
@@ -238,7 +238,7 @@ const AdminGyms = () => {
                                 <div className="p-6">
                                     <div className="flex justify-between items-center mb-6">
                                         <h2 className="text-2xl font-bold text-gray-800">Edit Gym Details</h2>
-                                        <button 
+                                        <button
                                             onClick={handleCloseModal}
                                             className="text-gray-500 hover:text-gray-700"
                                         >
@@ -249,16 +249,16 @@ const AdminGyms = () => {
                                     </div>
 
                                     <EditGymForm
-                                        gym={editGymDetails} 
-                                        onSave={handleSaveGym} 
-                                        onClose={handleCloseModal} 
+                                        gym={editGymDetails}
+                                        onSave={handleSaveGym}
+                                        onClose={handleCloseModal}
                                     />
                                 </div>
                             </div>
                         </div>
                     )
                 }
-                <div 
+                <div
                     className="fixed bottom-8 right-8 z-30 bg-lime-400 hover:bg-lime-500 text-white rounded-full shadow-lg p-4 cursor-pointer transition-all duration-300 flex items-center justify-center"
                     onClick={navigateToAddGym}
                 >

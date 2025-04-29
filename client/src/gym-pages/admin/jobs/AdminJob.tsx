@@ -84,7 +84,7 @@ const AdminJob = () => {
 
   const handleDeletion = async (id: string) => {
     try {
-      const response = await axios.delete(`http://localhost:8080/jobs/${id}/delete`, { withCredentials: true })
+      const response = await axios.delete(`${import.meta.env.VITE_DB_URL}/jobs/${id}/delete`, { withCredentials: true })
       if (response.status === 200) {
         setJobs(allJobs.filter((job) => job.jobs.some((deletejob) => deletejob._id !== id)))
       }
@@ -130,7 +130,7 @@ const AdminJob = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:8080/jobs/${currentJob._id}/edit`,
+        `${import.meta.env.VITE_DB_URL}/jobs/${currentJob._id}/edit`,
         formData,
         { withCredentials: true }
       );

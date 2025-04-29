@@ -236,7 +236,7 @@ const GetMyTrainers = () => {
             setIsSubmitting(false);
         }
     };
-    const handleShowEditForm = (trainer: Trainer,gymId:string) => {
+    const handleShowEditForm = (trainer: Trainer, gymId: string) => {
         setCurrentTrainer(trainer);
         setCurrentGymId(gymId)
         setShowEditForm(true);
@@ -260,7 +260,7 @@ const GetMyTrainers = () => {
     };
     const handleDeletion = async (gymId: string, trainerId: string) => {
         try {
-            const response = await axios.delete(`http://localhost:8080/trainers/${gymId}/${trainerId}/delete`, { withCredentials: true })
+            const response = await axios.delete(`${import.meta.env.VITE_DB_URL}/trainers/${gymId}/${trainerId}/delete`, { withCredentials: true })
             if (response.status === 200) {
                 setGyms(gyms.map((gym: GymWithTrainers) => {
                     return {
@@ -433,7 +433,7 @@ const GetMyTrainers = () => {
                                                                 <div className="flex space-x-2">
                                                                     <button
                                                                         className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded transition-colors cursor-pointer"
-                                                                        onClick={() => handleShowEditForm(trainer,gym._id)}
+                                                                        onClick={() => handleShowEditForm(trainer, gym._id)}
                                                                     >
                                                                         Edit Profile
                                                                     </button>

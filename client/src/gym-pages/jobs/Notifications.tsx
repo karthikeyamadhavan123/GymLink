@@ -20,8 +20,6 @@ interface NotifcyProps {
 }
 
 const notificationUrl = import.meta.env.VITE_DB_URL + "/jobs/notifications/all";
-
-
 const Notifications: React.FC<NotificationProps> = ({ setstate }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [notifications, setNotifications] = useState<NotifcyProps[]>([]);

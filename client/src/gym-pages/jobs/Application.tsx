@@ -69,7 +69,7 @@ const Application = () => {
     return (
         <>
             <Helmet>
-            <title>{`My Applications | Applications`}</title>
+                <title>{`My Applications | Applications`}</title>
                 <meta name="description" content={`Manage ${applications.length} job applications`} />
             </Helmet>
             <div className="w-full max-w-6xl mx-auto p-6 font-stencil text-white">
@@ -90,7 +90,7 @@ const Application = () => {
                                 <div className="p-6">
                                     <div className="flex justify-between items-start mb-4">
                                         <div className="flex items-center space-x-2">
-                                        Status :<span className="font-medium underline text-lime-300"> {" "} {application.status}</span>
+                                            Status :<span className="font-medium underline text-lime-300"> {" "} {application.status}</span>
                                         </div>
                                     </div>
 

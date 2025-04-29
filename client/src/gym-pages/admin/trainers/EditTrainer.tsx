@@ -36,8 +36,8 @@ const EditTrainerForm = ({ trainer, gymId, onClose, onSuccess }: EditTrainerForm
     const [formSuccess, setFormSuccess] = useState<string | null>(null);
 
     // Parse expertise array into comma-separated string for form
-    const expertiseString = Array.isArray(trainer.expertise) 
-        ? trainer.expertise.join(", ") 
+    const expertiseString = Array.isArray(trainer.expertise)
+        ? trainer.expertise.join(", ")
         : String(trainer.expertise);
 
     const [formData, setFormData] = useState<TrainerFormData>({
@@ -99,7 +99,7 @@ const EditTrainerForm = ({ trainer, gymId, onClose, onSuccess }: EditTrainerForm
 
             if (response.data.success) {
                 setFormSuccess("Trainer updated successfully!");
-                
+
                 // Notify parent component about the success
                 if (onSuccess) {
                     setTimeout(() => {

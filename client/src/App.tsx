@@ -22,9 +22,9 @@ const ApplicationMain = lazy(() => import("./gym-pages/jobs/ApplicationMain"));
 const MyGyms = lazy(() => import("./gym-pages/admin/MyGyms"));
 const AddGym = lazy(() => import('./gym-pages/admin/AddGym'))
 const AddJob = lazy(() => import('./gym-pages/admin/jobs/AddJob'))
-const AdminJob = lazy(()=>import('./gym-pages/admin/jobs/AdminJob'))
-const Applications = lazy(()=>import('./gym-pages/applications/Applications'))
-const AdminTrainers = lazy(()=>import('./gym-pages/admin/trainers/GetMyTrainers'))
+const AdminJob = lazy(() => import('./gym-pages/admin/jobs/AdminJob'))
+const Applications = lazy(() => import('./gym-pages/applications/Applications'))
+const AdminTrainers = lazy(() => import('./gym-pages/admin/trainers/GetMyTrainers'))
 function App() {
   return (
     <Suspense
@@ -83,13 +83,13 @@ function App() {
             path="/my-jobs"
             element={<AdminProtected component={<AdminJob />} />}
           />
-           <Route
+          <Route
             path="/admin-applications/:id"
             element={<AdminProtected component={<Applications />} />}
           />
-           <Route
+          <Route
             path="/admin-trainers"
-            element={<AdminProtected component={<AdminTrainers/>} />}
+            element={<AdminProtected component={<AdminTrainers />} />}
           />
           <Route path="/not-authorized" element={<NotAuthorize />} />
           <Route path="*" element={<NotFound />} />

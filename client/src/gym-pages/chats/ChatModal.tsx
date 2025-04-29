@@ -51,11 +51,9 @@ const ChatModal = () => {
 
             // Prepare the endpoint URL based on whether we're updating an existing chat
             const endpoint = chatId
-                ? `http://localhost:8080/chat/${chatId}/new`
-                : `http://localhost:8080/chat/new`;
+                ? `${import.meta.env.VITE_DB_URL}/chat/${chatId}/new`
+                : `${import.meta.env.VITE_DB_URL}/chat/new`;
 
-                
-            // Call API
             const res = await axios.post(
                 endpoint,
                 { prompt: userPrompt },
