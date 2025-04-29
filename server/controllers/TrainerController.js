@@ -1,5 +1,7 @@
 const Trainer = require("../models/TrainerSchema");
+const gymSchema = require("../models/gymSchema");
 const Gym = require("../models/gymSchema");
+const userSchema = require("../models/userSchema");
 const User = require("../models/userSchema");
 const cloudinary = require("cloudinary").v2;
 
@@ -230,11 +232,14 @@ const getTrainersByGym = async (req, res) => {
 };
 const getAllTrainers = async (req, res) => {
   try {
-  
-    const alltrainers = await Trainer.find({}).populate({
-      path:'gymId',
-      select:'gymName location -_id'
-    }).select('certifications trainerName expertise experience contactNumber trainerImage description -_id');
+    const alltrainers = await Trainer.find({})
+      .populate({
+        path: "gymId",
+        select: "gymName location -_id",
+      })
+      .select(
+        "certifications trainerName expertise experience contactNumber trainerImage description -_id"
+      );
     if (!alltrainers) {
       return res.status(400).json({
         success: false,
@@ -262,6 +267,56 @@ const getAllTrainers = async (req, res) => {
   }
 };
 
+const getAllTrainersAdmin = async (req, res) => {
+  try {
+    const { userId } = req.userId;
+    if (!userId) {
+      return res.status(403).json({
+        message: "Please log in to add a trainer",
+        success: false,
+      });
+    }
+    const user = await userSchema.findById(userId)
+    if(!user){
+      return res.status(404).json({
+        message: "User not exists",
+        success: false,
+      });
+    }
+    if(user.role!=='admin'){
+      return res.status(403).json({
+        message: "You are not authorized to see",
+        success: false,
+      });
+    }
+    const alltrainers = await gymSchema
+      .find({ owner: userId })
+      .populate({
+        path: "trainers",
+        select:
+          'trainerName expertise certifications experience contactNumber trainerImage description _id',
+      })
+      .select("gymName");
+    if (alltrainers.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "There are no trainers add Trainers.",
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      message: "Trainers fetched successfully",
+      trainer: alltrainers,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Internal Server Error",
+      success: false,
+      error: error.message,
+    });
+  }
+};
 
 const editTrainerProfile = async (req, res) => {
   try {
@@ -457,4 +512,5 @@ module.exports = {
   editTrainerProfile,
   deleteTrainerProfile,
   getAllTrainers,
+  getAllTrainersAdmin,
 };

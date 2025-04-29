@@ -19,7 +19,7 @@ const Register = async (req, res) => {
       password,
       avatar,
       phone_number,
-      role = "user",
+      role,
       location,
       age,
       gender,
@@ -92,96 +92,6 @@ const Register = async (req, res) => {
     return res.status(201).json({
       success: true,
       message: "User registered Successfully",
-    });
-  } catch (e) {
-    console.log(e);
-    return res
-      .status(500)
-      .json({ message: "Internal Server Error", success: false });
-  }
-};
-const adminRegister = async (req, res) => {
-  try {
-    const {
-      firstName,
-      lastName,
-      email,
-      password,
-      avatar,
-      phone_number,
-      role = "admin",
-      location,
-      age,
-      gender,
-    } = req.body;
-    if (!firstName) {
-      return res
-        .status(400)
-        .json({ message: "Please enter first name", success: false });
-    }
-    if (!email) {
-      return res
-        .status(400)
-        .json({ message: "Please enter email", success: false });
-    }
-    if (!password) {
-      return res
-        .status(400)
-        .json({ message: "Please enter password", success: false });
-    }
-    if (!phone_number) {
-      return res
-        .status(400)
-        .json({ message: "Please enter phone_number", success: false });
-    }
-    if (!location) {
-      return res
-        .status(400)
-        .json({ message: "Please enter location", success: false });
-    }
-    if (!age) {
-      return res
-        .status(400)
-        .json({ message: "Please enter age", success: false });
-    }
-    if (!gender) {
-      return res
-        .status(400)
-        .json({ message: "Please enter gender", success: false });
-    }
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const verificationToken = crypto.randomBytes(16).toString("hex");
-    let imageUrl;
-    if (req.file) {
-      const result = await cloudinary.uploader.upload(req.file.path, {
-        folder: "user_images", // You can adjust the folder as per your need
-        resource_type: "image", // Specify the resource type as image
-        allowed_formats: ["jpeg", "jpg", "png"], // Allow only image formats
-      });
-      if (result) {
-        imageUrl = result.secure_url;
-      }
-    }
-    const newUser = new User({
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: hashedPassword,
-      gender: gender,
-      phone_number: phone_number,
-      location: location,
-      age: age,
-      avatar: avatar || imageUrl,
-      role: role,
-      verificationToken: verificationToken,
-      verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000,
-    });
-    await newUser.save();
-    await welcomeEmail(email);
-    return res.status(201).json({
-      success: true,
-      message: "Admin registered Successfully",
     });
   } catch (e) {
     console.log(e);
@@ -325,5 +235,4 @@ module.exports = {
   Logout,
   forgotPassword,
   resetPassword,
-  adminRegister,
 };

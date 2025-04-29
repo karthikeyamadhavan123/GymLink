@@ -189,7 +189,7 @@ const AllTrainers = () => {
 
                     <div className="flex items-start mb-4">
                       <Award size={18} className="mr-2 mt-1 text-lime-500" />
-                      <span className="text-sm">{trainer.certifications}</span>
+                      <a href={trainer.certifications} className="text-sm" target='_blank'>Certificate</a>
                     </div>
 
                     <div className="flex items-center">

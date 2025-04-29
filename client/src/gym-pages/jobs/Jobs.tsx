@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { FiMapPin, FiBriefcase, FiClock, FiDollarSign } from "react-icons/fi";
+import { FiMapPin, FiBriefcase, FiClock, FiDollarSign, FiBell } from "react-icons/fi";
 import { HashLoader } from "react-spinners";
 import { Helmet } from "react-helmet-async";
+import Notifications from "./Notifications";
+import toast, { Toaster } from "react-hot-toast";
 
 const jobUrl = import.meta.env.VITE_DB_URL + '/jobs/all';
 
@@ -30,6 +32,8 @@ interface JobProps {
     salary: number;
 }
 
+
+
 const Jobs = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [jobs, setJobs] = useState<JobProps[]>([]);
@@ -45,6 +49,7 @@ const Jobs = () => {
         invoiceDays: "",
         userResume: null as File | null
     });
+    const [notificationModal, setNotificationModal] = useState(false)
 
     useEffect(() => {
         const fetchJobs = async () => {
@@ -98,7 +103,7 @@ const Jobs = () => {
         }
     }
 
-    const handleSubmit = async(e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         try {
             e.preventDefault();
             setIsLoading(true)
@@ -110,19 +115,24 @@ const Jobs = () => {
             if (jobForm.userResume instanceof File) {
                 formData.append("userResume", jobForm.userResume);
             }
-            const response =await axios.post(import.meta.env.VITE_DB_URL + `/applicants/${individualJob.gymId}/${individualJob.jobId}/apply`, formData,{withCredentials:true})
-            console.log(response.data);
+            const response = await axios.post(import.meta.env.VITE_DB_URL + `/applicants/${individualJob.gymId}/${individualJob.jobId}/apply`, formData, { withCredentials: true })
+            if (response.status === 200) {
+                toast.success('Job Applied success')
+            }
         } catch (error) {
             console.log(error);
         }
-        finally{
+        finally {
             setIsLoading(false)
             setjobModal(false)
             setIndividualJob({
-                gymId:"",
-                jobId:""
+                gymId: "",
+                jobId: ""
             })
         }
+    }
+    const handleNotificationClick = () => {
+        setNotificationModal(true);
     }
 
     return (
@@ -140,17 +150,28 @@ const Jobs = () => {
                     <p className="text-xl mb-8">Discover opportunities at top gyms and fitness centers</p>
 
                     {/* Search Bar */}
-                    <div className="max-w-2xl mx-auto relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <FiBriefcase className="h-5 w-5 text-gray-400" />
+                    <div className="max-w-2xl mx-auto relative flex items-center space-x-2">
+                        <div className="relative flex-grow">
+                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <FiBriefcase className="h-5 w-5 text-gray-400" />
+                            </div>
+
+                            <input
+                                type="text"
+                                placeholder="Search jobs by title, gym name, or location..."
+                                className="block w-full pl-10 pr-3 py-4 border rounded-lg bg-black bg-opacity-50 text-white focus:outline-none focus:ring-2 focus:ring-lime-300 focus:border-transparent border-gray-700"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
                         </div>
-                        <input
-                            type="text"
-                            placeholder="Search jobs by title, gym name, or location..."
-                            className="block w-full pl-10 pr-3 py-4 border rounded-lg bg-black bg-opacity-50 text-white focus:outline-none focus:ring-2 focus:ring-lime-300 focus:border-transparent border-gray-700"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
+                        <div className="relative">
+                            <button
+                                onClick={handleNotificationClick}
+                                className="bg-lime-500 hover:bg-lime-600 text-black py-4 px-4 rounded-lg transition-colors duration-300 cursor-pointer"
+                            >
+                                <FiBell className="h-5 w-5" />
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -199,7 +220,7 @@ const Jobs = () => {
                                     <div className="flex items-center mb-4">
                                         <FiDollarSign className="text-gray-400 mr-2" />
                                         <span className="text-lime-400 font-bold">
-                                        ₹{job.salary} per month
+                                            ₹{job.salary} per month
                                         </span>
                                     </div>
 
@@ -245,7 +266,7 @@ const Jobs = () => {
                         <div className="bg-gray-800 rounded-lg shadow-xl p-8 w-full max-w-md">
                             <h2 className="text-2xl font-bold text-white mb-6 text-center ">Job Application</h2>
 
-                            <form className="space-y-4" onSubmit={(e)=>handleSubmit(e)}>
+                            <form className="space-y-4" onSubmit={(e) => handleSubmit(e)}>
                                 {/* Previous Work */}
                                 <div>
                                     <label htmlFor="previousWork" className="block text-sm font-medium text-white mb-1 ">
@@ -336,6 +357,12 @@ const Jobs = () => {
                     </div>
                 )
             }
+            {
+                notificationModal && (
+                    <Notifications setstate={setNotificationModal} />
+                )
+            }
+            <Toaster />
         </div>
     );
 };

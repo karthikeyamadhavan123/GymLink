@@ -22,30 +22,7 @@ const existingUser = async (req, res, next) => {
 };
 
 
-const existingAdmin = async (req, res, next) => {
-  try {
-    const { email } = req.body;
-
-    if (!email) {
-      return res.status(400).json({ message: "Admin Email is required." });
-    }
-
-    const admin_existing = await User.findOne({ email, role: "admin" });
-
-    if (admin_existing) {
-      return res
-        .status(400)
-        .json({ message: "Admin already exists, please log in." });
-    }
-
-    next();
-  } catch (error) {
-    console.error("Error checking existing user:", error);
-    res.status(500).json({ message: "Internal Server Error." });
-  }
-};
 
 
 
-
-module.exports = { existingUser,existingAdmin };
+module.exports = { existingUser};

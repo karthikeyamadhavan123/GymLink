@@ -48,7 +48,7 @@ const AdminSidebar = () => {
       <div
         className={`bg-black font-stencil fixed md:static h-screen z-40 transition-all duration-300 
                     ${isOpen ? 'left-0 w-64' : '-left-full'} 
-                    md:left-0 md:w-1/5 md:min-w-48 flex flex-col border-r-2 justify-between md:flex lg:flex xs:hidden`}
+                    md:left-0 md:w-1/5 md:min-w-48 flex flex-col border-r-2 justify-between md:flex lg:flex sm:flex xs:hidden`}
       >
         {/* Logo at the top */}
         <div className="flex-shrink-0 flex items-center p-4">
@@ -82,6 +82,18 @@ const AdminSidebar = () => {
         </div>
 
         {/* User info at the bottom - now properly fixed at bottom */}
+        {isUserMenuOpen && (
+            <div className="mt-4 pl-12 bg-gray-700 w-full rounded-md">
+              <div className="py-1">
+                <button
+                  className="block px-2 py-1 text-sm text-white hover:text-lime-300 cursor-pointer"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              </div>
+            </div>
+          )}
         <div className="mt-auto flex-shrink-0 p-4 border-t border-gray-800">
           <div
             className='flex items-center justify-between cursor-pointer'
@@ -104,24 +116,7 @@ const AdminSidebar = () => {
             )}
           </div>
 
-          {isUserMenuOpen && (
-            <div className="mt-4 pl-12 bg-gray-700 w-full rounded-md">
-              <div className="py-1">
-                <Link
-                  to="/profile"
-                  className="block px-2 py-1 text-sm text-white hover:text-lime-300 rounded"
-                >
-                  Profile
-                </Link>
-                <button
-                  className="block px-2 py-1 text-sm text-white hover:text-lime-300 cursor-pointer"
-                  onClick={handleLogout}
-                >
-                  Logout
-                </button>
-              </div>
-            </div>
-          )}
+        
         </div>
       </div>
     </>

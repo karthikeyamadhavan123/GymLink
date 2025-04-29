@@ -280,7 +280,7 @@ const getNotifications = async (req, res) => {
   try {
     const notifications = await Notification.find({}).populate({
       path: "jobNotification",
-      select: "createdAt updatedAt",
+      select: "createdAt",
       populate: {
         path: "postedBy",
         select: "gymName -_id",

@@ -24,6 +24,7 @@ const AddGym = lazy(() => import('./gym-pages/admin/AddGym'))
 const AddJob = lazy(() => import('./gym-pages/admin/jobs/AddJob'))
 const AdminJob = lazy(()=>import('./gym-pages/admin/jobs/AdminJob'))
 const Applications = lazy(()=>import('./gym-pages/applications/Applications'))
+const AdminTrainers = lazy(()=>import('./gym-pages/admin/trainers/GetMyTrainers'))
 function App() {
   return (
     <Suspense
@@ -85,6 +86,10 @@ function App() {
            <Route
             path="/admin-applications/:id"
             element={<AdminProtected component={<Applications />} />}
+          />
+           <Route
+            path="/admin-trainers"
+            element={<AdminProtected component={<AdminTrainers/>} />}
           />
           <Route path="/not-authorized" element={<NotAuthorize />} />
           <Route path="*" element={<NotFound />} />

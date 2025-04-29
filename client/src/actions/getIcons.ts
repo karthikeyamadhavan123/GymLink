@@ -1,4 +1,4 @@
-import { Home, Users, CreditCard, Settings,Briefcase } from "lucide-react"
+import { Home, Users, Settings,Briefcase } from "lucide-react"
 
 const sidebarLinks = [
     {
@@ -15,11 +15,6 @@ const sidebarLinks = [
         label: "My Applications",
         icon: Briefcase,
         path: "/applications",
-    },
-    {
-        label: "Membership",
-        icon: CreditCard,
-        path: "/membership",
     },
     {
         label: "Settings",
