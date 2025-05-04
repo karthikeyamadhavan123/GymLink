@@ -39,7 +39,7 @@ const AdminJob = () => {
     const fetchJobs = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('http://localhost:8080/jobs/my-jobs', { withCredentials: true });
+        const response = await axios.get(`${import.meta.env.VITE_DB_URL}/jobs/my-jobs`, { withCredentials: true });
         setJobs(response.data.job);
       } catch (err: any) {
         setError(err.response?.data?.message || 'Failed to fetch jobs');
