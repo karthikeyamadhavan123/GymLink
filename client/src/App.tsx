@@ -8,6 +8,7 @@ import FitnessTips from "./company/components/FitnessTipsContainer";
 import TermsConditionsContainer from "./company/components/TermsContainer";
 import ScrollToTop from "./utils/ScrollTop";
 import FindGymContainer from "./company/components/FindGymContainer";
+import TopTrainerContainer from "./company/components/TopTrainerContainer";
 const HomePage = lazy(() => import("./pages/HomePage"));
 const About = lazy(() => import("./pages/About"));
 const Contact = lazy(() => import("./pages/Contact"));
@@ -57,6 +58,7 @@ function App() {
           <Route path="/tips" element={<FitnessTips />} />
           <Route path="/terms" element={<TermsConditionsContainer />} />
           <Route path="/find-gym" element={<FindGymContainer />} />
+          <Route path="/find-trainers" element={<TopTrainerContainer />} />
           <Route path="/api/auth/register" element={<Register />} />
           <Route path="/api/auth/login" element={<Login />} />
           <Route

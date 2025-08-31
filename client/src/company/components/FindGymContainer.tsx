@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FindGymPresenter from "./FindGymPresenter";
 
+//will be fetched from db later and ui wil also be changed
+
 const FindGymContainer = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedFilters, setSelectedFilters] = useState<FilterOptions>({
