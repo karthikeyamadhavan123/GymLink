@@ -78,16 +78,16 @@ const Footer = () => {
 
                 {/* Social icons */}
                 <div className="flex space-x-8 mt-10">
-                    <Link to="https://instagram.com" className="hover:text-[#8fe60f] transition-colors" aria-label="Instagram">
+                    <Link to="https://instagram.com" className="hover:text-[#8fe60f] transition-colors" aria-label="Instagram" target='_blank'>
                         <Instagram className="h-8 w-8" />
                     </Link>
-                    <Link to="https://youtube.com" className="hover:text-[#8fe60f] transition-colors" aria-label="YouTube">
+                    <Link to="https://youtube.com" className="hover:text-[#8fe60f] transition-colors" aria-label="YouTube" target='_blank'>
                         <Youtube className="h-8 w-8" />
                     </Link>
-                    <Link to="https://twitter.com" className="hover:text-[#8fe60f] transition-colors" aria-label="Twitter">
+                    <Link to="https://twitter.com" className="hover:text-[#8fe60f] transition-colors" aria-label="Twitter" target='_blank'>
                         <Twitter className="h-8 w-8" />
                     </Link>
-                    <Link to="https://linkedin.com" className="hover:text-[#8fe60f] transition-colors" aria-label="LinkedIn">
+                    <Link to="https://linkedin.com" className="hover:text-[#8fe60f] transition-colors" aria-label="LinkedIn" target='_blank'>
                         <Linkedin className="h-8 w-8" />
                     </Link>
                 </div>

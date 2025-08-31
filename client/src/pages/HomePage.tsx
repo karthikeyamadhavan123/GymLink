@@ -1,7 +1,8 @@
+import { lazy } from "react";
 import { Helmet } from "react-helmet-async";
 import Footer from "../components/Footer"
 import Main from "../components/Main"
-import Comment from '../components/Comment'
+const CommentContainer = lazy(() => import("@/components/comments/CommentContainer"));
 import Path from "../components/Path"
 const HomePage = () => {
   return (
@@ -13,7 +14,7 @@ const HomePage = () => {
       </Helmet>
       <div className="z-10 relative flex flex-col overflow-x-hidden bg-black font-stencil overflow-y-hidden">
         <Main />
-        <Comment />
+        <CommentContainer/>
         <Path />
         <Footer />
       </div>

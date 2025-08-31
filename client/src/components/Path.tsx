@@ -35,7 +35,7 @@ const Path = () => {
                     style={{ scale: imageScale }}
                 >
                     <img
-                        src='/lift.jpg' 
+                        src='/assets/images/gym/lift.avif' 
                         width={400} 
                         height={400} 
                         alt='lift' 

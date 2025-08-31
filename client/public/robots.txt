@@ -1,0 +1,47 @@
+# GymLink - Gym Management Platform
+# This file tells search engines which pages to crawl and which to avoid
+
+User-agent: *
+
+# Allow public marketing pages
+Allow: /
+Allow: /about
+Allow: /pricing
+Allow: /contact
+
+# Allow public authentication pages (for SEO)
+Allow: /api/auth/register
+Allow: /api/auth/login
+Allow: /api/auth/forgot-password
+
+# Disallow protected user dashboard areas
+Disallow: /dashboard/
+Disallow: /gym/
+Disallow: /jobs
+Disallow: /trainers
+Disallow: /applications
+
+# Disallow admin areas completely
+Disallow: /admin-dashboard
+Disallow: /add/
+Disallow: /my-jobs
+Disallow: /admin-applications/
+Disallow: /admin-trainers
+
+# Disallow API reset password with tokens (contains sensitive data)
+Disallow: /api/auth/reset-password/
+
+# Disallow error pages
+Disallow: /not-authorized
+
+# Allow 404 page for proper error handling
+Allow: /404
+
+# Disallow any API endpoints
+Disallow: /api/
+
+# Crawl delay to be respectful
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://gym-link.vercel.app/sitemap.xml

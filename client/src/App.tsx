@@ -1,8 +1,13 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { HashLoader } from "react-spinners";
 import Protected from "./Protected";
 import AdminProtected from "./AdminProtected";
+import FrequentlyAskedQuestion from "./company/components/FrequentlyAskedQuestionContainer";
+import FitnessTips from "./company/components/FitnessTipsContainer";
+import TermsConditionsContainer from "./company/components/TermsContainer";
+import ScrollToTop from "./utils/ScrollTop";
+import FindGymContainer from "./company/components/FindGymContainer";
 const HomePage = lazy(() => import("./pages/HomePage"));
 const About = lazy(() => import("./pages/About"));
 const Contact = lazy(() => import("./pages/Contact"));
@@ -18,6 +23,7 @@ const SingleGym = lazy(() => import("./gym-pages/SingleGym"));
 const JobMain = lazy(() => import("./gym-pages/jobs/JobMain"));
 const TrainerMain = lazy(() => import("./gym-pages/trainers/TrainerMain"));
 const ApplicationMain = lazy(() => import("./gym-pages/jobs/ApplicationMain"));
+
 // admin imports
 const MyGyms = lazy(() => import("./gym-pages/admin/MyGyms"));
 const AddGym = lazy(() => import('./gym-pages/admin/AddGym'))
@@ -26,20 +32,31 @@ const AdminJob = lazy(() => import('./gym-pages/admin/jobs/AdminJob'))
 const Applications = lazy(() => import('./gym-pages/applications/Applications'))
 const AdminTrainers = lazy(() => import('./gym-pages/admin/trainers/GetMyTrainers'))
 function App() {
+  useEffect(() => {
+    // Disable browser's automatic scroll restoration
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+  }, []);
   return (
     <Suspense
       fallback={
-        <div className="flex items-center justify-center h-screen">
+        <div className="flex items-center justify-center h-screen bg-black">
           <HashLoader color="#fff" />
         </div>
       }
     >
       <Router>
+        <ScrollToTop/>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<About />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/faq" element={<FrequentlyAskedQuestion />} />
+          <Route path="/tips" element={<FitnessTips />} />
+          <Route path="/terms" element={<TermsConditionsContainer />} />
+          <Route path="/find-gym" element={<FindGymContainer />} />
           <Route path="/api/auth/register" element={<Register />} />
           <Route path="/api/auth/login" element={<Login />} />
           <Route
