@@ -116,3 +116,46 @@ export interface FindGymPresenterProps {
   onGetDirections: (gym: FindGym) => void;
   onCallGym: (phone: string) => void;
 }
+
+export interface TermsSection {
+  id: string;
+  title: string;
+  content: string[];
+  icon: string;
+  color: string;
+}
+
+export interface TermsConditionsPresenterProps {
+  termsData: TermsSection[];
+  activeSection: string;
+  isScrolled: boolean;
+  onSectionClick: (sectionId: string) => void;
+  onBackToTop: () => void;
+  onGoBack: () => void;
+  onContactSupport: () => void;
+}
+
+
+export interface Trainer {
+  id: number;
+  name: string;
+  specialty: string;
+  rating: number;
+  students: number;
+  image: string;
+  achievement: string;
+  growth: string;
+}
+
+export interface TopTrainerPresenterProps {
+  trainers: Trainer[];
+  activeTrainer: number;
+  setActiveTrainer: (index: number) => void;
+}
+
+export interface StatItem {
+  icon: React.ComponentType<{ className?: string }>;
+  label: string;
+  value: string;
+  color: string;
+}

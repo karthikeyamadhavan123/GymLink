@@ -18,23 +18,7 @@ import {
   Calendar
 } from 'lucide-react';
 
-interface TermsSection {
-  id: string;
-  title: string;
-  content: string[];
-  icon: string;
-  color: string;
-}
-
-interface TermsConditionsPresenterProps {
-  termsData: TermsSection[];
-  activeSection: string;
-  isScrolled: boolean;
-  onSectionClick: (sectionId: string) => void;
-  onBackToTop: () => void;
-  onGoBack: () => void;
-  onContactSupport: () => void;
-}
+import { TermsConditionsPresenterProps } from '@/types';
 
 const TermsConditionsPresenter = ({
   termsData,
@@ -122,7 +106,7 @@ const TermsConditionsPresenter = ({
           <div className="flex items-center justify-between">
             <motion.button
               onClick={onGoBack}
-              className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-200"
+              className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-200 cursor-pointer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -130,7 +114,7 @@ const TermsConditionsPresenter = ({
               <span className="hidden sm:inline">Go Back</span>
             </motion.button>
             
-            <h1 className="text-lg md:text-xl font-bold text-white">
+            <h1 className="text-lg md:text-xl font-bold text-white text-center">
               Terms & Conditions
             </h1>
             
@@ -141,7 +125,7 @@ const TermsConditionsPresenter = ({
               whileTap={{ scale: 0.95 }}
             >
               <Mail className="w-4 h-4" />
-              <span className="hidden sm:inline">Support</span>
+              <span className="hidden sm:inline cursor-pointer">Support</span>
             </motion.button>
           </div>
         </div>
@@ -169,7 +153,7 @@ const TermsConditionsPresenter = ({
               </motion.div>
             </div>
             
-            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-400 via-purple-500 to-pink-400 bg-clip-text text-transparent mb-6">
+            <h1 className="text-4xl md:text-6xl font-bold text-lime-300 bg-clip-text  mb-6">
               Terms & Conditions
             </h1>
             
@@ -186,7 +170,7 @@ const TermsConditionsPresenter = ({
               <div className="hidden sm:block w-1 h-1 bg-gray-600 rounded-full" />
               <div className="flex items-center space-x-2">
                 <FileCheck className="w-4 h-4" />
-                <span>Version 2.1</span>
+                <span>Version 2.3.2</span>
               </div>
             </div>
           </motion.div>
@@ -234,7 +218,7 @@ const TermsConditionsPresenter = ({
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                       className={`${section.color}`}
                     >
-                      <ChevronDown className="w-6 h-6" />
+                      <ChevronDown className="w-6 h-6 cursor-pointer"/>
                     </motion.div>
                   </motion.button>
 
@@ -260,9 +244,9 @@ const TermsConditionsPresenter = ({
                                   className="flex items-start space-x-3"
                                 >
                                   <div className={`w-2 h-2 rounded-full ${section.color.replace('text', 'bg')} mt-3 flex-shrink-0`} />
-                                  <p className="text-gray-300 leading-relaxed">
+                                  <li className="text-gray-300 leading-relaxed">
                                     {paragraph}
-                                  </p>
+                                  </li>
                                 </motion.div>
                               ))}
                             </div>
@@ -293,7 +277,7 @@ const TermsConditionsPresenter = ({
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <motion.button
                 onClick={onContactSupport}
-                className="bg-lime-400 hover:bg-lime-500 text-white px-8 py-4 rounded-full font-semibold shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300"
+                className="bg-lime-400 hover:bg-lime-500 text-white px-8 py-4 rounded-full font-semibold shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300 cursor-pointer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -302,7 +286,7 @@ const TermsConditionsPresenter = ({
               
               <motion.button
                 onClick={onGoBack}
-                className="bg-gray-700 hover:bg-gray-600 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300"
+                className="bg-gray-700 hover:bg-gray-600 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 cursor-pointer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -323,7 +307,7 @@ const TermsConditionsPresenter = ({
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <ArrowUp className="w-6 h-6" />
+                <ArrowUp className="w-6 h-6 cursor-pointer"  />
               </motion.button>
             )}
           </AnimatePresence>
