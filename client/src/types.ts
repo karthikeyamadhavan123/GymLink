@@ -25,7 +25,7 @@ export interface FitnessTipProps {
   category: string;
   title: string;
   description: string;
-  icon: string;
+  icon: IconType;
   tips: string[];
   color: string;
   bgGradient: string;
