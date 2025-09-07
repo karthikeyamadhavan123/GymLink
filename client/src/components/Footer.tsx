@@ -26,7 +26,7 @@ const Footer = () => {
                         <Link to="/find-gym" className="hover:text-gray-300 transition-colors">
                             Find a Gym
                         </Link>
-                        <Link to="/trainers" className="hover:text-gray-300 transition-colors">
+                        <Link to="/find-trainers" className="hover:text-gray-300 transition-colors">
                             Top Trainers
                         </Link>
                     </nav>
@@ -37,21 +37,22 @@ const Footer = () => {
                     <h2 className="text-xl font-bold tracking-wider">ORDERS</h2>
 
                     <nav className="flex flex-col space-y-4">
-                        <Link to="/memberships" className="hover:text-gray-300 transition-colors">
+                        <Link to="/orders/memberships" className="hover:text-gray-300 transition-colors">
                             Memberships
                         </Link>
-                        <Link to="/subscription" className="hover:text-gray-300 transition-colors">
+                        <Link to="/orders/track-subscription" className="hover:text-gray-300 transition-colors">
                             Track Subscription
                         </Link>
-                        <Link to="/refund" className="hover:text-gray-300 transition-colors">
+                        <Link to="/orders/refund" className="hover:text-gray-300 transition-colors">
                             Cancellation & Refund Policy
                         </Link>
-                        <Link to="/elite" className="hover:text-gray-300 transition-colors">
+                        <Link to="/orders/elite" className="hover:text-gray-300 transition-colors">
                             Elite Training
                         </Link>
-                        <Link to="/plans" className="hover:text-gray-300 transition-colors">
+                        <Link to="/orders/plans" className="hover:text-gray-300 transition-colors">
                             Personal Training Plans
                         </Link>
+
                     </nav>
                 </div>
             </div>
@@ -78,16 +79,16 @@ const Footer = () => {
 
                 {/* Social icons */}
                 <div className="flex space-x-8 mt-10">
-                    <Link to="https://instagram.com" className="hover:text-[#8fe60f] transition-colors" aria-label="Instagram">
+                    <Link to="https://instagram.com" className="hover:text-[#8fe60f] transition-colors" aria-label="Instagram" target='_blank'>
                         <Instagram className="h-8 w-8" />
                     </Link>
-                    <Link to="https://youtube.com" className="hover:text-[#8fe60f] transition-colors" aria-label="YouTube">
+                    <Link to="https://youtube.com" className="hover:text-[#8fe60f] transition-colors" aria-label="YouTube" target='_blank'>
                         <Youtube className="h-8 w-8" />
                     </Link>
-                    <Link to="https://twitter.com" className="hover:text-[#8fe60f] transition-colors" aria-label="Twitter">
+                    <Link to="https://twitter.com" className="hover:text-[#8fe60f] transition-colors" aria-label="Twitter" target='_blank'>
                         <Twitter className="h-8 w-8" />
                     </Link>
-                    <Link to="https://linkedin.com" className="hover:text-[#8fe60f] transition-colors" aria-label="LinkedIn">
+                    <Link to="https://linkedin.com" className="hover:text-[#8fe60f] transition-colors" aria-label="LinkedIn" target='_blank'>
                         <Linkedin className="h-8 w-8" />
                     </Link>
                 </div>

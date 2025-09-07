@@ -69,7 +69,7 @@ const LoginForm = () => {
                 {/* Left side - Image */}
                 <div className="hidden md:block md:w-1/2 relative h-screen">
                     <img
-                        src="/women.jpg"
+                        src="/assets/images/gym/login.avif"
                         alt="Login background"
                         loading="lazy"
                         className="w-full h-full object-cover"

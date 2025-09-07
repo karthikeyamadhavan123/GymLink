@@ -9,7 +9,7 @@ const Main = () => {
         router(path)
     }
     return (
-        <div className="bg-[url('/main.jpg')] h-screen w-screen bg-cover relative">
+        <div className="bg-[url('/assets/images/gym/main.avif')] h-screen w-screen bg-cover relative">
             <Navbar />
             <div className="absolute inset-0 bg-black opacity-50"></div>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
