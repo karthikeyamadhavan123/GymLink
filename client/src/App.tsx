@@ -9,6 +9,12 @@ import TermsConditionsContainer from "./company/components/TermsContainer";
 import ScrollToTop from "./utils/ScrollTop";
 import FindGymContainer from "./company/components/FindGymContainer";
 import TopTrainerContainer from "./company/components/TopTrainerContainer";
+import CancellationRefund from "./pages/orders/components/Cancellation";
+import EliteTraining from "./pages/orders/components/Elitetraining";
+import PersonalTraining from "./pages/orders/components/Personaltraining";
+import Memberships from "./pages/orders/components/Membership";
+import TrackSubscription from "./pages/orders/components/Tracksubscription";
+
 const HomePage = lazy(() => import("./pages/HomePage"));
 const About = lazy(() => import("./pages/About"));
 const Contact = lazy(() => import("./pages/Contact"));
@@ -33,12 +39,14 @@ const AdminJob = lazy(() => import('./gym-pages/admin/jobs/AdminJob'))
 const Applications = lazy(() => import('./gym-pages/applications/Applications'))
 const AdminTrainers = lazy(() => import('./gym-pages/admin/trainers/GetMyTrainers'))
 function App() {
+
   useEffect(() => {
     // Disable browser's automatic scroll restoration
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
     }
   }, []);
+
   return (
     <Suspense
       fallback={
@@ -59,6 +67,11 @@ function App() {
           <Route path="/terms" element={<TermsConditionsContainer />} />
           <Route path="/find-gym" element={<FindGymContainer />} />
           <Route path="/find-trainers" element={<TopTrainerContainer />} />
+          <Route path="/orders/memberships" element={<Memberships />} />
+          <Route path="/orders/track-subscription" element={<TrackSubscription />} />
+          <Route path="/orders/refund" element={<CancellationRefund />} />
+          <Route path="/orders/elite" element={<EliteTraining />} />
+          <Route path="/orders/plans" element={<PersonalTraining />} />
           <Route path="/api/auth/register" element={<Register />} />
           <Route path="/api/auth/login" element={<Login />} />
           <Route

@@ -37,21 +37,22 @@ const Footer = () => {
                     <h2 className="text-xl font-bold tracking-wider">ORDERS</h2>
 
                     <nav className="flex flex-col space-y-4">
-                        <Link to="/memberships" className="hover:text-gray-300 transition-colors">
+                        <Link to="/orders/memberships" className="hover:text-gray-300 transition-colors">
                             Memberships
                         </Link>
-                        <Link to="/subscription" className="hover:text-gray-300 transition-colors">
+                        <Link to="/orders/track-subscription" className="hover:text-gray-300 transition-colors">
                             Track Subscription
                         </Link>
-                        <Link to="/refund" className="hover:text-gray-300 transition-colors">
+                        <Link to="/orders/refund" className="hover:text-gray-300 transition-colors">
                             Cancellation & Refund Policy
                         </Link>
-                        <Link to="/elite" className="hover:text-gray-300 transition-colors">
+                        <Link to="/orders/elite" className="hover:text-gray-300 transition-colors">
                             Elite Training
                         </Link>
-                        <Link to="/plans" className="hover:text-gray-300 transition-colors">
+                        <Link to="/orders/plans" className="hover:text-gray-300 transition-colors">
                             Personal Training Plans
                         </Link>
+
                     </nav>
                 </div>
             </div>
