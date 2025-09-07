@@ -1,15 +1,14 @@
 import { FindGymPresenterProps } from '@/types';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Search, 
-  MapPin, 
-  Star, 
-  Heart, 
-  Phone, 
-  Clock, 
-  Grid3X3, 
-  List, 
-  Filter,
+import {
+  Search,
+  MapPin,
+  Star,
+  Heart,
+  Phone,
+  Clock,
+  Grid3X3,
+  List,
   Navigation,
   Dumbbell,
   Users,
@@ -85,7 +84,7 @@ const FindGymPresenter = ({
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 font-stencil">
-      
+
       {/* Hero Section */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -103,15 +102,15 @@ const FindGymPresenter = ({
           >
             <MapPin className="w-12 h-12 text-blue-400" />
           </motion.div>
-          
+
           <h1 className="text-4xl md:text-6xl font-bold text-lime-400  mb-6">
             Find Your Perfect Gym
           </h1>
-          
+
           <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
             Discover the best fitness centers near you. Compare prices, amenities, and reviews to find your ideal workout destination.
           </p>
-          
+
           {/* Search Bar */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -142,20 +141,46 @@ const FindGymPresenter = ({
           className="flex flex-col lg:flex-row gap-4 items-center justify-between mb-8"
         >
           {/* Filter Button */}
-          <div className="flex items-center space-x-4">
-            <motion.button
-              className="flex items-center space-x-2 bg-gray-800/50 hover:bg-gray-700/50 border border-gray-600/50 text-gray-300 px-4 py-2 rounded-xl transition-all duration-200"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+          {/* Basic Filters */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            {/* Price Range */}
+            <select
+              value={selectedFilters.priceRange}
+              onChange={(e) => onFilterChange({ ...selectedFilters, priceRange: e.target.value })}
+              className="bg-gray-800/50 border border-gray-600/50 text-gray-300 px-4 py-2 rounded-xl"
             >
-              <Filter className="w-4 h-4" />
-              <span>Filters</span>
-            </motion.button>
-            
-            <div className="text-gray-400 text-sm">
-              {gyms.length} gyms found
-            </div>
+              {filterOptions.priceRanges.map((range:any) => (
+                <option key={range.value} value={range.value}>
+                  {range.label}
+                </option>
+              ))}
+            </select>
+
+            {/* Rating */}
+            <select
+              value={selectedFilters.rating}
+              onChange={(e) => onFilterChange({ ...selectedFilters, rating: Number(e.target.value) })}
+              className="bg-gray-800/50 border border-gray-600/50 text-gray-300 px-4 py-2 rounded-xl"
+            >
+              <option value={0}>All Ratings</option>
+              <option value={3}>3+ Stars</option>
+              <option value={4}>4+ Stars</option>
+              <option value={5}>5 Stars</option>
+            </select>
+
+            {/* Distance */}
+            <select
+              value={selectedFilters.distance}
+              onChange={(e) => onFilterChange({ ...selectedFilters, distance: Number(e.target.value) })}
+              className="bg-gray-800/50 border border-gray-600/50 text-gray-300 px-4 py-2 rounded-xl"
+            >
+              <option value={5}>Within 5 km</option>
+              <option value={10}>Within 10 km</option>
+              <option value={20}>Within 20 km</option>
+              <option value={50}>Within 50 km</option>
+            </select>
           </div>
+
 
           {/* Sort and View Controls */}
           <div className="flex items-center space-x-4">
@@ -170,15 +195,14 @@ const FindGymPresenter = ({
                 </option>
               ))}
             </select>
-            
+
             <div className="flex items-center bg-gray-800/50 border border-gray-600/50 rounded-xl p-1">
               <motion.button
                 onClick={() => onViewModeChange('grid')}
-                className={`p-2 rounded-lg transition-all duration-200 ${
-                  viewMode === 'grid' 
-                    ? 'bg-blue-600 text-white' 
+                className={`p-2 rounded-lg transition-all duration-200 ${viewMode === 'grid'
+                    ? 'bg-blue-600 text-white'
                     : 'text-gray-400 hover:text-gray-300'
-                }`}
+                  }`}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
@@ -186,11 +210,10 @@ const FindGymPresenter = ({
               </motion.button>
               <motion.button
                 onClick={() => onViewModeChange('list')}
-                className={`p-2 rounded-lg transition-all duration-200 ${
-                  viewMode === 'list' 
-                    ? 'bg-blue-600 text-white' 
+                className={`p-2 rounded-lg transition-all duration-200 ${viewMode === 'list'
+                    ? 'bg-blue-600 text-white'
                     : 'text-gray-400 hover:text-gray-300'
-                }`}
+                  }`}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
@@ -217,9 +240,8 @@ const FindGymPresenter = ({
               <motion.div
                 key={gym.id}
                 variants={itemVariants}
-                className={`group relative cursor-pointer bg-gradient-to-br from-gray-800/40 to-gray-900/40 backdrop-blur-sm border border-gray-700/50 rounded-2xl overflow-hidden hover:border-gray-600/50 transition-all duration-300 ${
-                  viewMode === 'list' ? 'flex' : ''
-                }`}
+                className={`group relative cursor-pointer bg-gradient-to-br from-gray-800/40 to-gray-900/40 backdrop-blur-sm border border-gray-700/50 rounded-2xl overflow-hidden hover:border-gray-600/50 transition-all duration-300 ${viewMode === 'list' ? 'flex' : ''
+                  }`}
                 onClick={() => onGymSelect(gym.id)}
                 whileHover={{ scale: 1.02 }}
                 layout={false}
@@ -230,7 +252,7 @@ const FindGymPresenter = ({
                     Featured
                   </div>
                 )}
-                
+
                 {/* Favorite Button */}
                 <motion.button
                   onClick={(e) => {
@@ -241,12 +263,11 @@ const FindGymPresenter = ({
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                 >
-                  <Heart 
-                    className={`w-5 h-5 ${
-                      favoriteGyms.includes(gym.id) 
-                        ? 'text-red-500 fill-red-500' 
+                  <Heart
+                    className={`w-5 h-5 ${favoriteGyms.includes(gym.id)
+                        ? 'text-red-500 fill-red-500'
                         : 'text-gray-300'
-                    }`} 
+                      }`}
                   />
                 </motion.button>
 
@@ -258,13 +279,12 @@ const FindGymPresenter = ({
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                  
+
                   {/* Status Badge */}
-                  <div className={`absolute bottom-3 left-3 px-3 py-1 rounded-full text-xs font-medium ${
-                    gym.isOpen 
-                      ? 'bg-green-500/20 text-green-400 border border-green-500/30' 
+                  <div className={`absolute bottom-3 left-3 px-3 py-1 rounded-full text-xs font-medium ${gym.isOpen
+                      ? 'bg-green-500/20 text-green-400 border border-green-500/30'
                       : 'bg-red-500/20 text-red-400 border border-red-500/30'
-                  }`}>
+                    }`}>
                     {gym.isOpen ? 'Open Now' : 'Closed'}
                   </div>
                 </div>
@@ -281,7 +301,7 @@ const FindGymPresenter = ({
                         <span>{gym.distance} km away</span>
                       </div>
                     </div>
-                    
+
                     <div className="flex items-center space-x-1">
                       <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
                       <span className="text-white font-medium">{gym.rating}</span>
@@ -322,7 +342,7 @@ const FindGymPresenter = ({
                       </div>
                       <div className="text-gray-400 text-sm">per month</div>
                     </div>
-                    
+
                     <div className="text-right">
                       <div className="text-sm text-gray-400">
                         Save ₹{((gym.pricing.monthly * 12) - gym.pricing.yearly).toLocaleString()}
@@ -347,7 +367,7 @@ const FindGymPresenter = ({
                       <Navigation className="w-4 h-4" />
                       <span>Directions</span>
                     </motion.button>
-                    
+
                     <motion.button
                       onClick={(e) => {
                         e.stopPropagation();

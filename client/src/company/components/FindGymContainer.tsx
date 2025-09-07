@@ -19,7 +19,7 @@ const FindGymContainer = () => {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [favoriteGyms, setFavoriteGyms] = useState<number[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  
+
   const navigate = useNavigate();
 
 
@@ -32,7 +32,7 @@ const FindGymContainer = () => {
       { value: 'premium', label: 'Above ₹3,000' }
     ],
     amenities: [
-      'Swimming Pool', 'Sauna', 'Personal Training', 'Group Classes', 
+      'Swimming Pool', 'Sauna', 'Personal Training', 'Group Classes',
       'Parking', 'Spa', 'Steam Room', 'Yoga Studio', 'Nutrition Bar'
     ],
     sortOptions: [
@@ -49,10 +49,10 @@ const FindGymContainer = () => {
     .filter(gym => {
       // Search query filter
       if (searchQuery && !gym.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
-          !gym.address.toLowerCase().includes(searchQuery.toLowerCase())) {
+        !gym.address.toLowerCase().includes(searchQuery.toLowerCase())) {
         return false;
       }
-      
+
       // Price range filter
       if (selectedFilters.priceRange !== 'all') {
         const monthly = gym.pricing.monthly;
@@ -60,25 +60,25 @@ const FindGymContainer = () => {
         if (selectedFilters.priceRange === 'mid' && (monthly < 2000 || monthly > 3000)) return false;
         if (selectedFilters.priceRange === 'premium' && monthly <= 3000) return false;
       }
-      
+
       // Rating filter
       if (selectedFilters.rating > 0 && gym.rating < selectedFilters.rating) {
         return false;
       }
-      
+
       // Distance filter
       if (gym.distance > selectedFilters.distance) {
         return false;
       }
-      
+
       // Amenities filter
       if (selectedFilters.amenities.length > 0) {
-        const hasAllAmenities = selectedFilters.amenities.every(amenity => 
+        const hasAllAmenities = selectedFilters.amenities.every(amenity =>
           gym.amenities.includes(amenity)
         );
         if (!hasAllAmenities) return false;
       }
-      
+
       return true;
     })
     .sort((a, b) => {
@@ -98,15 +98,21 @@ const FindGymContainer = () => {
     });
 
   const handleSearch = (query: string) => {
+    setIsLoading(true);
     setSearchQuery(query);
+    setTimeout(() => setIsLoading(false), 300);
   };
 
   const handleFilterChange = (filters: FilterOptions) => {
+    setIsLoading(true);
     setSelectedFilters(filters);
+    setTimeout(() => setIsLoading(false), 300);
   };
 
   const handleSortChange = (sort: string) => {
+    setIsLoading(true);
     setSortBy(sort);
+    setTimeout(() => setIsLoading(false), 300);
   };
 
   const handleViewModeChange = (mode: 'grid' | 'list') => {
@@ -114,8 +120,8 @@ const FindGymContainer = () => {
   };
 
   const handleFavoriteToggle = (gymId: number) => {
-    setFavoriteGyms(prev => 
-      prev.includes(gymId) 
+    setFavoriteGyms(prev =>
+      prev.includes(gymId)
         ? prev.filter(id => id !== gymId)
         : [...prev, gymId]
     );

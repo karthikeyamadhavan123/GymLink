@@ -122,7 +122,9 @@ const FitnessTipsPresenter = ({
             layout={false} // Fix 5: Disable layout animations on grid
           >
             {filteredTips.map((tip) => {
-              const TipIconComponent = getIconComponent(tip.icon);
+              const TipIconComponent = getIconComponent(
+                typeof tip.icon === "string" ? tip.icon : (tip.icon.name ?? "")
+              );
               return (
                 <motion.div
                   key={tip.id}
