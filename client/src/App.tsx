@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense } from "react";
 import { HashLoader } from "react-spinners";
 import Protected from "./Protected";
 import AdminProtected from "./AdminProtected";
