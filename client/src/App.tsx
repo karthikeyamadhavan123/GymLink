@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { lazy, Suspense, useEffect } from "react";
 import { HashLoader } from "react-spinners";
 import Protected from "./Protected";
@@ -18,7 +18,6 @@ import TrackSubscription from "./pages/orders/components/Tracksubscription";
 const HomePage = lazy(() => import("./pages/HomePage"));
 const About = lazy(() => import("./pages/About"));
 const Contact = lazy(() => import("./pages/Contact"));
-const Pricing = lazy(() => import("./pages/Pricing"));
 const NotFound = lazy(() => import("./pages/notfound/NotFound"));
 const NotAuthorize = lazy(() => import("./pages/not-authorize/NotAuthorize"));
 const Register = lazy(() => import("./Forms/Register"));
@@ -39,14 +38,6 @@ const AdminJob = lazy(() => import('./gym-pages/admin/jobs/AdminJob'))
 const Applications = lazy(() => import('./gym-pages/applications/Applications'))
 const AdminTrainers = lazy(() => import('./gym-pages/admin/trainers/GetMyTrainers'))
 function App() {
-
-  useEffect(() => {
-    // Disable browser's automatic scroll restoration
-    if ('scrollRestoration' in history) {
-      history.scrollRestoration = 'manual';
-    }
-  }, []);
-
   return (
     <Suspense
       fallback={
@@ -60,7 +51,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<About />} />
-          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/pricing" element={<Navigate to="/orders/memberships" replace />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/faq" element={<FrequentlyAskedQuestion />} />
           <Route path="/tips" element={<FitnessTips />} />
