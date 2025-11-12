@@ -32,7 +32,7 @@ const Navbar = () => {
                                     <Link to="/about" className={`${pathname==='/about'?'inline-flex items-center px-1 pt-1  text-lg font-medium text-white hover:text-lime-400 border-lime-400 border-b-2':'inline-flex items-center px-1 pt-1  text-lg font-medium text-white hover:text-lime-400 hover:border-lime-400 hover:border-b-2'}`}>
                                         About
                                     </Link>
-                                    <Link to="/pricing" className={`${pathname==='/pricing'?'inline-flex items-center px-1 pt-1  text-lg font-medium text-white hover:text-lime-400 border-lime-400 border-b-2':'inline-flex items-center px-1 pt-1  text-lg font-medium text-white hover:text-lime-400 hover:border-lime-400 hover:border-b-2'}`}>
+                                    <Link to="/orders/memberships" className={`${pathname==='/orders/memberships'?'inline-flex items-center px-1 pt-1  text-lg font-medium text-white hover:text-lime-400 border-lime-400 border-b-2':'inline-flex items-center px-1 pt-1  text-lg font-medium text-white hover:text-lime-400 hover:border-lime-400 hover:border-b-2'}`}>
                                         Pricing
                                     </Link>
                                     <Link to="/contact" className={`${pathname==='/contact'?'inline-flex items-center px-1 pt-1  text-lg font-medium text-white hover:text-lime-400 border-lime-400 border-b-2':'inline-flex items-center px-1 pt-1  text-lg font-medium text-white hover:text-lime-400 hover:border-lime-400 hover:border-b-2'}`}>

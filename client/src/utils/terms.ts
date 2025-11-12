@@ -1,6 +1,5 @@
 import { TermsSection } from "@/types";
 
-// Static terms data (will be fetched from DB later)
 export const termsData: TermsSection[] = [
     {
         id: 'acceptance',

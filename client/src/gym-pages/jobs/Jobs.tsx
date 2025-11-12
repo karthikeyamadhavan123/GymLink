@@ -1,42 +1,16 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import { FiMapPin, FiBriefcase, FiClock, FiDollarSign, FiBell } from "react-icons/fi";
 import { HashLoader } from "react-spinners";
-import { Helmet } from "react-helmet-async";
 import Notifications from "./Notifications";
-import toast, { Toaster } from "react-hot-toast";
-
-const jobUrl = import.meta.env.VITE_DB_URL + '/jobs/all';
-
-interface JobProps {
-    _id: string;
-    experienceRequired: number;
-    jobDetails: string;
-    jobTitle: string;
-    postedBy: {
-        gymName: string;
-        _id: string
-        location: {
-            area: string;
-            city: string;
-            landmark: string;
-            pincode: string;
-            state: string;
-            streetName: string;
-        };
-        owner: {
-            firstName: string;
-        }
-    };
-    requirements: string;
-    salary: number;
-}
-
-
+import toast from "react-hot-toast";
+import useJobs from "@/hooks/useJobs";
+import { JOB_ENDPOINTS } from "@/constants/jobApiEndpoints";
+import { JobProps } from "./types/types";
+import TitleHelmet from "@/Forms/components/TitleHelmet";
 
 const Jobs = () => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [jobs, setJobs] = useState<JobProps[]>([]);
+    const[isLoading,setIsLoading] = useState(false)
     const [searchTerm, setSearchTerm] = useState('');
     const [jobModal, setjobModal] = useState(false)
     const [individualJob, setIndividualJob] = useState({
@@ -51,25 +25,9 @@ const Jobs = () => {
     });
     const [notificationModal, setNotificationModal] = useState(false)
 
-    useEffect(() => {
-        const fetchJobs = async () => {
-            try {
-                setIsLoading(true);
-                const response = await axios.get(jobUrl, { withCredentials: true });
-                if (response.status === 200) {
-                    setJobs(response.data.job)
-                }
-            } catch (error) {
-                console.error("Error fetching jobs:", error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-        fetchJobs();
-    }, []);
+    const { data, loading, error } = useJobs(JOB_ENDPOINTS.GET_ALL_JOBS)
 
-
-    const filteredJobs = jobs.filter(job => {
+    const filteredJobs = data.filter((job:JobProps) => {
         const searchLower = searchTerm.toLowerCase();
         return (
             job.jobTitle.toLowerCase().includes(searchLower) ||
@@ -134,14 +92,13 @@ const Jobs = () => {
     const handleNotificationClick = () => {
         setNotificationModal(true);
     }
+    if(loading) {
+        return <HashLoader color="#fff"/>
+    }
 
     return (
         <div className="min-h-screen bg-black text-white font-stencil">
-            <Helmet>
-                <title>All Fitness Jobs & Careers | GymLink</title>
-                <meta name="description" content="Find the best fitness jobs and career opportunities in the wellness industry. Apply to trainer, instructor, and management positions at top gyms." />
-                <meta name="keywords" content="fitness jobs, gym careers, personal trainer jobs, fitness instructor" />
-            </Helmet>
+            <TitleHelmet title="All Fitness Jobs & Careers | GymLink" description_content="Find the best fitness jobs and career opportunities in the wellness industry. Apply to trainer, instructor, and management positions at top gyms." keywords_content="fitness jobs, gym careers, personal trainer jobs, fitness instructor" og_title="All Fitness Jobs & Careers | GymLink" og_description="Find the best fitness jobs and career opportunities in the wellness industry. Apply to trainer, instructor, and management positions at top gyms." og_type="website"/>
 
             {/* Hero Section */}
             <div className="bg-gradient-to-r from-black to-gray-900 text-white py-16 px-4 sm:px-6 lg:px-8">
@@ -190,7 +147,7 @@ const Jobs = () => {
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {filteredJobs.map((job) => (
+                        {filteredJobs.map((job:JobProps) => (
                             <div key={job._id} className="bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-lime-900/20 transition-all duration-300">
                                 {/* Job Header */}
                                 <div className="bg-gradient-to-r from-lime-800 to-lime-600 px-6 py-4">
@@ -362,7 +319,9 @@ const Jobs = () => {
                     <Notifications setstate={setNotificationModal} />
                 )
             }
-            <Toaster />
+            {
+                error && (<h1 className='text-red-400 font-bold text-3xl text-center'>{error}</h1>)
+            }
         </div>
     );
 };

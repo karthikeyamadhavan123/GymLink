@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import type { CommentBase } from "@/types";
 
-// Data fetching hook - separates concerns
 const useComments = () => {
   const [comments, setComments] = useState<CommentBase[]>([]);
   const [loading, setLoading] = useState(false);
@@ -10,8 +9,6 @@ const useComments = () => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        // In a real app, this would be an API call
-        // Simulating API fetch with timeout
         setLoading(true);
         setTimeout(() => {
           

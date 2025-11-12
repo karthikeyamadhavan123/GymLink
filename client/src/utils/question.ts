@@ -1,7 +1,7 @@
 import { Zap, Heart, Star, Sparkles } from 'lucide-react';
 import type { QuestionBase } from "@/types"
 
-// questions array which consists of frequently asked questions
+
 
 export const faqData: QuestionBase[] = [
   {
