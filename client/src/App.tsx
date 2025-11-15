@@ -14,6 +14,7 @@ import EliteTraining from "./pages/orders/components/Elitetraining";
 import PersonalTraining from "./pages/orders/components/Personaltraining";
 import Memberships from "./pages/orders/components/Membership";
 import TrackSubscription from "./pages/orders/components/Tracksubscription";
+import Tracking from "./tracking_gym/Tracking";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const About = lazy(() => import("./pages/About"));
@@ -115,6 +116,7 @@ function App() {
           />
           <Route path="/not-authorized" element={<NotAuthorize />} />
           <Route path="*" element={<NotFound />} />
+          <Route path='/tracking' element={<Tracking />} />
         </Routes>
       </Router>
     </Suspense>

@@ -148,7 +148,7 @@ export default function Register() {
                 <meta property="og:description" content="Join GymLink today and connect with the best gyms and trainers in your area." />
                 <meta property="og:type" content="website" />
             </Helmet>
-            <div className="min-h-screen bg-black flex flex-col items-center justify-center p-4 font-stencil    ">
+            <div className="min-h-screen bg-gradient-to-r from-[#0D0D0C]  via-[#43872a]  to-[#0D0D0C] flex flex-col items-center justify-center p-4 font-stencil">
                 <div className="w-full max-w-4xl">
                     {/* Logo and Header */}
                     <div className="text-center mb-8">
