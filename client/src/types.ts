@@ -1,3 +1,4 @@
+import React from "react"
 import { IconType } from "react-icons/lib"
 
 export interface CommentBase {
@@ -158,4 +159,106 @@ export interface StatItem {
   label: string;
   value: string;
   color: string;
+}
+
+
+export interface InputProps {
+  type: string,
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  value?: string | number,
+  placeholder: string
+  required?: boolean
+  name: string
+  id?: string
+  accept?: string
+  min?: number
+  max?: number;
+}
+
+export interface FormProps {
+  firstName: string,
+  lastName: string,
+  email: string,
+  password: string,
+  phone_number: string,
+  location: string,
+  age: string,
+  gender: string,
+  avatar: File | null,
+  role: string
+}
+
+export interface ButtonProps {
+  type: 'button' | 'submit' | 'reset',
+  handleClick?: () => void
+  text?: string
+  className: string
+  disabled?: boolean
+}
+
+export interface SelectProps {
+  handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void
+  value: string | number,
+  required?: boolean
+  name: string
+  data?: any[]
+  id: string
+}
+
+
+export interface LocationProps {
+  code: string,
+  name: string
+}
+
+export interface LabelProps {
+  htmlFor: string
+  labelText: string
+}
+
+export interface GenderProps {
+  name: string
+}
+
+export interface FormSubmitProps {
+  handleSubmit: (e: React.FormEvent) => Promise<void>;
+  bodyContent: React.ReactNode
+  loading:boolean
+  children:React.ReactElement
+}
+
+
+export interface HelmetProps{
+  title:string
+  description_content:string
+  keywords_content:string
+  og_title:string
+  og_description:string
+  og_type:string
+}
+
+export interface ProtectedProps{
+  Component: React.ReactNode
+}
+
+export interface ApplicationProps {
+    _id: string;
+    appliedUser: {
+        firstName: string,
+        email: string
+        gender: string
+        phone_number: string
+    }
+    gym: {
+        gymName: string
+        location: {
+            state: string
+        }
+    }
+    invoiceDays: number
+    jobId: string
+    previousExperience: string
+    previousWork: string
+    status: string
+    resume: string
 }

@@ -1,4 +1,6 @@
-const indianStates = [
+import { LocationProps } from "@/types";
+
+const indianStates: LocationProps[] = [
     { code: "AP", name: "Andhra Pradesh" },
     { code: "AR", name: "Arunachal Pradesh" },
     { code: "AS", name: "Assam" },

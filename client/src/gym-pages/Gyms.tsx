@@ -1,55 +1,24 @@
-import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react'
-import { Helmet } from 'react-helmet-async';
+import { useState } from 'react'
 import { FiSearch, FiMapPin, FiArrowRight } from 'react-icons/fi';
 import { HashLoader } from 'react-spinners';
 import ChatModal from './chats/ChatModal';
-
-interface GymProps {
-    _id: string;
-    gymName: string;
-    equipments: string[];
-    location: {
-        area: string;
-        city: string;
-        landmark: string;
-        pincode: string;
-        state: string;
-        streetName: string;
-    };
-    gymImages: string[];
-}
-
-const gymUrl = import.meta.env.VITE_DB_URL + '/gym/all'
+import { GymProps } from './types/types';
+import TitleHelmet from '@/Forms/components/TitleHelmet';
+import { GYM_ENDPOINTS } from '@/constants/gymApiEndpoints';
+import useGyms from '@/hooks/useGyms';
 
 const Gyms = () => {
-    const [gyms, setGyms] = useState<GymProps[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
     const router = useNavigate();
 
+    const { data, loading, error } = useGyms(GYM_ENDPOINTS.GET_ALL_GYMS);
+
     const handleNavigation = (id: string) => {
-        router(`/gym/${id}`);
+        router(GYM_ENDPOINTS.GET_GYM_BY_ID(id));
     }
 
-    useEffect(() => {
-        const fetchGyms = async () => {
-            try {
-                setIsLoading(true);
-                const response = await axios.get(gymUrl, { withCredentials: true });
-                const { gyms } = response.data;
-                setGyms(gyms);
-            } catch (error) {
-                console.error("Error fetching gyms:", error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-        fetchGyms();
-    }, []);
-
-    const filteredGyms = gyms.filter(gym => {
+    const filteredGyms = data.filter((gym: GymProps) => {
         const searchLower = searchTerm.toLowerCase();
         return (
             gym.gymName.toLowerCase().includes(searchLower) ||
@@ -60,15 +29,8 @@ const Gyms = () => {
     });
     return (
         <>
-            <Helmet>
-                <title>Find the Best Gyms Near You | GymLink</title>
-                <meta name="description" content="Explore top gyms in your area, find the best trainers, and start your fitness journey with GymLink." />
-                <meta name="keywords" content="GymLink, gyms near me, fitness, workout, best gyms, personal trainers" />
-                <meta property="og:title" content="Find the Best Gyms Near You - GymLink" />
-                <meta property="og:description" content="Discover the best gyms in your locality, explore facilities, and connect with top trainers through GymLink." />
-                <meta property="og:type" content="website" />
-            </Helmet>
-
+            <TitleHelmet title='Find the Best Gyms Near You | GymLink' description_content='Explore top gyms in your area, find the best trainers, and start your fitness journey with GymLink.'
+                keywords_content='GymLink, gyms near me, fitness, workout, best gyms, personal trainers.' og_title='Find the Best Gyms Near You - GymLink.' og_description='Discover the best gyms in your locality, explore facilities, and connect with top trainers through GymLink.' og_type='website' />
             <div className='h-full font-stencil bg-black'>
                 {/* Hero Section */}
                 <div className=' text-white py-16 px-4 sm:px-6 lg:px-8'>
@@ -94,7 +56,7 @@ const Gyms = () => {
 
                 {/* Main Content */}
                 <div className='max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8'>
-                    {isLoading ? (
+                    {loading ? (
                         <div className='flex justify-center items-center py-20'>
                             <HashLoader size={20} color='#fff' />
                         </div>
@@ -107,7 +69,7 @@ const Gyms = () => {
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {filteredGyms.map((gym) => (
+                                {filteredGyms.map((gym: GymProps) => (
                                     <div
                                         key={gym._id}
                                         className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
@@ -175,7 +137,11 @@ const Gyms = () => {
                             )}
                         </>
                     )}
+
                 </div>
+                {
+                    error && (<h1 className='text-red-400 font-bold text-3xl text-center'>{error}</h1>)
+                }
                 <ChatModal />
             </div>
         </>

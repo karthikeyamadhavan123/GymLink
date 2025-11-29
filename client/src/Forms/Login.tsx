@@ -20,7 +20,6 @@ const LoginForm = () => {
         try {
             setLoading(true)
             const response = await axios.post(loginUrl, { email, password }, { withCredentials: true })
-
             if (response.status === 200) {
                 const userData = response.data.details;
                 setUserDetails({
@@ -44,8 +43,6 @@ const LoginForm = () => {
                         router('/dashboard/gyms');
                     }
                 }, 1000)
-
-
             }
         } catch (error: any) {
             console.log(error);

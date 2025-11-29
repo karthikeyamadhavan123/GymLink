@@ -19,6 +19,8 @@ const Sidebar = () => {
 
   const userEmail = useUserStore((state) => state.details?.email);
   const userImage = useUserStore((state) => state.details?.avatar);
+
+
   const logoutUrl = import.meta.env.VITE_DB_URL + '/api/users/logout'
   const handleLogout = async () => {
     await axios.post(logoutUrl, {}, { withCredentials: true });
@@ -51,7 +53,7 @@ const Sidebar = () => {
         {/* Logo at the top */}
         <div className="flex-shrink-0 flex items-center p-4">
           <img
-            src="/logo.png"
+            src="/assets/images/logo/logo.png"
             alt="Logo"
             className="text-xl font-bold"
             loading="lazy"
@@ -126,7 +128,7 @@ const Sidebar = () => {
         {/* Logo at the top - with padding for mobile button */}
         <div className="flex-shrink-0 flex items-center p-4 pt-16">
           <img
-            src="/logo.png"
+            src="/assets/images/logo/logo.png"
             alt="Logo"
             className="text-xl font-bold"
             loading="lazy"

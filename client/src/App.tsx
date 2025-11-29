@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { HashLoader } from "react-spinners";
 import Protected from "./Protected";
@@ -14,6 +14,7 @@ import EliteTraining from "./pages/orders/components/Elitetraining";
 import PersonalTraining from "./pages/orders/components/Personaltraining";
 import Memberships from "./pages/orders/components/Membership";
 import TrackSubscription from "./pages/orders/components/Tracksubscription";
+import Tracking from "./tracking_gym/Tracking";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const About = lazy(() => import("./pages/About"));
@@ -47,18 +48,17 @@ function App() {
       }
     >
       <Router>
-        <ScrollToTop/>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<About />} />
-          <Route path="/pricing" element={<Navigate to="/orders/memberships" replace />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/orders/memberships" element={<Memberships />} />
           <Route path="/faq" element={<FrequentlyAskedQuestion />} />
           <Route path="/tips" element={<FitnessTips />} />
           <Route path="/terms" element={<TermsConditionsContainer />} />
           <Route path="/find-gym" element={<FindGymContainer />} />
           <Route path="/find-trainers" element={<TopTrainerContainer />} />
-          <Route path="/orders/memberships" element={<Memberships />} />
           <Route path="/orders/track-subscription" element={<TrackSubscription />} />
           <Route path="/orders/refund" element={<CancellationRefund />} />
           <Route path="/orders/elite" element={<EliteTraining />} />
@@ -75,47 +75,48 @@ function App() {
           />
           <Route
             path="/dashboard/gyms"
-            element={<Protected component={<GymMain />} />}
+            element={<Protected Component={<GymMain />} />}
           />
           <Route
             path="/gym/:id"
-            element={<Protected component={<SingleGym />} />}
+            element={<Protected Component={<SingleGym />} />}
           />
-          <Route path="/jobs" element={<Protected component={<JobMain />} />} />
+          <Route path="/jobs" element={<Protected Component={<JobMain />} />} />
           <Route
             path="/trainers"
-            element={<Protected component={<TrainerMain />} />}
+            element={<Protected Component={<TrainerMain />} />}
           />
           <Route
             path="/applications"
-            element={<Protected component={<ApplicationMain />} />}
+            element={<Protected Component={<ApplicationMain />} />}
           />
           <Route
             path="/admin-dashboard"
-            element={<AdminProtected component={<MyGyms />} />}
+            element={<AdminProtected Component={<MyGyms />} />}
           />
           <Route
             path="/add/new-gym"
-            element={<AdminProtected component={<AddGym />} />}
+            element={<AdminProtected Component={<AddGym />} />}
           />
           <Route
             path="/:gymId/job/add"
-            element={<AdminProtected component={<AddJob />} />}
+            element={<AdminProtected Component={<AddJob />} />}
           />
           <Route
             path="/my-jobs"
-            element={<AdminProtected component={<AdminJob />} />}
+            element={<AdminProtected Component={<AdminJob />} />}
           />
           <Route
             path="/admin-applications/:id"
-            element={<AdminProtected component={<Applications />} />}
+            element={<AdminProtected Component={<Applications />} />}
           />
           <Route
             path="/admin-trainers"
-            element={<AdminProtected component={<AdminTrainers />} />}
+            element={<AdminProtected Component={<AdminTrainers />} />}
           />
           <Route path="/not-authorized" element={<NotAuthorize />} />
           <Route path="*" element={<NotFound />} />
+          <Route path='/tracking' element={<Tracking />} />
         </Routes>
       </Router>
     </Suspense>

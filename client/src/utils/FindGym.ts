@@ -1,6 +1,5 @@
 import { FindGym } from "@/types";
 
-// Static gym data (will be fetched from DB later)
 export const gymsData: FindGym[] = [
     {
         id: 1,

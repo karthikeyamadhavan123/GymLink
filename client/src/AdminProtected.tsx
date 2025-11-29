@@ -1,10 +1,8 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { ProtectedProps } from "./types";
 
-interface AdminProtectedProps {
-    component: React.ReactNode
-}
-const AdminProtected: React.FC<AdminProtectedProps> = ({ component }) => {
+const AdminProtected: React.FC<ProtectedProps> = ({ Component }) => {
     const router = useNavigate();
     useEffect(()=>{
         const user = localStorage.getItem('user-storage');
@@ -20,7 +18,7 @@ const AdminProtected: React.FC<AdminProtectedProps> = ({ component }) => {
     },[router])
     return (
         <div>
-            {component}
+            {Component}
         </div>
     )
 }

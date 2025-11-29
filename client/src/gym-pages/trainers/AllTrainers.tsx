@@ -1,57 +1,16 @@
-import axios from 'axios'
-import  { useEffect, useState } from 'react'
-import { Helmet } from 'react-helmet-async'
+import { useState } from 'react'
 import { MapPin, Phone, Award, Search } from 'lucide-react'
-
-interface TrainerProps {
-  certifications: string
-  contactNumber: string
-  description: string
-  experience: number
-  expertise: string[]
-  trainerImage: string
-  trainerName: string
-  _id: string
-  gymId: {
-    location: {
-      area: string;
-      city: string;
-      landmark: string;
-      pincode: string;
-      state: string;
-      streetName: string;
-    };
-    gymName: string;
-  }
-}
+import useTrainers from '@/hooks/useTrainers'
+import { TRAINER_ENDPOINTS } from '@/constants/trainerApiEndpoints'
+import { TrainerProps } from './types/types'
+import TitleHelmet from '@/Forms/components/TitleHelmet'
 
 const AllTrainers = () => {
-  const allTrainerUrl = import.meta.env.VITE_DB_URL + `/trainers/all`;
-  const [trainers, setTrainers] = useState<TrainerProps[]>([])
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [filterByExpertise, setFilterByExpertise] = useState<string | null>(null)
+  const { data, loading, error } = useTrainers(TRAINER_ENDPOINTS.GET_ALL_TRAINER);
 
-  useEffect(() => {
-    const fetchTrainers = async () => {
-      setLoading(true)
-      try {
-        const response = await axios.get(allTrainerUrl, { withCredentials: true })
-        setTrainers(response.data.trainer)
-        setLoading(false)
-      } catch (err) {
-        console.error('Error fetching trainers:', err)
-        setError('Failed to load trainers. Please try again later.')
-      }
-      finally{
-        setLoading(false)
-
-      }
-    }
-    fetchTrainers();
-  }, [allTrainerUrl])
-  const allExpertise = trainers.reduce((acc: string[], trainer) => {
+  const allExpertise = data.reduce((acc: string[], trainer: TrainerProps) => {
     trainer.expertise.forEach(skill => {
       if (!acc.includes(skill)) {
         acc.push(skill)
@@ -60,7 +19,7 @@ const AllTrainers = () => {
     return acc
   }, [])
 
-  const filteredTrainers = trainers.filter(trainer => {
+  const filteredTrainers = data.filter((trainer: TrainerProps) => {
     const matchesSearch =
       trainer.trainerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       trainer.gymId.gymName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -75,11 +34,7 @@ const AllTrainers = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Find Your Perfect Fitness Trainer | GymLink</title>
-        <meta name="description" content="Browse our comprehensive directory of certified fitness trainers from top gyms across the country. Find the perfect trainer to help you reach your fitness goals." />
-        <meta name="keywords" content="fitness trainers, personal trainers, gym trainers, fitness experts, workout coach" />
-      </Helmet>
+      <TitleHelmet title='Find Your Perfect Fitness Trainer | GymLink' description_content='Browse our comprehensive directory of certified fitness trainers from top gyms across the country. Find the perfect trainer to help you reach your fitness goals.' keywords_content='fitness trainers, personal trainers, gym trainers, fitness experts, workout coach.' og_title='Find Your Perfect Fitness Trainer | GymLink.' og_description='Browse our comprehensive directory of certified fitness trainers from top gyms across the country. Find the perfect trainer to help you reach your fitness goals.' og_type='website' />
 
       <div className='bg-black min-h-screen text-white font-stencil pb-12'>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
@@ -142,7 +97,7 @@ const AllTrainers = () => {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredTrainers.map((trainer, index) => (
+              {filteredTrainers.map((trainer: TrainerProps, index) => (
                 <div key={index} className="bg-gray-900 rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105">
                   <div className="h-64 overflow-hidden relative">
                     <img
@@ -204,7 +159,11 @@ const AllTrainers = () => {
                     </div>
                   </div>
                 </div>
+
               ))}
+              {
+                error && (<h1 className='text-red-400 font-bold text-3xl text-center'>{error}</h1>)
+              }
             </div>
           )}
         </div>

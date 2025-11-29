@@ -25,7 +25,7 @@ const Application = () => {
         const fetchAllApplications = async () => {
             try {
                 setLoading(true);
-                const res = await axios.get(applicationUrl, { withCredentials: true });
+                const res = await axios.get(applicationUrl, { withCredentials: true });                
                 setApplications(res.data.applications);
                 setLoading(false);
             } catch (err) {
