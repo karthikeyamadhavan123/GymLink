@@ -25,8 +25,8 @@ const Register = lazy(() => import("./Forms/Register"));
 const Login = lazy(() => import("./Forms/Login"));
 const ForgotPassword = lazy(() => import("./Forms/forgotPassword"));
 const ResetPassword = lazy(() => import("./Forms/ResetPassword"));
-const GymMain = lazy(() => import("./gym-pages/GymMain"));
-const SingleGym = lazy(() => import("./gym-pages/SingleGym"));
+const GymMain = lazy(() => import("@/gym-pages/gym-related-pages-users/GymMain"));
+const SingleGym = lazy(() => import("@/gym-pages/gym-related-pages-users/SingleGym"));
 const JobMain = lazy(() => import("./gym-pages/jobs/JobMain"));
 const TrainerMain = lazy(() => import("./gym-pages/trainers/TrainerMain"));
 const ApplicationMain = lazy(() => import("./gym-pages/jobs/ApplicationMain"));
@@ -34,10 +34,10 @@ const ApplicationMain = lazy(() => import("./gym-pages/jobs/ApplicationMain"));
 // admin imports
 const MyGyms = lazy(() => import("./gym-pages/admin/MyGyms"));
 const AddGym = lazy(() => import('./gym-pages/admin/AddGym'))
-const AddJob = lazy(() => import('./gym-pages/admin/jobs/AddJob'))
-const AdminJob = lazy(() => import('./gym-pages/admin/jobs/AdminJob'))
-const Applications = lazy(() => import('./gym-pages/applications/Applications'))
-const AdminTrainers = lazy(() => import('./gym-pages/admin/trainers/GetMyTrainers'))
+const AddJob = lazy(() => import('./gym-pages/admin/admin-jobs/AddJob'))
+const AdminJob = lazy(() => import('./gym-pages/admin/admin-jobs/AdminJob'))
+const Applications = lazy(() => import('./gym-pages/admin-applications/Applications'))
+const AdminTrainers = lazy(() => import('./gym-pages/admin/admin-trainers/GetMyTrainers'))
 function App() {
   return (
     <Suspense

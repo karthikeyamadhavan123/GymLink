@@ -14,7 +14,7 @@ const HomePage = () => {
       </Helmet>
       <div className="z-10 relative flex flex-col overflow-x-hidden bg-black font-stencil overflow-y-hidden">
         <Main />
-        <CommentContainer/>
+        <CommentContainer />
         <Path />
         <Footer />
       </div>

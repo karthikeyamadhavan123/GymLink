@@ -4,27 +4,14 @@ import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async';
 import { FiSearch, FiMapPin, FiArrowRight, FiEdit, FiTrash2, FiPlus } from 'react-icons/fi';
 import { HashLoader } from 'react-spinners';
-import EditGymForm from './EditForm';
-interface GymProps {
-    _id: string;
-    gymName: string;
-    equipments: string[];
-    basePrice: number;
-    location: {
-        area: string;
-        city: string;
-        landmark: string;
-        pincode: string;
-        state: string;
-        streetName: string;
-    };
-    gymImages: string[];
-}
+import EditGymForm from './AdminEditGym';
+import { AdminGymProps } from './admin-gym-types/types';
+
 
 const gymUrl = import.meta.env.VITE_DB_URL + '/gym/all/admin'
 const AdminGyms = () => {
-    const [gyms, setGyms] = useState<GymProps[]>([]);
-    const [editGymDetails, seteditGymDetails] = useState<GymProps>()
+    const [gyms, setGyms] = useState<AdminGymProps[]>([]);
+    const [editGymDetails, seteditGymDetails] = useState<AdminGymProps>()
     const [editModal, setEditModal] = useState(false)
     const [searchTerm, setSearchTerm] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -59,11 +46,11 @@ const AdminGyms = () => {
         )
     });
 
-    const handleEdit = async (gym: GymProps) => {
+    const handleEdit = async (gym: AdminGymProps) => {
         seteditGymDetails(gym)
         setEditModal(true)
     }
-    const handleSaveGym = (updatedGym: GymProps) => {
+    const handleSaveGym = (updatedGym: AdminGymProps) => {
         setGyms(gyms.map(gym => gym._id === updatedGym._id ? updatedGym : gym));
     };
     const handleCloseModal = () => {

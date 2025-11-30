@@ -1,7 +1,7 @@
 import { InputProps } from '@/types';
 import React from 'react';
 
-const Input: React.FC<InputProps> = ({ type, handleChange, value, placeholder, required, name }) => {
+const Input: React.FC<InputProps> = ({ type, handleChange, value, placeholder, required, name,className }) => {
   return (
     <div className="w-full">
       <input
@@ -10,12 +10,7 @@ const Input: React.FC<InputProps> = ({ type, handleChange, value, placeholder, r
         value={value}
         placeholder={placeholder}
         required={required}
-        className="w-full px-4 py-3 
-                   bg-gray-800 border border-gray-700 
-                   rounded-lg text-white 
-                   placeholder-gray-400
-                   focus:outline-none focus:ring-2 focus:ring-lime-400 
-                   transition duration-200"
+        className={className}
         name={name}
       />
     </div>

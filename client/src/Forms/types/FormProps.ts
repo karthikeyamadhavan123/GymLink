@@ -32,3 +32,19 @@ export interface LoginViewProps {
     onPasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onSubmit: (e: React.FormEvent) => void;
 }
+
+export interface ForgotPasswordViewProps {
+    email: string;
+    loading: boolean;
+    onEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onSubmit: (e: React.FormEvent) => void;
+}
+
+export interface ResetPasswordViewProps {
+    password: string;
+    confirmPassword: string;
+    loading: boolean;
+    onPasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onConfirmPasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onSubmit: (e: React.FormEvent) => void;
+}

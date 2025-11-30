@@ -4,22 +4,10 @@ import { HashLoader } from 'react-spinners';
 import { Helmet } from 'react-helmet-async';
 import { Search, Edit, Trash2, Plus, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
-interface JobPostingProps {
-  _id: string;
-  jobTitle: string;
-  requirements: string;
-  jobDetails: string;
-  experienceRequired: number;
-  salary: number;
-}
-
-interface JobProps {
-  jobs: JobPostingProps[];
-}
+import { AdminJobPostingProps, AdminJobProps } from './admin-jobs-types/types/types';
 
 const AdminJob = () => {
-  const [allJobs, setJobs] = useState<JobProps[]>([]);
+  const [allJobs, setJobs] = useState<AdminJobProps[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -27,7 +15,7 @@ const AdminJob = () => {
   const [updateLoading, setUpdateLoading] = useState(false);
   const [updateError, setUpdateError] = useState('');
   const [updateSuccess, setUpdateSuccess] = useState(false);
-  const [currentJob, setCurrentJob] = useState<JobPostingProps | null>(null);
+  const [currentJob, setCurrentJob] = useState<AdminJobPostingProps | null>(null);
   const [formData, setFormData] = useState({
     jobTitle: '',
     requirements: '',
@@ -94,7 +82,7 @@ const AdminJob = () => {
     }
   }
 
-  const openModal = (job: JobPostingProps) => {
+  const openModal = (job: AdminJobPostingProps) => {
     setCurrentJob(job);
     setFormData({
       jobTitle: job.jobTitle,

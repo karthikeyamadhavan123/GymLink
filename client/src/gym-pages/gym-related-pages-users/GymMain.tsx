@@ -1,5 +1,5 @@
-import Sidebar from "../components/Sidebar"
-import Gyms from "./Gyms"
+import Sidebar from "@/components/Sidebar"
+import Gyms from "@/gym-pages/gym-related-pages-users/Gyms"
 
 const GymMain = () => {
   return (

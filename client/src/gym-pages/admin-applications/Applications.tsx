@@ -4,32 +4,12 @@ import axios from 'axios';
 import { HashLoader } from 'react-spinners';
 import { Helmet } from 'react-helmet-async';
 import { Search, FileText, Check, X, ArrowLeft } from 'lucide-react';
+import { AdminApplicationProps } from './types/types';
 
-interface ApplicationProps {
-    _id: string;
-    appliedUser: {
-        firstName: string,
-        email: string
-        gender: string
-        phone_number: string
-    }
-    gym: {
-        gymName: string
-        location: {
-            state: string
-        }
-    }
-    invoiceDays: number
-    jobId: string
-    previousExperience: string
-    previousWork: string
-    status: string
-    resume: string
-}
 
 const Applications = () => {
     const { id } = useParams<{ id: string }>();
-    const [applications, setApplications] = useState<ApplicationProps[]>([]);
+    const [applications, setApplications] = useState<AdminApplicationProps[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [searchTerm, setSearchTerm] = useState('');

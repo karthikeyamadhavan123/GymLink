@@ -1,13 +1,6 @@
 import React from "react"
 import { IconType } from "react-icons/lib"
 
-export interface CommentBase {
-  id: string
-  storyNumber: string,
-  description: string,
-  image: string
-
-}
 
 export interface QuestionBase {
   id: number,
@@ -173,6 +166,7 @@ export interface InputProps {
   accept?: string
   min?: number
   max?: number;
+  className?: string
 }
 
 export interface FormProps {
@@ -203,6 +197,7 @@ export interface SelectProps {
   name: string
   data?: any[]
   id: string
+  className?: string
 }
 
 
@@ -223,41 +218,11 @@ export interface GenderProps {
 export interface FormSubmitProps {
   handleSubmit: (e: React.FormEvent) => void;
   bodyContent?: React.ReactNode
-  children:React.ReactElement
+  children: React.ReactElement
 }
 
 
-export interface HelmetProps{
-  title:string
-  description_content:string
-  keywords_content:string
-  og_title:string
-  og_description:string
-  og_type:string
-}
-
-export interface ProtectedProps{
+export interface ProtectedProps {
   Component: React.ReactNode
 }
 
-export interface ApplicationProps {
-    _id: string;
-    appliedUser: {
-        firstName: string,
-        email: string
-        gender: string
-        phone_number: string
-    }
-    gym: {
-        gymName: string
-        location: {
-            state: string
-        }
-    }
-    invoiceDays: number
-    jobId: string
-    previousExperience: string
-    previousWork: string
-    status: string
-    resume: string
-}

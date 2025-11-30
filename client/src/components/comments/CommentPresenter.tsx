@@ -1,15 +1,6 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
-
-interface CommentPresenterProps {
-    comment: {
-        storyNumber: string,
-        description: string,
-        image: string
-        id: string
-    }
-}
-
+import { CommentPresenterProps } from './types/types'
 const CommentPresenter: React.FC<CommentPresenterProps> = ({ comment }) => {
     const ref = useRef<HTMLDivElement>(null)
     const { scrollYProgress } = useScroll({

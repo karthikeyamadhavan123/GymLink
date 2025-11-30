@@ -1,33 +1,9 @@
 import { useState } from "react";
 import { X, ArrowRight, ArrowLeft, Loader2 } from "lucide-react";
 import axios from "axios";
+import { EditTrainerFormProps, TrainerFormData } from "./admin-trainers-types/types/types";
 
-// Define interfaces for Trainer data
-interface Trainer {
-    _id: string;
-    trainerName: string;
-    expertise: string[];
-    certifications: string[];
-    experience: string;
-    contactNumber: string;
-    trainerImage: string;
-    description: string;
-}
 
-interface EditTrainerFormProps {
-    trainer: Trainer;
-    gymId: string;
-    onClose: () => void;
-    onSuccess: (updatedTrainer: Trainer) => void;
-}
-
-interface TrainerFormData {
-    trainerName: string;
-    expertise: string;
-    experience: string;
-    contactNumber: string;
-    description: string;
-}
 
 const EditTrainerForm = ({ trainer, gymId, onClose, onSuccess }: EditTrainerFormProps) => {
     const [formStep, setFormStep] = useState(1);

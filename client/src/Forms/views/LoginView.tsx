@@ -19,7 +19,6 @@ export const LoginView: React.FC<LoginViewProps> = ({
 }) => {
     return (
         <div className="flex h-screen font-stencil">
-            {/* Left side - Image */}
             <div className="hidden md:block md:w-1/2 relative h-screen">
                 <img
                     src="/assets/images/gym/login.avif"
@@ -30,7 +29,6 @@ export const LoginView: React.FC<LoginViewProps> = ({
             </div>
             <div className="absolute inset-0 w-1/2 bg-black opacity-35 sm:hidden lg:block xs:hidden"></div>
 
-            {/* Right side - Login form */}
             <div className="w-full md:w-1/2 flex items-center justify-center bg-black p-8">
                 <motion.div
                     className="max-w-md w-full border-2 p-4 bg-white flex flex-col rounded-lg"
@@ -39,7 +37,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                     transition={{ duration: 1.5, delay: 1 }}
                 >
                     <div className="text-center flex space-x-3 items-center justify-center">
-                        <Dumbbell size={25} color="#000" />
+                        <Dumbbell size={25} color="#000000" />
                         <h1 className="text-black text-3xl font-bold mb-2 underline text-center">
                             Welcome{" "}
                             <span className="text-lime-400 underline text-3xl">Back!!</span>
@@ -60,6 +58,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                                 handleChange={onEmailChange}
                                 placeholder="Enter your email"
                                 required={true}
+                                className="w-full pl-5 px-3 py-2 bg-transparent border border-gray-600 rounded-lg focus:outline-none focus:border-lime-400  text-black"
                             />
                         </div>
 
@@ -80,6 +79,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                                 handleChange={onPasswordChange}
                                 placeholder="Enter your password"
                                 required={true}
+                                className="w-full pl-5 px-3 py-2 bg-transparent border border-gray-600 rounded-lg focus:outline-none focus:border-lime-400  text-black"
                             />
                         </div>
 

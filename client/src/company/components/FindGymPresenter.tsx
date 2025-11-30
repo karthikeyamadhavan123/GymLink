@@ -19,11 +19,6 @@ import {
   TrendingUp
 } from 'lucide-react';
 
-
-
-
-
-
 const FindGymPresenter = ({
   gyms,
   searchQuery,

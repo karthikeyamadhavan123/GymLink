@@ -1,43 +1,10 @@
 import axios from "axios";
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { HashLoader } from "react-spinners";
-
-interface GymProps {
-    _id: string;
-    gymName: string;
-    equipments: string[];
-    basePrice: number;
-    location: {
-        area: string;
-        city: string;
-        landmark: string;
-        pincode: string;
-        state: string;
-        streetName: string;
-    };
-    gymImages: string[];
-}
-
-interface EditGymProps {
-    gym: GymProps;
-    onSave :(updatedGym:GymProps)=>void
-    onClose: () => void;
-}
-
-interface FormDataType {
-    editedgymName: string;
-    editedbasePrice: number;
-    editedequipments: string;
-    editedarea: string;
-    editedcity: string;
-    editedlandmark: string;
-    editedpincode: string;
-    editedstate: string;
-    editedstreetName: string;
-}
+import { AdminGymEditFormData, AdminGymProps, EditGymProps } from "./admin-gym-types/types";
 
 const EditGymForm: React.FC<EditGymProps> = ({ gym, onClose,onSave }) => {
-    const [formData, setFormData] = useState<FormDataType>({
+    const [formData, setFormData] = useState<AdminGymEditFormData>({
         editedgymName: gym.gymName,
         editedbasePrice: gym.basePrice,
         editedequipments: gym.equipments.join(', '),
@@ -82,7 +49,7 @@ const EditGymForm: React.FC<EditGymProps> = ({ gym, onClose,onSave }) => {
             };
             
             // Call the API to update gym
-            const response = await axios.put<{gym: GymProps}>(`${import.meta.env.VITE_DB_URL}/gym/${gym._id}/edit`, updatedData, { 
+            const response = await axios.put<{gym: AdminGymProps}>(`${import.meta.env.VITE_DB_URL}/gym/${gym._id}/edit`, updatedData, { 
                 withCredentials: true 
             });
             if (response.status === 200) {

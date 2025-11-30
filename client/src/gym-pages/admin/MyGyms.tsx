@@ -1,4 +1,4 @@
-import AdminGyms from './AdminGyms'
+import AdminGyms from '@/gym-pages/admin/AdminGyms'
 import AdminSidebar from './AdminSidebar'
 
 const MyGyms = () => {

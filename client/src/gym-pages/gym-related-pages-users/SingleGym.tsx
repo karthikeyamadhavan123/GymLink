@@ -5,27 +5,8 @@ import { FiMapPin, FiUser, FiPhone, FiMail, FiInfo } from "react-icons/fi";
 import { HashLoader } from "react-spinners";
 import { Helmet } from "react-helmet-async";
 import Trainers from "./trainers/GymTrainers";
+import { SingleGymProps } from "./gym-related-pages-users/types/types";
 
-interface SingleGymProps {
-  basePrice: number;
-  equipments: string[];
-  gymImages: string[];
-  gymName: string;
-  location: {
-    area: string;
-    city: string;
-    landmark: string;
-    pincode: string;
-    state: string;
-    streetName: string;
-  };
-  owner: {
-    firstName: string;
-    email: string;
-    gender: string;
-    phone_number: string;
-  };
-}
 
 const SingleGym = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -203,7 +184,7 @@ const SingleGym = () => {
               {/* Price */}
               <div className="mb-6">
                 <h2 className="text-2xl font-bold mb-2 flex items-center">
-                ₹ Membership
+                  ₹ Membership
                 </h2>
                 <div className="bg-black bg-opacity-40 rounded-lg p-4">
                   <div className="text-3xl font-bold text-lime-400">₹{singleGym.basePrice}</div>
@@ -271,7 +252,7 @@ const SingleGym = () => {
           </div>
         </div>
       </div>
-      <Trainers id={id || ''}/>
+      <Trainers id={id || ''} />
     </>
   );
 };
