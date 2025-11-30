@@ -2,21 +2,13 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { Phone, Award, Briefcase, Tag } from "lucide-react"
 import { HashLoader } from "react-spinners"
+import { UserTrainerProps } from "./types/types"
 
-interface TrainerProps {
-  certifications: string
-  contactNumber: string
-  description: string
-  experience: number
-  expertise: string[]
-  trainerImage: string
-  trainerName: string
-  _id: string
-}
+
 
 const Trainers = ({ id }: { id: string }) => {
   const gymTrainerUrl = import.meta.env.VITE_DB_URL + `/trainers/${id}/all`;
-  const [trainers, setTrainers] = useState<TrainerProps[]>([])
+  const [trainers, setTrainers] = useState<UserTrainerProps[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 

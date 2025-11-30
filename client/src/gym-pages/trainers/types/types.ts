@@ -21,3 +21,14 @@ export interface TrainerProps {
     gymName: string;
   }
 }
+
+export interface UserTrainerProps {
+  certifications: string
+  contactNumber: string
+  description: string
+  experience: number
+  expertise: string[]
+  trainerImage: string
+  trainerName: string
+  _id: string
+}

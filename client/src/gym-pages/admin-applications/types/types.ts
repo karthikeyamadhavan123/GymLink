@@ -20,3 +20,13 @@ export interface AdminApplicationProps {
     status: string
     resume: string
 }
+
+export interface ApplicationProps {
+    _id: string;
+    jobId: string;
+    invoiceDays: number;
+    previousExperience: number;
+    previousWork: string;
+    resume: string;
+    status: 'Pending' | 'Accepted' | 'Rejected';
+}

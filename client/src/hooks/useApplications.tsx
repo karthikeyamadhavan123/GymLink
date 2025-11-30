@@ -1,4 +1,4 @@
-import { ApplicationProps } from "@/types";
+import { ApplicationProps } from "@/gym-pages/admin-applications/types/types";
 import axios from "axios";
 import { useState, useEffect } from "react";
 

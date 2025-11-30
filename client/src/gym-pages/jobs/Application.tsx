@@ -3,18 +3,10 @@ import { useEffect, useState } from "react";
 import { Trash2, FileText, Award, Briefcase } from "lucide-react";
 import { HashLoader } from "react-spinners";
 import { Helmet } from "react-helmet-async";
+import { ApplicationProps } from "../admin-applications/types/types";
 
 const applicationUrl = import.meta.env.VITE_DB_URL + '/applicants/all';
 
-interface ApplicationProps {
-    _id: string;
-    jobId: string;
-    invoiceDays: number;
-    previousExperience: number;
-    previousWork: string;
-    resume: string;
-    status: 'Pending' | 'Accepted' | 'Rejected';
-}
 
 const Application = () => {
     const [applications, setApplications] = useState<ApplicationProps[]>([]);

@@ -1,8 +1,15 @@
 import { useState, useEffect } from "react";
-import type { CommentBase } from "@/types";
+
+export interface Comment {
+    id:string
+    storyNumber:string; // number or string depending on your data
+    image: string;                 // URL of the image
+    description: string;           // Comment/description text
+}
+
 
 const useComments = () => {
-  const [comments, setComments] = useState<CommentBase[]>([]);
+  const [comments, setComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

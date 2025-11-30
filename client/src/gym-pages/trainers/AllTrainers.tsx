@@ -1,47 +1,79 @@
-import { useState } from 'react'
-import { MapPin, Phone, Award, Search } from 'lucide-react'
-import useTrainers from '@/hooks/useTrainers'
-import { TRAINER_ENDPOINTS } from '@/constants/trainerApiEndpoints'
-import { TrainerProps } from './types/types'
-import TitleHelmet from '@/Forms/components/TitleHelmet'
+import { useState } from "react";
+import { MapPin, Phone, Award, Search } from "lucide-react";
+import useTrainers from "@/hooks/useTrainers";
+import { TRAINER_ENDPOINTS } from "@/constants/trainerApiEndpoints";
+import { TrainerProps } from "./types/types";
+import { Helmet } from "react-helmet-async";
 
 const AllTrainers = () => {
-  const [searchQuery, setSearchQuery] = useState('')
-  const [filterByExpertise, setFilterByExpertise] = useState<string | null>(null)
-  const { data, loading, error } = useTrainers(TRAINER_ENDPOINTS.GET_ALL_TRAINER);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterByExpertise, setFilterByExpertise] = useState<string | null>(
+    null
+  );
+  const { data, loading, error } = useTrainers(
+    TRAINER_ENDPOINTS.GET_ALL_TRAINER
+  );
 
   const allExpertise = data.reduce((acc: string[], trainer: TrainerProps) => {
-    trainer.expertise.forEach(skill => {
+    trainer.expertise.forEach((skill) => {
       if (!acc.includes(skill)) {
-        acc.push(skill)
+        acc.push(skill);
       }
-    })
-    return acc
-  }, [])
+    });
+    return acc;
+  }, []);
 
   const filteredTrainers = data.filter((trainer: TrainerProps) => {
     const matchesSearch =
       trainer.trainerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       trainer.gymId.gymName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      trainer.gymId.location.city.toLowerCase().includes(searchQuery.toLowerCase())
+      trainer.gymId.location.city
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase());
 
     const matchesExpertise =
-      !filterByExpertise ||
-      trainer.expertise.includes(filterByExpertise)
+      !filterByExpertise || trainer.expertise.includes(filterByExpertise);
 
-    return matchesSearch && matchesExpertise
-  })
+    return matchesSearch && matchesExpertise;
+  });
 
   return (
     <>
-      <TitleHelmet title='Find Your Perfect Fitness Trainer | GymLink' description_content='Browse our comprehensive directory of certified fitness trainers from top gyms across the country. Find the perfect trainer to help you reach your fitness goals.' keywords_content='fitness trainers, personal trainers, gym trainers, fitness experts, workout coach.' og_title='Find Your Perfect Fitness Trainer | GymLink.' og_description='Browse our comprehensive directory of certified fitness trainers from top gyms across the country. Find the perfect trainer to help you reach your fitness goals.' og_type='website' />
+      <Helmet>
+        <title>Find Your Perfect Fitness Trainer | GymLink</title>
 
-      <div className='bg-black min-h-screen text-white font-stencil pb-12'>
+        <meta
+          name="description"
+          content="Browse our comprehensive directory of certified fitness trainers from top gyms across the country. Find the perfect trainer to help you reach your fitness goals."
+        />
+        <meta
+          name="keywords"
+          content="fitness trainers, personal trainers, gym trainers, fitness experts, workout coach."
+        />
+
+        {/* Open Graph Tags */}
+        <meta
+          property="og:title"
+          content="Find Your Perfect Fitness Trainer | GymLink."
+        />
+        <meta
+          property="og:description"
+          content="Browse our comprehensive directory of certified fitness trainers from top gyms across the country. Find the perfect trainer to help you reach your fitness goals."
+        />
+        <meta property="og:type" content="website" />
+      </Helmet>
+
+      <div className="bg-black min-h-screen text-white font-stencil pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
           {/* Hero Section */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Find Your Perfect Fitness Trainer</h1>
-            <p className="text-gray-400 text-xl max-w-3xl mx-auto">Browse our elite network of certified fitness professionals ready to help you achieve your goals</p>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+              Find Your Perfect Fitness Trainer
+            </h1>
+            <p className="text-gray-400 text-xl max-w-3xl mx-auto">
+              Browse our elite network of certified fitness professionals ready
+              to help you achieve your goals
+            </p>
           </div>
 
           {/* Search and Filter Section */}
@@ -62,12 +94,14 @@ const AllTrainers = () => {
             <div className="w-full md:w-auto">
               <select
                 className="bg-gray-900 rounded-lg py-3 px-4 w-full text-white focus:outline-none focus:ring-2 focus:ring-lime-500 cursor-pointer"
-                value={filterByExpertise || ''}
+                value={filterByExpertise || ""}
                 onChange={(e) => setFilterByExpertise(e.target.value || null)}
               >
                 <option value="">All Specializations</option>
                 {allExpertise.map((expertise, index) => (
-                  <option key={index} value={expertise}>{expertise}</option>
+                  <option key={index} value={expertise}>
+                    {expertise}
+                  </option>
                 ))}
               </select>
             </div>
@@ -84,11 +118,13 @@ const AllTrainers = () => {
             </div>
           ) : filteredTrainers.length === 0 ? (
             <div className="text-center py-12">
-              <h3 className="text-xl">No trainers found matching your criteria.</h3>
+              <h3 className="text-xl">
+                No trainers found matching your criteria.
+              </h3>
               <button
                 onClick={() => {
-                  setSearchQuery('')
-                  setFilterByExpertise(null)
+                  setSearchQuery("");
+                  setFilterByExpertise(null);
                 }}
                 className="mt-4 bg-lime-400 hover:bg-lime-500 px-4 py-2 rounded-md transition-colors duration-300"
               >
@@ -98,7 +134,10 @@ const AllTrainers = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredTrainers.map((trainer: TrainerProps, index) => (
-                <div key={index} className="bg-gray-900 rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105">
+                <div
+                  key={index}
+                  className="bg-gray-900 rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105"
+                >
                   <div className="h-64 overflow-hidden relative">
                     <img
                       src={trainer.trainerImage || "/api/placeholder/400/320"}
@@ -108,25 +147,36 @@ const AllTrainers = () => {
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
                       <div className="flex items-center">
                         <MapPin size={16} className="text-lime-500 mr-2" />
-                        <span className="text-sm truncate">{trainer.gymId.location.city}, {trainer.gymId.location.state}</span>
+                        <span className="text-sm truncate">
+                          {trainer.gymId.location.city},{" "}
+                          {trainer.gymId.location.state}
+                        </span>
                       </div>
                     </div>
                   </div>
 
                   <div className="p-6">
                     <div className="flex justify-between items-start mb-2">
-                      <h2 className="text-2xl font-bold">{trainer.trainerName}</h2>
+                      <h2 className="text-2xl font-bold">
+                        {trainer.trainerName}
+                      </h2>
                       <div className="bg-lime-500 text-black text-xs font-bold py-1 px-2 rounded-full">
                         {trainer.experience}+ YRS
                       </div>
                     </div>
 
-                    <p className="text-lime-500 mb-4 text-sm">{trainer.gymId.gymName}</p>
+                    <p className="text-lime-500 mb-4 text-sm">
+                      {trainer.gymId.gymName}
+                    </p>
 
-                    <p className="text-gray-300 mb-4 line-clamp-2">{trainer.description}</p>
+                    <p className="text-gray-300 mb-4 line-clamp-2">
+                      {trainer.description}
+                    </p>
 
                     <div className="mt-2 mb-4">
-                      <h3 className="text-sm font-semibold mb-2 text-gray-400 uppercase tracking-wider">Expertise</h3>
+                      <h3 className="text-sm font-semibold mb-2 text-gray-400 uppercase tracking-wider">
+                        Expertise
+                      </h3>
                       <div className="flex flex-wrap gap-2">
                         {trainer.expertise.slice(0, 3).map((skill, idx) => (
                           <span
@@ -137,14 +187,22 @@ const AllTrainers = () => {
                           </span>
                         ))}
                         {trainer.expertise.length > 3 && (
-                          <span className="text-xs text-gray-400 mt-1">+{trainer.expertise.length - 3} more</span>
+                          <span className="text-xs text-gray-400 mt-1">
+                            +{trainer.expertise.length - 3} more
+                          </span>
                         )}
                       </div>
                     </div>
 
                     <div className="flex items-start mb-4">
                       <Award size={18} className="mr-2 mt-1 text-lime-500" />
-                      <a href={trainer.certifications} className="text-sm" target='_blank'>Certificate</a>
+                      <a
+                        href={trainer.certifications}
+                        className="text-sm"
+                        target="_blank"
+                      >
+                        Certificate
+                      </a>
                     </div>
 
                     <div className="flex items-center">
@@ -159,17 +217,18 @@ const AllTrainers = () => {
                     </div>
                   </div>
                 </div>
-
               ))}
-              {
-                error && (<h1 className='text-red-400 font-bold text-3xl text-center'>{error}</h1>)
-              }
+              {error && (
+                <h1 className="text-red-400 font-bold text-3xl text-center">
+                  {error}
+                </h1>
+              )}
             </div>
           )}
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default AllTrainers
+export default AllTrainers;

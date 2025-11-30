@@ -4,8 +4,8 @@ import { useParams } from "react-router-dom";
 import { FiMapPin, FiUser, FiPhone, FiMail, FiInfo } from "react-icons/fi";
 import { HashLoader } from "react-spinners";
 import { Helmet } from "react-helmet-async";
-import Trainers from "./trainers/GymTrainers";
-import { SingleGymProps } from "./gym-related-pages-users/types/types";
+import Trainers from "@/gym-pages/trainers/GymTrainers";
+import { SingleGymProps } from "@/gym-pages/gym-related-pages-users/types/types";
 
 
 const SingleGym = () => {
