@@ -191,7 +191,7 @@ export interface FormProps {
 export interface ButtonProps {
   type: 'button' | 'submit' | 'reset',
   handleClick?: () => void
-  text?: string
+  text?: string | React.ReactNode
   className: string
   disabled?: boolean
 }
@@ -221,9 +221,8 @@ export interface GenderProps {
 }
 
 export interface FormSubmitProps {
-  handleSubmit: (e: React.FormEvent) => Promise<void>;
-  bodyContent: React.ReactNode
-  loading:boolean
+  handleSubmit: (e: React.FormEvent) => void;
+  bodyContent?: React.ReactNode
   children:React.ReactElement
 }
 

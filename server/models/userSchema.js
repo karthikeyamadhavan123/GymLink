@@ -69,7 +69,7 @@ const UserSchema = new Schema(
         },
         gender: {
             type: String,
-            enum: ['male', 'female'],
+            enum: ['Male', 'Female'],
             required:true
         },
         resetPasswordToken: String,
