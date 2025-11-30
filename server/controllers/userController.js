@@ -111,7 +111,7 @@ const Login = async (req, res) => {
       return res.status(400).json({ message: "Password is required." });
     }
     const user = await User.findOne({ email }).select(
-      "+ password firstName avatar role location phone_number"
+      "+ password firstName avatar role location phone_number gender"
     );
     if (!user) {
       return res.status(400).json({ message: "User not found." });
@@ -127,6 +127,7 @@ const Login = async (req, res) => {
     const role = user.role;
     const location = user.location;
     const phone_number = user.phone_number;
+    const gender = user.gender;
     res.cookie("login", token, {
       httpOnly: true,
       maxAge: 2 * 60 * 60 * 1000,
@@ -145,6 +146,7 @@ const Login = async (req, res) => {
         phone_number,
         email,
         userId,
+        gender,
       },
     });
   } catch (error) {

@@ -34,3 +34,8 @@ export interface SingleGymProps {
     phone_number: string;
   };
 }
+
+export default interface GymCardProps {
+  gym: GymProps;
+  onClick: () => void;
+}

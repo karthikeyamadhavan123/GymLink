@@ -24,20 +24,20 @@ export const useLoginForm = () => {
         e.preventDefault();
         try {
             setLoading(true);
-            const response = await axios.post(loginUrl, { email, password }, { withCredentials: true });
-            
+            const response = await axios.post(loginUrl, { email, password }, { withCredentials: true });         
             if (response.status === 200) {
                 const userData = response.data.details;
                 setUserDetails({
                     firstName: userData.firstName,
-                    avatar: userData.avatar || "/user.png",
+                    avatar: userData.avatar,
                     role: userData.role || "user",
                     location: userData.location || "",
                     phone_number: userData.phone_number || "",
                     email: userData.email,
-                    userId: userData.userId
+                    userId: userData.userId,
+                    gender: userData.gender
                 });
-                
+
                 toast.success('Login Successful');
                 setEmail('');
                 setPassword('');
