@@ -53,7 +53,7 @@ const Sidebar = () => {
         {/* Logo at the top */}
         <div className="flex-shrink-0 flex items-center p-4">
           <img
-            src="/assets/images/logo/logo.png"
+            src="/logo.png"
             alt="Logo"
             className="text-xl font-bold"
             loading="lazy"

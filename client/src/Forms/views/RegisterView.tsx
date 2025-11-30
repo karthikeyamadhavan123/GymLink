@@ -6,7 +6,7 @@ import Form from '@/Forms/components/Form';
 import Button from '@/Forms/components/Button';
 import Label from '@/Forms/components/Label';
 import Select from '@/Forms/components/Select';
-import { RegisterViewProps } from '../types/RegisterFormProps';
+import { RegisterViewProps } from '../types/FormProps';
 import { STEPS } from '@/enums';
 
 
@@ -61,8 +61,8 @@ export const RegisterView: React.FC<RegisterViewProps> = ({
                                 <div key={step} className="relative flex flex-col items-center">
                                     <div
                                         className={`w-10 h-10 flex items-center justify-center rounded-full border-2 ${currentStep >= step
-                                                ? 'bg-lime-400 border-lime-400'
-                                                : 'bg-gray-800 border-gray-600'
+                                            ? 'bg-lime-400 border-lime-400'
+                                            : 'bg-gray-800 border-gray-600'
                                             }`}
                                     >
                                         {currentStep > step ? (

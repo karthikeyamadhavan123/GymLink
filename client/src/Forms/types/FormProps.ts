@@ -23,3 +23,12 @@ export interface RegisterViewProps {
     onSubmit: (e: React.FormEvent) => void;
     onGoogleSignIn: () => void;
 }
+
+export interface LoginViewProps {
+    email: string;
+    password: string;
+    loading: boolean;
+    onEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onPasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onSubmit: (e: React.FormEvent) => void;
+}

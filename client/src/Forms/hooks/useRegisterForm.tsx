@@ -2,7 +2,7 @@ import useIndianStates from "@/actions/getStates";
 import { STEPS } from "@/enums";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FormProps } from "../types/RegisterFormProps";
+import { FormProps } from "../types/FormProps";
 import axios from "axios";
 import toast from "react-hot-toast";
 
