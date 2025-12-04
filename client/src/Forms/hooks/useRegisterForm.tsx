@@ -56,73 +56,77 @@ export const useRegisterForm = () => {
         }
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        const submitData = new FormData();
-        submitData.append('firstName', formDetails.firstName);
-        if (formDetails.lastName) {
-            submitData.append('lastName', formDetails.lastName);
-        }
-        submitData.append('email', formDetails.email);
-        submitData.append('password', formDetails.password);
-        submitData.append('phone_number', formDetails.phone_number);
-        submitData.append('location', formDetails.location);
-        submitData.append('age', formDetails.age);
-        submitData.append('gender', formDetails.gender);
-        if (formDetails.avatar) {
-            submitData.append('avatar', formDetails.avatar);
-        }
+   
 
-        try {
-            setLoading(true);
-            const response = await axios.post(RUrl, submitData);
-            if (response.status === 201) {
-                toast.success('Register Successful');
-                setFormDetails({
-                    firstName: '',
-                    lastName: '',
-                    avatar: null,
-                    age: '',
-                    password: '',
-                    phone_number: '',
-                    location: '',
-                    gender: '',
-                    email: '',
-                });
-                router('/api/auth/login');
-            }
-        } catch (error: any) {
-            console.log(error);
-            toast.error(error.response?.data?.message || 'Registration failed');
-        } finally {
-            setLoading(false);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const submitData = new FormData();
+    submitData.append('firstName', formDetails.firstName);
+    if (formDetails.lastName) {
+        submitData.append('lastName', formDetails.lastName);
+    }
+    submitData.append('email', formDetails.email);
+    submitData.append('password', formDetails.password);
+    submitData.append('phone_number', formDetails.phone_number);
+    submitData.append('location', formDetails.location);
+    submitData.append('age', formDetails.age);
+    submitData.append('gender', formDetails.gender);
+    if (formDetails.avatar) {
+        submitData.append('avatar', formDetails.avatar);
+    }
+
+    try {
+        setLoading(true);
+        const response = await axios.post(RUrl, submitData);
+        if (response.status === 201) {
+            toast.success('Register Successful');
+            setFormDetails({
+                firstName: '',
+                lastName: '',
+                avatar: null,
+                age: '',
+                password: '',
+                phone_number: '',
+                location: '',
+                gender: '',
+                email: '',
+            });
+            router('/api/auth/login');
         }
+    } catch (error: any) {
+        console.log(error);
+        toast.error(error.response?.data?.message || 'Registration failed');
+    } finally {
+        setLoading(false);
+    }
     };
 
     const handleGoogleSignIn = async () => {
-        try {
-            // Implement Google OAuth flow here
-            // Example: Redirect to backend Google OAuth endpoint
-            const googleAuthUrl = import.meta.env.VITE_DB_URL + '/api/auth/google';
-            window.location.href = googleAuthUrl;
-        } catch (error: any) {
-            toast.error('Google Sign-In failed');
-        }
+    try {
+        // Implement Google OAuth flow here
+        // Example: Redirect to backend Google OAuth endpoint
+        const googleAuthUrl = import.meta.env.VITE_DB_URL + '/api/auth/google';
+        window.location.href = googleAuthUrl;
+    } catch (error: any) {
+        toast.error('Google Sign-In failed');
+    }
     };
+    
     useEffect(() => {
-        switch (currentStep) {
-            case STEPS.BASIC:
-                setDisabled(!formDetails.firstName || !formDetails.email || !formDetails.password);
-                break;
-            case STEPS.CONTACT:
-                setDisabled(!formDetails.phone_number || !formDetails.location);
-                break;
-            case STEPS.PROFILE:
-                setDisabled(!formDetails.age || !formDetails.gender);
-                break;
-            default:
-                setDisabled(false);
-        }
+    switch (currentStep) {
+        case STEPS.BASIC:
+            setDisabled(!formDetails.firstName || !formDetails.email || !formDetails.password);
+            break;
+        case STEPS.CONTACT:
+            setDisabled(!formDetails.phone_number || !formDetails.location);
+            break;
+        case STEPS.PROFILE:
+            setDisabled(!formDetails.age || !formDetails.gender);
+            break;
+        default:
+            setDisabled(false);
+    }
     }, [currentStep, formDetails]);
 
     return {

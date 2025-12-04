@@ -115,8 +115,8 @@ function App() {
             element={<AdminProtected Component={<AdminTrainers />} />}
           />
           <Route path="/not-authorized" element={<NotAuthorize />} />
-          <Route path="*" element={<NotFound />} />
           <Route path='/tracking' element={<Tracking />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
     </Suspense>

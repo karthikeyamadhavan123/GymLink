@@ -1,5 +1,4 @@
-const express = require("express");
-const app = express();
+const { app, express, server } = require("./socket/socket.js");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/userRoute");
@@ -20,7 +19,7 @@ async function main() {
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:5173","https://gym-link.vercel.app"],
+    origin: ["http://localhost:5173", "https://gym-link.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
@@ -32,6 +31,8 @@ app.use("/trainers", trainerRoutes);
 app.use("/jobs", JobPostingRoutes);
 app.use("/applicants", JobApplicantsRoutes);
 app.use("/chat", AichatRoutes);
-app.listen(process.env.PORT, () => {
+app.use("/friend",friendRoutes)
+
+server.listen(process.env.PORT, () => {
   console.log("Server running on port: " + process.env.PORT);
 });

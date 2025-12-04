@@ -6,7 +6,7 @@ const jwt=require('jsonwebtoken');
 
 const createToken=(payload)=>{
     return token.sign(payload,secret,{
-        expiresIn:'2h',
+        expiresIn:'7d',
     })
 }
 

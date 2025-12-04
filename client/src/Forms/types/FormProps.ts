@@ -21,7 +21,6 @@ export interface RegisterViewProps {
     onNextStep: () => void;
     onPrevStep: () => void;
     onSubmit: (e: React.FormEvent) => void;
-    onGoogleSignIn: () => void;
 }
 
 export interface LoginViewProps {
