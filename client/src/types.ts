@@ -159,7 +159,7 @@ export interface InputProps {
   type: string,
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   value?: string | number,
-  placeholder: string
+  placeholder?: string
   required?: boolean
   name: string
   id?: string

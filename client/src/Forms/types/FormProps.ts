@@ -8,6 +8,7 @@ export interface FormProps {
     age: string;
     gender: string;
     avatar: File | null;
+    role: 'user' | 'trainer'
 }
 
 export interface RegisterViewProps {

@@ -56,7 +56,7 @@ const UserSchema = new Schema(
     },
     role: {
       type: String,
-      enum: ["user", "admin"], // just add user or trainer only trainers can apply for job and applications
+      enum: ["user", "trainer"], // just add user or trainer only trainers can apply for job and applications
       default: "user",
     },
     location: {
@@ -73,6 +73,10 @@ const UserSchema = new Schema(
       type: String,
       enum: ["Male", "Female"],
       required: true,
+    },
+    interests: {
+      type: [String],
+      default: [],
     },
     followers: [
       {

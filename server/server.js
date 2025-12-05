@@ -31,7 +31,7 @@ app.use("/trainers", trainerRoutes);
 app.use("/jobs", JobPostingRoutes);
 app.use("/applicants", JobApplicantsRoutes);
 app.use("/chat", AichatRoutes);
-app.use("/friend",friendRoutes)
+// app.use("/friend",friendRoutes)
 
 server.listen(process.env.PORT, () => {
   console.log("Server running on port: " + process.env.PORT);

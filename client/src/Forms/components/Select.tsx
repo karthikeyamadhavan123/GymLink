@@ -1,7 +1,7 @@
 import { SelectProps } from '@/types';
 import React from 'react';
 
-const Select: React.FC<SelectProps> = ({ handleChange, value, required, data, id, name,className }) => {
+const Select: React.FC<SelectProps> = ({ handleChange, value, required, data, id, name, className }) => {
   return (
     <div className="w-full">
       <select
@@ -16,7 +16,7 @@ const Select: React.FC<SelectProps> = ({ handleChange, value, required, data, id
         {
           data?.map((d, index) => (
             <option key={index}>
-              {d?.name}
+              {d.name ? d.name : d}
             </option>
           ))}
       </select>
