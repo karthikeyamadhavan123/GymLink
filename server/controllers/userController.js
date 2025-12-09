@@ -93,6 +93,7 @@ const Register = async (req, res) => {
     return res.status(201).json({
       success: true,
       message: "User registered Successfully",
+      userId: newUser._id,
     });
   } catch (e) {
     console.log(e);
@@ -235,35 +236,62 @@ const resetPassword = async (req, res) => {
 const getInterests = async (req, res) => {
   try {
     const allInterests = await Intrests.find({}).select("-_id");
-    return res.status(200).json({ allInterests, success: true });
+
+    return res.status(200).json({
+      success: true,
+      message: "Interests fetched successfully",
+      allInterests,
+    });
   } catch (error) {
-    console.log(error);
-    return res.status(500).send("Internal Server Error");
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
   }
 };
 
 const submitInterests = async (req, res) => {
   try {
-    const { userId } = req.userId;
+    const { interests, userId } = req.body;
+
     if (!userId) {
-      return res.status(403).json({
-        message: "Please login to submit the intrests",
+      return res.status(401).json({
         success: false,
+        message: "Please login to submit interests",
       });
     }
-    const { interests } = req.body;
-    if (typeof interests !== "object") {
-      return res
-        .status(403)
-        .json({ message: "Intrests is not an object", success: false });
+
+    if (!Array.isArray(interests)) {
+      return res.status(400).json({
+        success: false,
+        message: "Interests must be an array",
+      });
     }
 
-    //  for(let key in interests){
-    //   console.log(interests[key]);
-    //  }
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    for (let i = 0; i < interests.length; i++) {
+      user.interests.push(interests[i]);
+    }
+    await user.save();
+    return res.status(200).json({
+      success: true,
+      message: "Interests submitted successfully",
+    });
   } catch (error) {
-    console.log(error);
-    return res.status(500).send("Internal Server Error");
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
   }
 };
 

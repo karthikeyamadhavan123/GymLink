@@ -15,6 +15,7 @@ import PersonalTraining from "./pages/orders/components/Personaltraining";
 import Memberships from "./pages/orders/components/Membership";
 import TrackSubscription from "./pages/orders/components/Tracksubscription";
 import Tracking from "./tracking_gym/Tracking";
+import SubmitInterest from "./Forms/SubmitInterest";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const About = lazy(() => import("./pages/About"));
@@ -73,6 +74,7 @@ function App() {
             path="/api/auth/reset-password/:token"
             element={<ResetPassword />}
           />
+          <Route path="/submit-interests" element={<SubmitInterest/>}/>
           <Route
             path="/dashboard/gyms"
             element={<Protected Component={<GymMain />} />}
