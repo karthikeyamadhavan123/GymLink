@@ -5,6 +5,7 @@ import sidebarLinks from '../actions/getIcons';
 import useUserStore from '@/zustand';
 import axios from 'axios';
 
+const logoutUrl = import.meta.env.VITE_DB_URL + '/api/users/logout'
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -19,9 +20,8 @@ const Sidebar = () => {
 
   const userEmail = useUserStore((state) => state.details?.email);
   const userImage = useUserStore((state) => state.details?.avatar);
-
-
-  const logoutUrl = import.meta.env.VITE_DB_URL + '/api/users/logout'
+  const gender = useUserStore((state) => state.details?.gender)
+  
   const handleLogout = async () => {
     await axios.post(logoutUrl, {}, { withCredentials: true });
     useUserStore.setState({ details: null })
@@ -82,17 +82,17 @@ const Sidebar = () => {
         </div>
 
         {isUserMenuOpen && (
-            <div className="mt-4 pl-12 bg-gray-700 w-full rounded-md">
-              <div className="py-1">
-                <button
-                  className="block px-2 py-1 text-sm text-white hover:text-lime-300 cursor-pointer"
-                  onClick={handleLogout}
-                >
-                  Logout
-                </button>
-              </div>
+          <div className="mt-4 pl-12 bg-gray-700 w-full rounded-md">
+            <div className="py-1">
+              <button
+                className="block px-2 py-1 text-sm text-white hover:text-lime-300 cursor-pointer"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
             </div>
-          )}
+          </div>
+        )}
 
         {/* User info at the bottom - now properly fixed at bottom */}
         <div className="mt-auto flex-shrink-0 p-4 border-t border-gray-800">
@@ -101,10 +101,10 @@ const Sidebar = () => {
             onClick={toggleUserMenu}
           >
             <div className='flex items-center space-x-3 flex-1 min-w-0'>
-              {userImage ? (
+              {userImage?.trim()!=="" ? (
                 <img src={userImage} alt="userimage" className='rounded-md w-10 h-10 flex-shrink-0' />
               ) : (
-                <img src="/user.png" alt="user" className='rounded-md w-10 h-10 flex-shrink-0' />
+                <img src={gender === "male" ? '/male-user.png' : "/female-user.png"} alt="user" className='rounded-md w-10 h-10 flex-shrink-0' />
               )}
               <div className='text-sm hover:text-lime-300 text-white hover:transition-all hover:ease-in-out truncate'>
                 {userEmail}
@@ -128,7 +128,7 @@ const Sidebar = () => {
         {/* Logo at the top - with padding for mobile button */}
         <div className="flex-shrink-0 flex items-center p-4 pt-16">
           <img
-            src="/assets/images/logo/logo.png"
+            src="/logo.png"
             alt="Logo"
             className="text-xl font-bold"
             loading="lazy"
@@ -158,17 +158,17 @@ const Sidebar = () => {
         </div>
 
         {isUserMenuOpen && (
-            <div className="mt-4 pl-12 bg-gray-700 w-full rounded-md">
-              <div className="py-1">
-                <button
-                  className="block px-2 py-1 text-sm text-white hover:text-lime-300 cursor-pointer"
-                  onClick={handleLogout}
-                >
-                  Logout
-                </button>
-              </div>
+          <div className="mt-4 pl-12 bg-gray-700 w-full rounded-md">
+            <div className="py-1">
+              <button
+                className="block px-2 py-1 text-sm text-white hover:text-lime-300 cursor-pointer"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
             </div>
-          )}
+          </div>
+        )}
 
         {/* User info at the bottom - now properly fixed at bottom */}
         <div className="mt-auto flex-shrink-0 p-4 border-t border-gray-800">
@@ -180,7 +180,7 @@ const Sidebar = () => {
               {userImage ? (
                 <img src={userImage} alt="userimage" className='rounded-md w-10 h-10 flex-shrink-0' />
               ) : (
-                <img src="/user.png" alt="user" className='rounded-md w-10 h-10 flex-shrink-0' />
+                <img src={gender === "male" ? '/assets/images/avatars/male-user.png' : "/assets/images/avatars/female-user.png"} alt="user" className='rounded-md w-10 h-10 flex-shrink-0' />
               )}
               <div className='text-sm hover:text-lime-300 text-white hover:transition-all hover:ease-in-out truncate'>
                 {userEmail}

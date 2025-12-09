@@ -10,6 +10,7 @@ interface UserDetails {
   phone_number: string;
   email: string;
   userId:string
+  gender:"male" | "female"
 }
 
 interface UserState {

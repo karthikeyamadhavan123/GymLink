@@ -84,7 +84,7 @@ Storage	Cloudinary (for gym/trainer images)
 Hosting	Vercel / Render
 Other	React Router, Formik, Toastify
 # Clone the repository
-git clone https://github.com/yourusername/gymlink.git
+git clone https://github.com/karthikeyamadhavan123/GymLink.git
 cd gymlink
 
 # Install dependencies
@@ -101,9 +101,6 @@ CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 JWT_SECRET=your_jwt_secret_key
-FIREBASE_API_KEY=your_firebase_api_key
-FIREBASE_AUTH_DOMAIN=your_auth_domain
-
 
 gymlink/
 ├── client/               # React frontend
@@ -150,6 +147,6 @@ This project is licensed under the MIT License.
 📬 Contact
 Karthikeya Madhavan
 📧 Email: karthikeyamadhavan095@gmail.com
-🌐 Portfolio: [yourportfolio.com](https://my-portfolio-1a2r.vercel.app/)
+🌐 Portfolio: (https://my-portfolio-1a2r.vercel.app/)
 🐙 GitHub: (https://github.com/karthikeyamadhavan123)
 └── README.m

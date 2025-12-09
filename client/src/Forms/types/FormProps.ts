@@ -8,6 +8,7 @@ export interface FormProps {
     age: string;
     gender: string;
     avatar: File | null;
+    role: 'user' | 'trainer'
 }
 
 export interface RegisterViewProps {
@@ -21,7 +22,6 @@ export interface RegisterViewProps {
     onNextStep: () => void;
     onPrevStep: () => void;
     onSubmit: (e: React.FormEvent) => void;
-    onGoogleSignIn: () => void;
 }
 
 export interface LoginViewProps {

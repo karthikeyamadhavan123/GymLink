@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { FiSearch, FiMapPin, FiArrowRight } from "react-icons/fi";
+import { FiSearch} from "react-icons/fi";
 import { HashLoader } from "react-spinners";
 import ChatModal from "@/gym-pages/chats/ChatModal";
 import { GymProps } from "@/gym-pages/gym-related-pages-users/types/types";
 import { GYM_ENDPOINTS } from "@/constants/gymApiEndpoints";
 import useGyms from "@/hooks/useGyms";
 import { Helmet } from "react-helmet-async";
+import GymCard from "./components/GymCard";
 
 const Gyms = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -27,11 +28,11 @@ const Gyms = () => {
       gym.equipments.some((eq) => eq.toLowerCase().includes(searchLower))
     );
   });
+
   return (
     <>
       <Helmet>
         <title>Find the Best Gyms Near You | GymLink</title>
-
         <meta
           name="description"
           content="Explore top gyms in your area, find the best trainers, and start your fitness journey with GymLink."
@@ -40,8 +41,6 @@ const Gyms = () => {
           name="keywords"
           content="GymLink, gyms near me, fitness, workout, best gyms, personal trainers."
         />
-
-        {/* Open Graph Tags */}
         <meta
           property="og:title"
           content="Find the Best Gyms Near You - GymLink."
@@ -95,69 +94,11 @@ const Gyms = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredGyms.map((gym: GymProps) => (
-                  <div
+                  <GymCard
                     key={gym._id}
-                    className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
-                  >
-                    {/* Gym Image with overlay */}
-                    <div className="relative h-48 overflow-hidden">
-                      <img
-                        src={
-                          gym.gymImages[0] ||
-                          "https://via.placeholder.com/400x300?text=Gym"
-                        }
-                        alt={gym.gymName}
-                        className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                      <div className="absolute bottom-4 left-4">
-                        <h3 className="text-xl font-bold text-white">
-                          {gym.gymName}
-                        </h3>
-                      </div>
-                    </div>
-
-                    {/* Gym Details */}
-                    <div className="p-6">
-                      <div className="flex items-center text-gray-600 mb-3">
-                        <FiMapPin className="mr-2" />
-                        <span>
-                          {gym.location.area}, {gym.location.city}
-                        </span>
-                      </div>
-
-                      {/* Equipment tags */}
-                      <div className="mb-4">
-                        <div className="flex items-center text-gray-600 mb-2">
-                          <span className="font-medium">Equipment:</span>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                          {gym.equipments.slice(0, 3).map((equipment, idx) => (
-                            <span
-                              key={idx}
-                              className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded"
-                            >
-                              {equipment}
-                            </span>
-                          ))}
-                          {gym.equipments.length > 3 && (
-                            <span className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">
-                              +{gym.equipments.length - 3} more
-                            </span>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* View Button */}
-                      <button
-                        onClick={() => handleNavigation(gym._id)}
-                        className="w-full flex items-center justify-center bg-lime-400 hover:bg-lime-500 cursor-pointer text-white py-2 px-4 rounded-lg transition-colors duration-300"
-                      >
-                        View Details
-                        <FiArrowRight className="ml-2" />
-                      </button>
-                    </div>
-                  </div>
+                    gym={gym}
+                    onClick={() => handleNavigation(gym._id)}
+                  />
                 ))}
               </div>
 

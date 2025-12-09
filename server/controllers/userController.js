@@ -8,6 +8,7 @@ const {
   sendVerificationEmail,
   sendResetEmailSuccessful,
 } = require("../nodemailer/nodemailer");
+const Intrests = require("../models/InterestsModel");
 // register functionality
 
 const Register = async (req, res) => {
@@ -111,7 +112,7 @@ const Login = async (req, res) => {
       return res.status(400).json({ message: "Password is required." });
     }
     const user = await User.findOne({ email }).select(
-      "+ password firstName avatar role location phone_number"
+      "+ password firstName avatar role location phone_number gender"
     );
     if (!user) {
       return res.status(400).json({ message: "User not found." });
@@ -127,6 +128,7 @@ const Login = async (req, res) => {
     const role = user.role;
     const location = user.location;
     const phone_number = user.phone_number;
+    const gender = user.gender;
     res.cookie("login", token, {
       httpOnly: true,
       maxAge: 2 * 60 * 60 * 1000,
@@ -145,6 +147,7 @@ const Login = async (req, res) => {
         phone_number,
         email,
         userId,
+        gender,
       },
     });
   } catch (error) {
@@ -229,10 +232,47 @@ const resetPassword = async (req, res) => {
   }
 };
 
+const getInterests = async (req, res) => {
+  try {
+    const allInterests = await Intrests.find({}).select("-_id");
+    return res.status(200).json({ allInterests, success: true });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("Internal Server Error");
+  }
+};
+
+const submitInterests = async (req, res) => {
+  try {
+    const { userId } = req.userId;
+    if (!userId) {
+      return res.status(403).json({
+        message: "Please login to submit the intrests",
+        success: false,
+      });
+    }
+    const { interests } = req.body;
+    if (typeof interests !== "object") {
+      return res
+        .status(403)
+        .json({ message: "Intrests is not an object", success: false });
+    }
+
+    //  for(let key in interests){
+    //   console.log(interests[key]);
+    //  }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("Internal Server Error");
+  }
+};
+
 module.exports = {
   Register,
   Login,
   Logout,
   forgotPassword,
   resetPassword,
+  getInterests,
+  submitInterests,
 };

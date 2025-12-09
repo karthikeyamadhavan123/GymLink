@@ -7,7 +7,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 export const useRegisterForm = () => {
-    const [currentStep, setCurrentStep] = useState(STEPS.BASIC);
+    const [currentStep, setCurrentStep] = useState(STEPS.BASIC_1);
     const [formDetails, setFormDetails] = useState<FormProps>({
         firstName: '',
         lastName: '',
@@ -18,6 +18,7 @@ export const useRegisterForm = () => {
         age: '',
         gender: '',
         avatar: null,
+        role: 'user'
     });
     const [disabled, setDisabled] = useState(true);
     const [loading, setLoading] = useState(false);
@@ -45,16 +46,17 @@ export const useRegisterForm = () => {
     };
 
     const nextStep = () => {
-        if (currentStep < STEPS.PROFILE) {
+        if (currentStep < STEPS.PROFILE_2) {
             setCurrentStep((prev) => prev + 1);
         }
     };
 
     const prevStep = () => {
-        if (currentStep > STEPS.BASIC) {
+        if (currentStep > STEPS.BASIC_1) {
             setCurrentStep((prev) => prev - 1);
         }
     };
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -69,10 +71,12 @@ export const useRegisterForm = () => {
         submitData.append('location', formDetails.location);
         submitData.append('age', formDetails.age);
         submitData.append('gender', formDetails.gender);
+        submitData.append("role",formDetails.role)
+
         if (formDetails.avatar) {
             submitData.append('avatar', formDetails.avatar);
         }
-
+    
         try {
             setLoading(true);
             const response = await axios.post(RUrl, submitData);
@@ -88,8 +92,9 @@ export const useRegisterForm = () => {
                     location: '',
                     gender: '',
                     email: '',
+                    role: 'user'
                 });
-                router('/api/auth/login');
+                router('/submit-intrests');
             }
         } catch (error: any) {
             console.log(error);
@@ -99,26 +104,30 @@ export const useRegisterForm = () => {
         }
     };
 
-    const handleGoogleSignIn = async () => {
-        try {
-            // Implement Google OAuth flow here
-            // Example: Redirect to backend Google OAuth endpoint
-            const googleAuthUrl = import.meta.env.VITE_DB_URL + '/api/auth/google';
-            window.location.href = googleAuthUrl;
-        } catch (error: any) {
-            toast.error('Google Sign-In failed');
-        }
-    };
+
     useEffect(() => {
         switch (currentStep) {
-            case STEPS.BASIC:
-                setDisabled(!formDetails.firstName || !formDetails.email || !formDetails.password);
+            case STEPS.BASIC_1:
+                setDisabled(!formDetails.email || !formDetails.password);
                 break;
-            case STEPS.CONTACT:
-                setDisabled(!formDetails.phone_number || !formDetails.location);
+            case STEPS.BASIC_2:
+                setDisabled(!formDetails.firstName);
                 break;
-            case STEPS.PROFILE:
+            case STEPS.CONTACT_1:
+                setDisabled(!formDetails.phone_number);
+                break;
+            case STEPS.CONTACT_2:
+                setDisabled(!formDetails.location);
+                break;
+            case STEPS.PROFILE_1:
                 setDisabled(!formDetails.age || !formDetails.gender);
+                break;
+            case STEPS.PROFILE_2:
+                // Avatar is optional, so no validation needed
+                setDisabled(false);
+                break;
+            case STEPS.ROLE:
+                setDisabled(!formDetails.role);
                 break;
             default:
                 setDisabled(false);
@@ -137,7 +146,6 @@ export const useRegisterForm = () => {
         nextStep,
         prevStep,
         handleSubmit,
-        handleGoogleSignIn,
     };
 };
 

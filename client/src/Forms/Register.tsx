@@ -37,7 +37,6 @@ export default function Register() {
         onNextStep={register.nextStep}
         onPrevStep={register.prevStep}
         onSubmit={register.handleSubmit}
-        onGoogleSignIn={register.handleGoogleSignIn}
       />
     </>
   );

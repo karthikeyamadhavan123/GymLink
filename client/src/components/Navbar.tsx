@@ -22,8 +22,8 @@ const Navbar = () => {
                             {/* Logo and desktop navigation */}
                             <div className="flex items-center">
                                 <div className="flex-shrink-0 flex items-center">
-                                    {/* <image className="text-xl font-bold " width={140} height={140} alt='Logo' src={'/logo.png'} /> */}
-                                    <img src="/assets/images/logo/logo.png" alt="Logo" className='text-xl font-bold' loading='lazy' width={140} height={140} />
+                                   
+                                    <img src="/logo.png" alt="Logo" className='text-xl font-bold' loading='lazy' width={140} height={140} />
                                 </div>
                                 <div className="hidden md:ml-6 md:flex md:space-x-8  ">
                                     <Link to="/" className={`${pathname==='/'?'inline-flex items-center px-1 pt-1  text-lg font-medium text-white hover:text-lime-400 border-lime-400 border-b-2':'inline-flex items-center px-1 pt-1  text-lg font-medium text-white hover:text-lime-400 hover:border-lime-400 hover:border-b-2'}`}>
