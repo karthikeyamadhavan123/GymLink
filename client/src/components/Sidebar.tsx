@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, ChevronUp, ChevronDown } from 'lucide-react';
-import sidebarLinks from '../actions/getIcons';
+import { Menu, X, ChevronUp, ChevronDown, User, LogOut } from 'lucide-react';
+import { adminSidebarLinks, trainerSidebarLinks, userSidebarLinks } from '../actions/getIcons';
 import useUserStore from '@/zustand';
 import axios from 'axios';
 
 const logoutUrl = import.meta.env.VITE_DB_URL + '/api/users/logout'
-const Sidebar = () => {
+const Sidebar = ({ role }: { role: string | undefined }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const router = useNavigate()
@@ -21,7 +21,7 @@ const Sidebar = () => {
   const userEmail = useUserStore((state) => state.details?.email);
   const userImage = useUserStore((state) => state.details?.avatar);
   const gender = useUserStore((state) => state.details?.gender)
-  
+
   const handleLogout = async () => {
     await axios.post(logoutUrl, {}, { withCredentials: true });
     useUserStore.setState({ details: null })
@@ -65,34 +65,85 @@ const Sidebar = () => {
         {/* Links in the middle - grows to take available space */}
         <div className="flex-grow overflow-y-auto px-4">
           <div className="flex flex-col space-y-4">
-            {sidebarLinks.map((item, index) => {
+            {role === "User" ? (
+              userSidebarLinks.map((item, index) => {
+                const Icon = item.icon;
+                return (
+                  <Link
+                    className="flex items-center p-2 hover:bg-gray-800 rounded-md transition-colors"
+                    key={index}
+                    to={item.path}
+                    onClick={() => setIsOpen(false)} // Close sidebar when link is clicked
+                  >
+                    <Icon className="mr-3 text-white" size={20} />
+                    <span className="text-white">{item.label}</span>
+                  </Link>
+                );
+              })
+            ) : role === "Trainer" ? (
+              trainerSidebarLinks.map((item, index) => {
+                const Icon = item.icon;
+                return (
+                  <Link
+                    className="flex items-center p-2 hover:bg-gray-800 rounded-md transition-colors"
+                    key={index}
+                    to={item.path}
+                    onClick={() => setIsOpen(false)} // Close sidebar when link is clicked
+                  >
+                    <Icon className="mr-3 text-white" size={20} />
+                    <span className="text-white">{item.label}</span>
+                  </Link>
+                );
+              })
+            ) : (adminSidebarLinks.map((item, index) => {
               const Icon = item.icon;
               return (
                 <Link
                   className="flex items-center p-2 hover:bg-gray-800 rounded-md transition-colors"
                   key={index}
                   to={item.path}
+                  onClick={() => setIsOpen(false)} // Close sidebar when link is clicked
                 >
                   <Icon className="mr-3 text-white" size={20} />
                   <span className="text-white">{item.label}</span>
                 </Link>
               );
-            })}
+            }))}
           </div>
         </div>
 
         {isUserMenuOpen && (
-          <div className="mt-4 pl-12 bg-gray-700 w-full rounded-md">
-            <div className="py-1">
+          <div className="mt-2 mx-auto w-[85%] bg-gray-800 rounded-xl shadow-lg border border-gray-700">
+            <div className="py-1 flex flex-col">
+
+              {/* Profile */}
+              <Link
+                to="/profile"
+                className="flex items-center gap-2 px-3 py-1.5 text-xs text-white 
+                   hover:bg-gray-600 hover:text-lime-300 transition-all rounded-md"
+                onClick={() => setIsOpen(false)}
+              >
+                <User className="w-3 h-3" />
+                Profile
+              </Link>
+
+              <div className="border-t border-gray-600 my-1"></div>
+
+              {/* Logout */}
               <button
-                className="block px-2 py-1 text-sm text-white hover:text-lime-300 cursor-pointer"
+                className="flex items-center gap-2 px-3 py-1.5 text-xs text-white 
+                   hover:bg-red-500/20 cursor-pointer hover:text-red-400 transition-all rounded-md"
                 onClick={handleLogout}
               >
+                <LogOut className="w-3 h-3" />
                 Logout
               </button>
+
             </div>
           </div>
         )}
+
+
 
         {/* User info at the bottom - now properly fixed at bottom */}
         <div className="mt-auto flex-shrink-0 p-4 border-t border-gray-800">
@@ -101,7 +152,7 @@ const Sidebar = () => {
             onClick={toggleUserMenu}
           >
             <div className='flex items-center space-x-3 flex-1 min-w-0'>
-              {userImage?.trim()!=="" ? (
+              {userImage?.trim() !== "" ? (
                 <img src={userImage} alt="userimage" className='rounded-md w-10 h-10 flex-shrink-0' />
               ) : (
                 <img src={gender === "male" ? '/male-user.png' : "/female-user.png"} alt="user" className='rounded-md w-10 h-10 flex-shrink-0' />
@@ -119,7 +170,6 @@ const Sidebar = () => {
         </div>
       </div>
 
-      {/* Mobile Sidebar - Only visible when toggled */}
       <div
         className={`md:hidden bg-black font-stencil fixed h-screen z-40 transition-all duration-300 ease-in-out
                     ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
@@ -140,7 +190,37 @@ const Sidebar = () => {
         {/* Links in the middle - grows to take available space */}
         <div className="flex-grow overflow-y-auto px-4">
           <div className="flex flex-col space-y-4">
-            {sidebarLinks.map((item, index) => {
+            {role === "User" ? (
+              userSidebarLinks.map((item, index) => {
+                const Icon = item.icon;
+                return (
+                  <Link
+                    className="flex items-center p-2 hover:bg-gray-800 rounded-md transition-colors"
+                    key={index}
+                    to={item.path}
+                    onClick={() => setIsOpen(false)} // Close sidebar when link is clicked
+                  >
+                    <Icon className="mr-3 text-white" size={20} />
+                    <span className="text-white">{item.label}</span>
+                  </Link>
+                );
+              })
+            ) : role === "Trainer" ? (
+              trainerSidebarLinks.map((item, index) => {
+                const Icon = item.icon;
+                return (
+                  <Link
+                    className="flex items-center p-2 hover:bg-gray-800 rounded-md transition-colors"
+                    key={index}
+                    to={item.path}
+                    onClick={() => setIsOpen(false)} // Close sidebar when link is clicked
+                  >
+                    <Icon className="mr-3 text-white" size={20} />
+                    <span className="text-white">{item.label}</span>
+                  </Link>
+                );
+              })
+            ) : (adminSidebarLinks.map((item, index) => {
               const Icon = item.icon;
               return (
                 <Link
@@ -153,22 +233,42 @@ const Sidebar = () => {
                   <span className="text-white">{item.label}</span>
                 </Link>
               );
-            })}
+            }))}
           </div>
         </div>
 
         {isUserMenuOpen && (
-          <div className="mt-4 pl-12 bg-gray-700 w-full rounded-md">
-            <div className="py-1">
+          <div className="mt-2 mx-auto w-[85%] bg-gray-800 rounded-xl shadow-lg border border-gray-700">
+            <div className="py-1 flex flex-col">
+
+              {/* Profile */}
+              <Link
+                to="/profile"
+                className="flex items-center gap-2 px-3 py-1.5 text-xs text-white 
+                   hover:bg-gray-600 hover:text-lime-300 transition-all rounded-md"
+                onClick={() => setIsOpen(false)}
+              >
+                <User className="w-3 h-3" />
+                Profile
+              </Link>
+
+              <div className="border-t border-gray-600 my-1"></div>
+
+              {/* Logout */}
               <button
-                className="block px-2 py-1 text-sm text-white hover:text-lime-300 cursor-pointer"
+                className="flex items-center gap-2 px-3 py-1.5 text-xs text-white 
+                   hover:bg-red-500/20 cursor-pointer hover:text-red-400 transition-all rounded-md"
                 onClick={handleLogout}
               >
+                <LogOut className="w-3 h-3" />
                 Logout
               </button>
+
             </div>
           </div>
         )}
+
+
 
         {/* User info at the bottom - now properly fixed at bottom */}
         <div className="mt-auto flex-shrink-0 p-4 border-t border-gray-800">

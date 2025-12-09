@@ -1,9 +1,12 @@
-import { GenderProps } from "@/types";
+ interface GenderProps {
+  name: string
+  value:string
+}
 const genders: GenderProps[] = [
-    {  name: "Male" },
-    {  name: "Female" },
-    {  name: "Others" },
-]
+    { name: "Male", value: "male" },
+    { name: "Female", value: "female" },
+  ];
+
 
 const useGenders = () => {
     const gender = genders.map((g) => { return g })

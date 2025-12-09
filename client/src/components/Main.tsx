@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
-import { Button } from "./ui/button";
 import { motion } from 'framer-motion'
 const Main = () => {
     const text = 'Welcome to GymLink - Your Ultimate Fitness Companion'
@@ -24,8 +23,8 @@ const Main = () => {
                         applications. Discover AI-powered recommendations and take the next step in your fitness journey today!
                     </p>
                     <div className="flex space-x-4">
-                        <Button className="bg-[#8fe60f] rounded-tl-lg text-lg cursor-pointer hover:underline text-black" variant='arena' onClick={() => handleNavigation('/api/auth/register')}>Join the Arena</Button>
-                        <Button className="border-dashed bg-transparent text-lg hover:underline cursor-pointer" variant='arenaOutline' onClick={() => handleNavigation('/api/auth/login')}>Enter Arena</Button>
+                        <button className="bg-[#8fe60f] rounded-tl-lg text-lg cursor-pointer hover:underline text-black px-3 py-1" onClick={() => handleNavigation('/api/auth/register')}>Join the Arena</button>
+                        <button className="border-dashed bg-transparent text-lg hover:underline cursor-pointer" onClick={() => handleNavigation('/api/auth/login')}>Enter Arena</button>
                     </div>
                 </motion.div>
             </div>

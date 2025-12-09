@@ -1,4 +1,7 @@
-import { LocationProps } from "@/types";
+interface LocationProps {
+    code: string,
+    name: string
+}
 
 const indianStates: LocationProps[] = [
     { code: "AP", name: "Andhra Pradesh" },

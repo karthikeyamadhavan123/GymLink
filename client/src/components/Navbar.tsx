@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
-import { Button } from './ui/button';
 import { Dumbbell } from 'lucide-react'
 import { LogIn } from 'lucide-react'
 const Navbar = () => {
@@ -61,10 +60,8 @@ const Navbar = () => {
 
                             {/* Mobile menu button */}
                             <div className="flex items-center md:hidden relative z-10">
-                                <Button
+                                <button
                                     type="button"
-                                    variant="ghost"
-                                    size="icon"
                                     className="text-white hover:text-gray-500 hover:bg-gray-100 cursor-pointer"
                                     onClick={toggleMenu}
                                 >
@@ -74,7 +71,7 @@ const Navbar = () => {
                                     ) : (
                                         <Menu className="h-6 w-6 cursor-pointer" />
                                     )}
-                                </Button>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -86,16 +83,14 @@ const Navbar = () => {
                         }`}
                 >
                     <div className="flex justify-end p-4">
-                        <Button
+                        <button
                             type="button"
-                            variant="ghost"
-                            size="icon"
                             className="text-gray-400 hover:text-gray-500 hover:bg-gray-100 cursor-pointer"
                             onClick={toggleMenu}
                         >
                             <span className="sr-only">Close menu</span>
                             <X className="h-6 w-6 text-black" />
-                        </Button>
+                        </button>
                     </div>
                     <div className="px-2 pt-2 pb-3 space-y-1">
                         <Link to="/" className="block px-3 py-2 rounded-md text-base font-medium text-indigo-700 bg-indigo-50">

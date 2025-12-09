@@ -201,19 +201,14 @@ export interface SelectProps {
 }
 
 
-export interface LocationProps {
-  code: string,
-  name: string
-}
+
 
 export interface LabelProps {
   htmlFor: string
   labelText: string
 }
 
-export interface GenderProps {
-  name: string
-}
+
 
 export interface FormSubmitProps {
   handleSubmit: (e: React.FormEvent) => void;

@@ -9,6 +9,8 @@ import Select from "@/Forms/components/Select";
 import { RegisterViewProps } from "../types/FormProps";
 import useCheckPassword from "@/hooks/useCheckPassword";
 import { STEPS } from "@/enums";
+import useGenders from "@/actions/getGender";
+import useRoles from "@/actions/getRoles";
 
 export const RegisterView: React.FC<RegisterViewProps> = ({
   currentStep,
@@ -22,15 +24,8 @@ export const RegisterView: React.FC<RegisterViewProps> = ({
   onPrevStep,
   onSubmit,
 }) => {
-  const genderOptions = [
-    { name: "Male", value: "male" },
-    { name: "Female", value: "female" },
-  ];
-
-  const roleOptions = [
-    { name: "User", value: "user" },
-    { name: "Trainer", value: "trainer" },
-  ];
+  const genderOptions = useGenders()
+  const roleOptions = useRoles()
 
   const { success, error } = useCheckPassword(formDetails.password);
 
