@@ -94,7 +94,7 @@ export const useRegisterForm = () => {
                     email: '',
                     role: 'user'
                 });
-                router('/submit-intrests');
+                router('/submit-interests');
             }
         } catch (error: any) {
             console.log(error);
