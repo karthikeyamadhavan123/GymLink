@@ -1,4 +1,5 @@
-//all gym types will go here of users gym 
+//all gym types will go here of users gym and notification also
+
 export interface GymProps {
     _id: string;
     gymName: string;
@@ -38,4 +39,24 @@ export interface SingleGymProps {
 export default interface GymCardProps {
   gym: GymProps;
   onClick: () => void;
+}
+
+export interface NotificationModalProps {
+  onClose: () => void;
+}
+
+export interface NotificationProps {
+  _id: string;
+  notificationMessage: string;
+  jobNotification: {
+    postedBy: { gymName: string };
+  };
+  readBy: string[];
+  createdAt: string;
+}
+
+export interface Props {
+  n: NotificationProps;
+  isRead: boolean;
+  formatTime: (date: string) => string;
 }

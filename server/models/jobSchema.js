@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const Notification = require("../models/notificationSchema");
 const jobApplication = require("./jobApplicationSchema");
+
 const jobSchema = new Schema(
   {
     jobTitle: {
@@ -42,22 +43,6 @@ const jobSchema = new Schema(
   { timestamps: true }
 );
 
-jobSchema.post("save", async function (doc, next) {
-  try {
-    // Create a notification when a job is posted
-    const notification = new Notification({
-      notificationMessage: `New job alert:${doc.jobTitle}`,
-      jobNotification: doc._id, // Associate the notification with the job
-    });
-// will create a socket connection after the successful completion of frontend 
- //send to all users whose role is Trainer
-    await notification.save();
-    next();
-  } catch (error) {
-    console.error("Error creating notification:", error);
-    next(error);
-  }
-});
 
 jobSchema.post("findOneAndDelete", async function (doc) {
   try {
@@ -69,4 +54,5 @@ jobSchema.post("findOneAndDelete", async function (doc) {
     next(error);
   }
 });
+
 module.exports = mongoose.model("JobPosting", jobSchema);

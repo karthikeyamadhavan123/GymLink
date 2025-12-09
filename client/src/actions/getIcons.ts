@@ -19,7 +19,7 @@ export const userSidebarLinks = [
     path: "/dashboard/gyms",
   },
   {
-    label: "Trainers",
+    label: "My Trainers",
     icon: Users,
     path: "/trainers",
   },
@@ -29,7 +29,7 @@ export const userSidebarLinks = [
     path: "/chat",
   },
   {
-    label: "Partner Matching",
+    label: "Find People",
     icon: UserPlus,
     path: "/partner-matching",
   },
@@ -38,21 +38,21 @@ export const userSidebarLinks = [
     icon: Grid,
     path: "/kanban",
   },
-  {
-    label: "My Applications",
-    icon: Briefcase,
-    path: "/applications",
-  },
+  // {
+  //   label: "My Applications",
+  //   icon: Briefcase,
+  //   path: "/applications",
+  // },
   {
     label: "Settings",
     icon: Settings,
     path: "/settings",
   },
-  {
-    label: "Jobs",
-    icon: Briefcase,
-    path: "/jobs",
-  },
+  // {
+  //   label: "Jobs",
+  //   icon: Briefcase,
+  //   path: "/jobs",
+  // },
 ];
 
 // --------------------- TRAINER LINKS ---------------------

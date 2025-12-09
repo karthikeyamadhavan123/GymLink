@@ -49,7 +49,7 @@ const Sidebar = ({ role }: { role: string | undefined }) => {
       )}
 
       {/* Desktop Sidebar - Hidden on mobile */}
-      <div className="hidden md:flex bg-black font-stencil h-screen z-40 md:static md:w-1/5 md:min-w-48 flex-col border-r-2 border-gray-800 justify-between">
+      <div className="hidden md:flex bg-black font-stencil h-screen z-40 md:static md:w-1/5 md:min-w-64 flex-col border-r-2 border-gray-800 justify-between">
         {/* Logo at the top */}
         <div className="shrink-0 flex items-center p-4">
           <img

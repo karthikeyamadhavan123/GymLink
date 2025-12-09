@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { HashLoader } from "react-spinners";
+// import { io } from "socket.io-client";
 import Protected from "./Protected";
 import AdminProtected from "./AdminProtected";
 import FrequentlyAskedQuestion from "./company/components/FrequentlyAskedQuestionContainer";
@@ -16,6 +17,7 @@ import Memberships from "./pages/orders/components/Membership";
 import TrackSubscription from "./pages/orders/components/Tracksubscription";
 import Tracking from "./tracking_gym/Tracking";
 import SubmitInterest from "./Forms/SubmitInterest";
+
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const About = lazy(() => import("./pages/About"));
@@ -39,7 +41,23 @@ const AddJob = lazy(() => import('./gym-pages/admin/admin-jobs/AddJob'))
 const AdminJob = lazy(() => import('./gym-pages/admin/admin-jobs/AdminJob'))
 const Applications = lazy(() => import('./gym-pages/admin-applications/Applications'))
 const AdminTrainers = lazy(() => import('./gym-pages/admin/admin-trainers/GetMyTrainers'))
+
+//common imports
+const Profile = lazy(() => import("@/pages/profile/Profile"))
+const Settings = lazy(() => import("@/pages/settings/Settings"))
+
 function App() {
+  // const socket = io("http://localhost:8080")
+  // useEffect(() => {
+  //   socket.on("connect", () => {
+  //     console.log("connected", socket.id);
+
+  //   })
+  //   socket.on("notification", (msg:any) => {
+  //     console.log(msg);
+  //   })
+  // }, []);
+  
   return (
     <Suspense
       fallback={
@@ -74,7 +92,7 @@ function App() {
             path="/api/auth/reset-password/:token"
             element={<ResetPassword />}
           />
-          <Route path="/submit-interests" element={<SubmitInterest/>}/>
+          <Route path="/submit-interests" element={<SubmitInterest />} />
           <Route
             path="/dashboard/gyms"
             element={<Protected Component={<GymMain />} />}
@@ -117,6 +135,8 @@ function App() {
             element={<AdminProtected Component={<AdminTrainers />} />}
           />
           <Route path="/not-authorized" element={<NotAuthorize />} />
+          <Route path="/profile" element={<Protected Component={<Profile />} />} />
+          <Route path="/settings" element={<Protected Component={<Settings />} />} />
           <Route path='/tracking' element={<Tracking />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

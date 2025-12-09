@@ -11,10 +11,8 @@ const notificationSchema = new Schema({
         ref:"JobPosting",
         required:true
     },
-    isRead:{
-        type:Boolean,
-        default:false
-    }
+    readBy: [{ type: Schema.Types.ObjectId, ref: "User" }]
+
 },{timestamps:true})
 
 module.exports=mongoose.model('Notification',notificationSchema)

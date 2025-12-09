@@ -37,11 +37,11 @@ export default function PersonalTraining() {
           className="text-center mb-10"
         >
           <h1 className="text-3xl sm:text-4xl font-bold mb-3 
-            bg-gradient-to-r from-white via-lime-400 to-white 
+            bg-linear-to-r from-white via-lime-400 to-white 
             bg-clip-text text-transparent animate-pulse">
             Personal Training Plans
           </h1>
-          <div className="w-24 h-1 bg-gradient-to-r from-lime-400 to-white mx-auto rounded-full"></div>
+          <div className="w-24 h-1 bg-linear-to-r from-lime-400 to-white mx-auto rounded-full"></div>
         </motion.div>
 
         {/* Intro */}
@@ -77,7 +77,7 @@ export default function PersonalTraining() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => router("/subscription")}
-                className="w-full px-4 py-2 bg-gradient-to-r from-lime-400 to-white 
+                className="w-full px-4 py-2 bg-linear-to-r from-lime-400 to-white 
                   text-black font-semibold rounded-lg 
                   hover:from-white hover:to-lime-300 
                   transition-all duration-300"

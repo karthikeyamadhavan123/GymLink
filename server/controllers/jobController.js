@@ -2,6 +2,7 @@ const Gym = require("../models/gymSchema");
 const JobPosting = require("../models/jobSchema"); // Import JobPosting model
 const User = require("../models/userSchema");
 const Notification = require("../models/notificationSchema");
+const { io } = require("../socket/socket");
 
 const createJobPosting = async (req, res) => {
   try {
@@ -67,6 +68,18 @@ const createJobPosting = async (req, res) => {
 
     // Update the gym document to include this job posting
     // create a new notification
+
+    const notification = new Notification({
+      notificationMessage: `${jobTitle} by ${postedGym.gymName}!`,
+      jobNotification: newJob._id,
+      isRead: false,
+    });
+
+    await notification.save();
+
+    //call socket here
+    io.emit("notification", { notification: notification });
+
     postedGym.jobs.push(newJob._id);
     await postedGym.save();
 
@@ -120,7 +133,7 @@ const getJobPostingByGym = async (req, res) => {
         "-gymName -owner -equipments -gymImages -basePrice -trainers -owner -_id -location"
       );
     if (jobs.length === 0) {
-      res.status(400).json({ message: "You have no jobs posted!"});
+      res.status(400).json({ message: "You have no jobs posted!" });
     }
     return res
       .status(200)
@@ -241,7 +254,7 @@ const deleteJobPosting = async (req, res) => {
     if (!gym) {
       return res.status(404).json({
         success: false,
-        message: "Job you trying to find does not exist!!",
+        message: "Gym you trying to find does not exist!!",
       });
     }
     const deletejob = await JobPosting.findById(jobId).populate({
@@ -277,10 +290,16 @@ const deleteJobPosting = async (req, res) => {
 };
 
 const getNotifications = async (req, res) => {
+  const { userId } = req.userId;
+  if (!userId) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Please log in and try again!" });
+  }
   try {
     const notifications = await Notification.find({}).populate({
       path: "jobNotification",
-      select: "createdAt",
+      select: "-_id,-jobTitle,-requirements,-jobDetails,-experienceRequired",
       populate: {
         path: "postedBy",
         select: "gymName -_id",
@@ -303,6 +322,49 @@ const getNotifications = async (req, res) => {
       .json({ message: "Internal server error", error: error.message });
   }
 };
+
+const markReadAllNotifications = async (req, res) => {
+  try {
+    const { userId } = req.userId;
+    if (!userId) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Please log in and try again!" });
+    }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User does not exist!" });
+    }
+
+    const { notification_ids } = req.body;
+
+    if (!Array.isArray(notification_ids)) {
+      return res.status(400).json({
+        success: false,
+        message: "Notification IDs are required and must be an array.",
+      });
+    }
+
+    await Notification.updateMany(
+      { _id: { $in: notification_ids } },
+      { $addToSet: { readBy: userId } }
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: "All notifications marked as read successfully.",
+    });
+  } catch (error) {
+    console.error("Error posting job:", error);
+    return res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
+  }
+};
+
 module.exports = {
   createJobPosting,
   getJobPosting,
@@ -310,4 +372,5 @@ module.exports = {
   editJobPosting,
   deleteJobPosting,
   getNotifications,
+  markReadAllNotifications,
 };

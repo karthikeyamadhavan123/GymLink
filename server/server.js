@@ -11,10 +11,10 @@ require("dotenv").config();
 const cookieParser = require("cookie-parser");
 const rateLimit = require("express-rate-limit");
 
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 25, //15min frame
-});
+// const limiter = rateLimit({
+//   windowMs: 15 * 60 * 1000,
+//   max: 25, //15min frame
+// });
 
 main().catch((err) => console.log(err));
 async function main() {
@@ -31,7 +31,7 @@ app.use(
   })
 );
 
-app.use(limiter);
+// app.use(limiter);
 app.use(cookieParser());
 app.use("/api/users", userRoutes);
 app.use("/gym", gymRoutes);
