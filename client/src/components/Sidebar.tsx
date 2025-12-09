@@ -51,7 +51,7 @@ const Sidebar = ({ role }: { role: string | undefined }) => {
       {/* Desktop Sidebar - Hidden on mobile */}
       <div className="hidden md:flex bg-black font-stencil h-screen z-40 md:static md:w-1/5 md:min-w-48 flex-col border-r-2 border-gray-800 justify-between">
         {/* Logo at the top */}
-        <div className="flex-shrink-0 flex items-center p-4">
+        <div className="shrink-0 flex items-center p-4">
           <img
             src="/logo.png"
             alt="Logo"
@@ -63,7 +63,7 @@ const Sidebar = ({ role }: { role: string | undefined }) => {
         </div>
 
         {/* Links in the middle - grows to take available space */}
-        <div className="flex-grow overflow-y-auto px-4">
+        <div className="grow overflow-y-auto px-4">
           <div className="flex flex-col space-y-4">
             {role === "User" ? (
               userSidebarLinks.map((item, index) => {
@@ -146,25 +146,25 @@ const Sidebar = ({ role }: { role: string | undefined }) => {
 
 
         {/* User info at the bottom - now properly fixed at bottom */}
-        <div className="mt-auto flex-shrink-0 p-4 border-t border-gray-800">
+        <div className="mt-auto shrink-0 p-4 border-t border-gray-800">
           <div
             className='flex items-center justify-between cursor-pointer hover:bg-gray-800 rounded-md p-2 transition-colors'
             onClick={toggleUserMenu}
           >
             <div className='flex items-center space-x-3 flex-1 min-w-0'>
               {userImage?.trim() !== "" ? (
-                <img src={userImage} alt="userimage" className='rounded-md w-10 h-10 flex-shrink-0' />
+                <img src={userImage} alt="userimage" className='rounded-md w-10 h-10 shrink-0' />
               ) : (
-                <img src={gender === "male" ? '/male-user.png' : "/female-user.png"} alt="user" className='rounded-md w-10 h-10 flex-shrink-0' />
+                <img src={gender === "male" ? '/male-user.png' : "/female-user.png"} alt="user" className='rounded-md w-10 h-10 shrink-0' />
               )}
               <div className='text-sm hover:text-lime-300 text-white hover:transition-all hover:ease-in-out truncate'>
                 {userEmail}
               </div>
             </div>
             {isUserMenuOpen ? (
-              <ChevronUp className="text-white flex-shrink-0 ml-2" size={16} />
+              <ChevronUp className="text-white shrink-0 ml-2" size={16} />
             ) : (
-              <ChevronDown className="text-white flex-shrink-0 ml-2" size={16} />
+              <ChevronDown className="text-white shrink-0 ml-2" size={16} />
             )}
           </div>
         </div>
@@ -176,7 +176,7 @@ const Sidebar = ({ role }: { role: string | undefined }) => {
                     w-64 left-0 top-0 flex flex-col border-r-2 border-gray-800 justify-between`}
       >
         {/* Logo at the top - with padding for mobile button */}
-        <div className="flex-shrink-0 flex items-center p-4 pt-16">
+        <div className="shrink-0 flex items-center p-4 pt-16">
           <img
             src="/logo.png"
             alt="Logo"
@@ -188,7 +188,7 @@ const Sidebar = ({ role }: { role: string | undefined }) => {
         </div>
 
         {/* Links in the middle - grows to take available space */}
-        <div className="flex-grow overflow-y-auto px-4">
+        <div className="grow overflow-y-auto px-4">
           <div className="flex flex-col space-y-4">
             {role === "User" ? (
               userSidebarLinks.map((item, index) => {
@@ -271,25 +271,25 @@ const Sidebar = ({ role }: { role: string | undefined }) => {
 
 
         {/* User info at the bottom - now properly fixed at bottom */}
-        <div className="mt-auto flex-shrink-0 p-4 border-t border-gray-800">
+        <div className="mt-auto shrink-0 p-4 border-t border-gray-800">
           <div
             className='flex items-center justify-between cursor-pointer hover:bg-gray-800 rounded-md p-2 transition-colors'
             onClick={toggleUserMenu}
           >
             <div className='flex items-center space-x-3 flex-1 min-w-0'>
               {userImage ? (
-                <img src={userImage} alt="userimage" className='rounded-md w-10 h-10 flex-shrink-0' />
+                <img src={userImage} alt="userimage" className='rounded-md w-10 h-10 shrink-0' />
               ) : (
-                <img src={gender === "male" ? '/assets/images/avatars/male-user.png' : "/assets/images/avatars/female-user.png"} alt="user" className='rounded-md w-10 h-10 flex-shrink-0' />
+                <img src={gender === "male" ? '/assets/images/avatars/male-user.png' : "/assets/images/avatars/female-user.png"} alt="user" className='rounded-md w-10 h-10 shrink-0' />
               )}
               <div className='text-sm hover:text-lime-300 text-white hover:transition-all hover:ease-in-out truncate'>
                 {userEmail}
               </div>
             </div>
             {isUserMenuOpen ? (
-              <ChevronUp className="text-white flex-shrink-0 ml-2" size={16} />
+              <ChevronUp className="text-white shrink-0 ml-2" size={16} />
             ) : (
-              <ChevronDown className="text-white flex-shrink-0 ml-2" size={16} />
+              <ChevronDown className="text-white shrink-0 ml-2" size={16} />
             )}
           </div>
         </div>

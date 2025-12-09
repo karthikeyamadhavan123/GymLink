@@ -27,7 +27,7 @@ const Jobs = () => {
     previousWork: "",
     previousExperience: "",
     invoiceDays: "",
-    userResume: null as File | null,
+    trainerResume: null as File | null,
   });
   const [notificationModal, setNotificationModal] = useState(false);
 
@@ -54,7 +54,7 @@ const Jobs = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = e.target;
 
-    if (name === "userResume" && files && files.length > 0) {
+    if (name === "trainerResume" && files && files.length > 0) {
       setJobForm((prev) => ({
         ...prev,
         userResume: files[0],
@@ -76,12 +76,12 @@ const Jobs = () => {
       formData.append("previousExperience", jobForm.previousExperience);
       formData.append("invoiceDays", jobForm.invoiceDays);
 
-      if (jobForm.userResume instanceof File) {
-        formData.append("userResume", jobForm.userResume);
+      if (jobForm.trainerResume instanceof File) {
+        formData.append("trainerResume", jobForm.trainerResume);
       }
       const response = await axios.post(
         import.meta.env.VITE_DB_URL +
-          `/applicants/${individualJob.gymId}/${individualJob.jobId}/apply`,
+        `/applicants/${individualJob.gymId}/${individualJob.jobId}/apply`,
         formData,
         { withCredentials: true }
       );
@@ -133,7 +133,7 @@ const Jobs = () => {
       </Helmet>
 
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-black to-gray-900 text-white py-16 px-4 sm:px-6 lg:px-8">
+      <div className="bg-linear-to-r from-black to-gray-900 text-white py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-4xl font-bold mb-6">
             Find Your Dream Fitness Career
@@ -144,7 +144,7 @@ const Jobs = () => {
 
           {/* Search Bar */}
           <div className="max-w-2xl mx-auto relative flex items-center space-x-2">
-            <div className="relative flex-grow">
+            <div className="relative grow">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <FiBriefcase className="h-5 w-5 text-gray-400" />
               </div>
@@ -190,7 +190,7 @@ const Jobs = () => {
                 className="bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-lime-900/20 transition-all duration-300"
               >
                 {/* Job Header */}
-                <div className="bg-gradient-to-r from-lime-800 to-lime-600 px-6 py-4">
+                <div className="bg-linear-to-r from-lime-800 to-lime-600 px-6 py-4">
                   <h3 className="text-xl font-bold text-white truncate">
                     {job.jobTitle}
                   </h3>

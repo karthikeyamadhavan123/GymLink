@@ -49,7 +49,8 @@ jobSchema.post("save", async function (doc, next) {
       notificationMessage: `New job alert:${doc.jobTitle}`,
       jobNotification: doc._id, // Associate the notification with the job
     });
-// will create a socket connection after the successful completion of frontend
+// will create a socket connection after the successful completion of frontend 
+ //send to all users whose role is Trainer
     await notification.save();
     next();
   } catch (error) {

@@ -56,8 +56,8 @@ const UserSchema = new Schema(
     },
     role: {
       type: String,
-      enum: ["user", "trainer"], // just add user or trainer only trainers can apply for job and applications
-      default: "user",
+      enum: ["User", "Trainer", "admin"], // just add user or trainer only trainers can apply for job and applications
+      default: "User",
     },
     location: {
       type: String, // Stores only the state

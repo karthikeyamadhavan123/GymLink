@@ -3,6 +3,7 @@ const jobApplication = require("../models/jobApplicationSchema");
 const JobPosting = require("../models/jobSchema"); // Import JobPosting model
 const User = require("../models/userSchema");
 const cloudinary = require("cloudinary").v2;
+
 const applyforJobPosting = async (req, res) => {
   try {
     const { userId } = req.userId; // Extract userId from request (Ensure it's passed via middleware)
@@ -16,8 +17,8 @@ const applyforJobPosting = async (req, res) => {
         .status(404)
         .json({ message: "User not found. Please register first." });
     }
-    if (user.role !== "user") {
-      return res.status(400).json({ message: "Users can only apply" });
+    if (user.role.toLowerCase() !== "trainer") {
+      return res.status(400).json({ message: "Trainers can only apply" });
     }
 
     // Extract gymId from request parameters
@@ -26,16 +27,17 @@ const applyforJobPosting = async (req, res) => {
       return res.status(400).json({ message: "jobId is required." });
     }
     if (!gymId) {
-      return res.status(400).json({ message: "jobId is required." });
+      return res.status(400).json({ message: "gymId is required." });
     }
+
+    // Check if the gym exists
     const gym = await Gym.findById(gymId);
     if (!gym) {
       return res
         .status(404)
-        .json({ message: "User not found. Please register first." });
+        .json({ message: "Gym not found. Please register first." });
     }
 
-    // Check if the gym exists
     const postedJob = await JobPosting.findById(jobId);
     if (!postedJob) {
       return res
@@ -56,13 +58,13 @@ const applyforJobPosting = async (req, res) => {
 
     if (req.file) {
       const imageUpload = await cloudinary.uploader.upload(req.file.path, {
-        folder: "userResume",
+        folder: "trainerResume",
         resource_type: "raw",
       });
       application = imageUpload.secure_url;
     } else {
       return res.status(400).json({
-        message: "User Resume is required",
+        message: "Trainer Resume is required",
         success: false,
       });
     }
@@ -72,8 +74,8 @@ const applyforJobPosting = async (req, res) => {
       invoiceDays,
       resume: application,
       appliedUser: userId,
-      gym:gymId,
-      jobId:jobId
+      gym: gymId,
+      jobId: jobId,
     });
 
     await newJobApplication.save();
@@ -81,7 +83,8 @@ const applyforJobPosting = async (req, res) => {
     // Update the gym document to include this job posting
     postedJob.appliedJobApplicants.push(newJobApplication._id);
     await postedJob.save();
-// mail send to user
+    // mail send to user
+    //use sockets here
     return res.status(201).json({ message: "Job Applied successfully!" });
   } catch (error) {
     console.error("Error posting job:", error);
@@ -102,10 +105,12 @@ const getJobApplicationofCurrentUser = async (req, res) => {
     if (!user) {
       return res
         .status(404)
-        .json({ message: "User not found. Please register first." });
+        .json({ message: "user not found. Please register first." });
     }
-    if (user.role !== "user") {
-      return res.status(400).json({ message: "Users can only view" });
+    if (user.role.toLowerCase() !== "trainer") {
+      return res
+        .status(400)
+        .json({ message: "Trainer can only their applications." });
     }
     const myApplications = await jobApplication.find({ appliedUser: userId });
     if (!myApplications) {
@@ -142,21 +147,35 @@ const getApplicationsOfGym = async (req, res) => {
         .json({ message: "User not found. Please register first." });
     }
     if (user.role !== "admin") {
-      return res.status(400).json({ message: "Admins can only view" });
+      return res
+        .status(400)
+        .json({
+          message:
+            "Admins can only view their applications posted to their gym.",
+        });
     }
-    const myApplications = await jobApplication.find({}).populate({
-      path:'appliedUser',
-      select:'firstName email phone_number gender -_id'
-    }).populate({
-      path:'gym',
-      select:'gymName location.state'
-    }).select('invoiceDays jobId _id previousExperience previousWork status resume')
-    if (myApplications.length===0) {
+    const myApplications = await jobApplication
+      .find({})
+      .populate({
+        path: "appliedUser",
+        select: "firstName email phone_number gender -_id",
+      })
+      .populate({
+        path: "gym",
+        select: "gymName location.state",
+      })
+      .select(
+        "invoiceDays jobId _id previousExperience previousWork status resume"
+      );
+
+    if (myApplications.length === 0) {
       return res.status(200).json({ message: "You have no applications" });
     }
-    const allApplicantsJob=myApplications.filter((application)=>String(application.jobId) === jobId)
+    const allApplicantsJob = myApplications.filter(
+      (application) => String(application.jobId) === jobId
+    );
     return res.status(200).json({
-      message: "Applications fetched successfully!",
+      message: "Your Gym Applications fetched successfully!",
       applications: allApplicantsJob,
     });
   } catch (error) {
@@ -256,7 +275,7 @@ const AcceptjobApplication = async (req, res) => {
     }
     if (
       String(job.postedBy.owner._id) !== String(userId) ||
-      user.role !== "admin"
+      user.role.toLowerCase() !== "admin"
     ) {
       return res.status(401).json({
         success: false,
@@ -266,6 +285,7 @@ const AcceptjobApplication = async (req, res) => {
     acceptApplication.status = "Accepted";
     await acceptApplication.save();
     // mail send to user
+    //send notification here
     return res.status(200).json({
       message: "The owner  has accepted your application",
       success: true,
@@ -320,7 +340,7 @@ const RejectjobApplication = async (req, res) => {
     }
     if (
       String(job.postedBy.owner._id) !== String(userId) ||
-      user.role !== "admin"
+      user.role.toLowerCase() !== "admin"
     ) {
       return res.status(401).json({
         success: false,
@@ -328,6 +348,7 @@ const RejectjobApplication = async (req, res) => {
       });
     }
     rejectApplication.status = "Rejected";
+    //socket use here
     await rejectApplication.save();
     // mail send to user
     return res.status(200).json({

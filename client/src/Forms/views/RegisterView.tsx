@@ -56,7 +56,7 @@ export const RegisterView: React.FC<RegisterViewProps> = ({
   return (
     <div className="min-h-screen bg-black flex flex-col items-center justify-center p-4 font-stencil">
       {/* Background Gradient Effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-green-900/10 to-gray-900 opacity-70"></div>
+      <div className="absolute inset-0 bg-linear-to-r from-gray-900 via-green-900/10 to-gray-900 opacity-70"></div>
 
       <div className="w-full max-w-2xl z-10">
         {/* Logo and Header */}
@@ -297,7 +297,7 @@ export const RegisterView: React.FC<RegisterViewProps> = ({
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                       <div
-                        className={`transition duration-300 ${formDetails.role === "user"
+                        className={`transition duration-300 ${formDetails.role.toLowerCase() === "user"
                           ? "bg-lime-600/20 border-lime-400"
                           : "bg-gray-800 border-gray-700"
                           } border-2 rounded-lg p-6`}
@@ -305,13 +305,13 @@ export const RegisterView: React.FC<RegisterViewProps> = ({
                         <div className="flex flex-col items-center text-center">
                           <User
                             size={48}
-                            className={`mb-3 ${formDetails.role === "user"
+                            className={`mb-3 ${formDetails.role.toLowerCase() === "user"
                               ? "text-lime-400"
                               : "text-gray-400"
                               }`}
                           />
                           <h3
-                            className={`font-bold text-lg mb-2 ${formDetails.role === "user"
+                            className={`font-bold text-lg mb-2 ${formDetails.role.toLowerCase() === "user"
                               ? "text-lime-400"
                               : "text-gray-300"
                               }`}
@@ -325,7 +325,7 @@ export const RegisterView: React.FC<RegisterViewProps> = ({
                       </div>
 
                       <div
-                        className={`transition duration-300 ${formDetails.role === "trainer"
+                        className={`transition duration-300 ${formDetails.role.toLowerCase() === "trainer"
                           ? "bg-lime-600/20 border-lime-400"
                           : "bg-gray-800 border-gray-700"
                           } border-2 rounded-lg p-6`}
@@ -333,13 +333,13 @@ export const RegisterView: React.FC<RegisterViewProps> = ({
                         <div className="flex flex-col items-center text-center">
                           <UserCog
                             size={48}
-                            className={`mb-3 ${formDetails.role === "trainer"
+                            className={`mb-3 ${formDetails.role.toLowerCase() === "trainer"
                               ? "text-lime-400"
                               : "text-gray-400"
                               }`}
                           />
                           <h3
-                            className={`font-bold text-lg mb-2 ${formDetails.role === "trainer"
+                            className={`font-bold text-lg mb-2 ${formDetails.role.toLowerCase() === "trainer"
                               ? "text-lime-400"
                               : "text-gray-300"
                               }`}
@@ -391,7 +391,6 @@ export const RegisterView: React.FC<RegisterViewProps> = ({
                         file:text-sm file:font-semibold
                         file:bg-lime-500/20 file:text-lime-400
                         hover:file:bg-lime-500/30 transition duration-200 cursor-pointer"
-                      required={true}
                     />
                     <p className="mt-2 text-sm text-gray-500">
                       Upload a profile picture to personalize your account

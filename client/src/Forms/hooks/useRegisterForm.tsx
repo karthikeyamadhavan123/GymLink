@@ -18,7 +18,7 @@ export const useRegisterForm = () => {
         age: '',
         gender: '',
         avatar: null,
-        role: 'user'
+        role: 'User'
     });
     const [disabled, setDisabled] = useState(true);
     const [loading, setLoading] = useState(false);
@@ -92,7 +92,7 @@ export const useRegisterForm = () => {
                     location: '',
                     gender: '',
                     email: '',
-                    role: 'user'
+                    role: 'User'
                 });
                 router('/submit-interests');
             }
