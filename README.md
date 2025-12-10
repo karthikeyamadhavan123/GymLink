@@ -1,88 +1,107 @@
-GymLink is a dynamic web platform that bridges the gap between fitness seekers and gym service providers. Whether you're looking for a gym nearby, want to compare facilities, or book sessions with professional trainers, GymLink simplifies the process with a modern and intuitive interface.
+# 🏋️‍♂️ GymLink — Your Gateway to Fitness Connectivity
 
-📌 Table of Contents
-Overview
+![React](https://img.shields.io/badge/Frontend-React-blue)
+![TailwindCSS](https://img.shields.io/badge/Styles-TailwindCSS-38B2AC)
+![Node](https://img.shields.io/badge/Backend-Node.js-43853D)
+![MongoDB](https://img.shields.io/badge/Database-MongoDB-47A248)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
-Features
+GymLink is a powerful fitness discovery and booking platform that connects **users**, **trainers**, and **gym owners**.  
+From finding nearby gyms to booking sessions with certified trainers, GymLink makes fitness accessible with a modern and intuitive interface.
 
-Demo
+---
 
-Tech Stack
+## 📌 Table of Contents
 
-Installation
+- [Overview](#overview)
+- [Features](#features)
+- [Demo](#demo)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
+- [Environment Variables](#environment-variables)
+- [Folder Structure](#folder-structure)
+- [Screenshots](#screenshots)
+- [Future Enhancements](#future-enhancements)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
-Environment Variables
+---
 
-Folder Structure
+## 📖 Overview
 
-Screenshots
+GymLink centralizes everything fitness-related in a single platform:
 
-Future Enhancements
+- Discover local gyms based on your preferences
+- Connect with trainers and book fitness sessions
+- Explore facilities, pricing, and ratings
+- Manage your bookings and classes
+- Track personalized fitness suggestions
+- NEW: **Real-time notifications for users**
 
-Contributing
+Gym owners get a complete dashboard to showcase their services, manage trainers, and track bookings.
 
-License
+---
 
-Contact
+## ✨ Features
 
-📖 Overview
-GymLink is a centralized platform where users can:
+### 🔍 User Features
 
-Discover local gyms with real-time availability
+- Search gyms by location, rating, cost & services
+- See trainer profiles with certifications and specialties
+- Book workout classes and personal sessions
+- Manage dashboard: bookings, favorites, recommendations
+- Rate & review gyms
+- **🔔 NEW: Real-Time Notifications**
+  - Live updates for bookings, messages & trainer responses
+  - Unread notifications badge
+  - Notification modal with timestamp formatting
 
-View detailed profiles of trainers and facilities
+---
 
-Manage fitness bookings and schedules
+### 🛠 Admin / Gym Owner Features
 
-Receive personalized gym suggestions based on preferences
+- Add and manage gyms
+- Add trainers & track their schedules
+- Upload images and facility details
+- Manage reviews
+- Booking insights dashboard
 
-Rate and review gyms and services
+---
 
-The platform also supports gym owners and trainers by giving them a space to showcase their services, manage bookings, and grow their client base.
+### 📱 UI/UX
 
-✨ Features
-🔍 User-Side
-Explore Nearby Gyms: Search and filter gyms by location, rating, cost, and services (Zumba, cardio, strength, etc.)
+- Fully responsive
+- Smooth transitions
+- Mobile-first
+- Clean dark theme
 
-Trainer Connect: View trainers, their certifications, experience, and specialties. Book personal sessions.
+---
 
-Class Scheduling: Book workout slots in advance and manage your schedule.
+## 🌐 Demo
 
-Personal Dashboard: Track bookings, favorite gyms, and workout recommendations.
+👉 **Live Link:** https://gym-link.vercel.app/
+Try booking a gym, viewing trainers, or testing notifications!
 
-Reviews & Ratings: Share and read feedback about gyms and trainers.
+---
 
-🛠 Admin Panel
-Gym Owner Dashboard: Add and manage gyms, update services, upload images.
+## 🛠 Tech Stack
 
-Trainer Management: Add or edit trainers associated with a gym.
+| Layer    | Technology                     |
+| -------- | ------------------------------ |
+| Frontend | React.js, Tailwind CSS, Axios  |
+| Backend  | Node.js, Express.js            |
+| Database | MongoDB Atlas                  |
+| Auth     | Firebase Auth / JWT            |
+| Storage  | Cloudinary                     |
+| Hosting  | Vercel / Render                |
+| Others   | React Router, Formik, Toastify |
 
-Booking Insights: View all user bookings, slot availability, and trends.
+---
 
-Review Moderation: Manage user-submitted reviews.
+## ⚙️ Installation
 
-📱 UI/UX
-Mobile-first responsive design
-
-Fast and accessible UI with intuitive navigation
-
-Dark mode (optional)
-
-🌐 Live Demo
-👉 Visit GymLink Website
-
-Try exploring gyms near your area or test out the trainer booking feature!
-
-🛠 Tech Stack
-
-Layer	Technology
-Frontend	React.js, Tailwind CSS, Axios
-Backend	Node.js, Express.js
-Database	MongoDB Atlas
-Auth	Firebase Authentication / JWT
-Storage	Cloudinary (for gym/trainer images)
-Hosting	Vercel / Render
-Other	React Router, Formik, Toastify
+```bash
 # Clone the repository
 git clone https://github.com/karthikeyamadhavan123/GymLink.git
 cd gymlink
@@ -90,63 +109,35 @@ cd gymlink
 # Install dependencies
 npm install
 
-# Set up your environment variables
-touch .env
-# Add the keys as mentioned below
-
-# Start the development server
+# Start development server
 npm run dev
+
+Backend Env
+
 MONGO_URI=your_mongodb_connection_string
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 JWT_SECRET=your_jwt_secret_key
 
-gymlink/
-├── client/               # React frontend
-│   ├── components/
-│   ├── pages/
-│   ├── services/
-│   └── assets/
-├── server/               # Node.js + Express backend
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   └── middleware/
-├── .env
-├── package.json
+
+🔥 Upcoming in V2.0.0
+These features are currently under development and will be released in V2.0.0:
+✔ Chat system
+✔ Partner matching system
+✔ Kanban board for users to track fitness tasks
+✔ Codebase cleaning & optimization
+
+
 🚀 Future Enhancements
-AI-powered fitness recommendation engine
-
-Payment gateway integration for premium features
-
-Real-time chat between trainers and users
-
-Push notifications for class reminders
-
-Multi-language support
+Features planned after the V2.0.0 release:
+🤖 AI-powered fitness recommendation system
+🌎 Multi-language support
 
 🤝 Contributing
-Contributions are welcome! Follow these steps:
+Contributions, issues, and feature requests are welcome!
+Feel free to fork the repo and submit a PR.
 
-Fork the repository
-
-Create a new branch: git checkout -b feature-name
-
-Make your changes
-
-Commit your changes: git commit -m 'Added feature X'
-
-Push to the branch: git push origin feature-name
-
-Submit a pull request
-
-📜 License
+📄 License
 This project is licensed under the MIT License.
-
-📬 Contact
-Karthikeya Madhavan
-📧 Email: karthikeyamadhavan095@gmail.com
-🌐 Portfolio: (https://my-portfolio-1a2r.vercel.app/)
-🐙 GitHub: (https://github.com/karthikeyamadhavan123)
-└── README.m
+```
