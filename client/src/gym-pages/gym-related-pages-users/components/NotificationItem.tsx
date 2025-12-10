@@ -1,5 +1,5 @@
 import React from "react";
-import {  Props } from "../types/types";
+import { Props } from "../types/types";
 
 const NotificationItem: React.FC<Props> = ({ n, isRead, formatTime }) => {
   return (

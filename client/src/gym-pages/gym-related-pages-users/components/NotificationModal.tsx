@@ -5,9 +5,9 @@ import { useNotifications } from "../hooks/useNotifications";
 import { NotificationModalProps } from "../types/types";
 
 
-const NotificationModal: React.FC<NotificationModalProps> = ({ onClose }) => {
-  const { notifications, isRead, formatTime, markAllAsRead } = useNotifications();
 
+const NotificationModal: React.FC<NotificationModalProps> = ({ onClose }) => {
+  const { notifications, isRead, formatTime, markAllRead } = useNotifications();
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
       <div className="bg-zinc-900 w-full max-w-md rounded-xl shadow-lg border border-zinc-700 p-6 relative">
@@ -25,10 +25,9 @@ const NotificationModal: React.FC<NotificationModalProps> = ({ onClose }) => {
           <h2 className="text-white text-lg font-semibold">🔔 Notifications</h2>
 
           <button
-            onClick={markAllAsRead}
             className="flex items-center gap-1 text-sm px-3 py-1 rounded-md 
                        bg-zinc-800 border border-zinc-700 text-gray-300 
-                       hover:border-lime-400 hover:text-lime-300 transition cursor-pointer"
+                       hover:border-lime-400 hover:text-lime-300 transition cursor-pointer" onClick={() => markAllRead(notifications)}
           >
             <CheckCheck size={14} />
             Mark all as read
@@ -37,19 +36,23 @@ const NotificationModal: React.FC<NotificationModalProps> = ({ onClose }) => {
 
         {/* Notification List */}
         <div className="space-y-3 max-h-72 overflow-y-auto pr-1">
-          {notifications.map((n) => (
-            <NotificationItem
-              key={n._id}
-              n={n}
-              isRead={isRead(n)}
-              formatTime={formatTime}
-            />
-          ))}
+          {notifications.length === 0 ? (
+            <div className="flex items-center justify-center h-72 text-gray-400 text-center px-4">
+              There are no updates for you right now.
+            </div>
+          ) : (
+            notifications.map((n) => (
+              <NotificationItem
+                key={n._id}
+                n={n}
+                isRead={isRead(n)}
+                formatTime={formatTime}
+              />
+            ))
+          )}
         </div>
 
-        <div className="mt-5 text-center">
-          <p className="text-gray-400 text-xs">These are dummy notifications</p>
-        </div>
+
       </div>
     </div>
   );

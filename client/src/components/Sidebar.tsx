@@ -280,7 +280,7 @@ const Sidebar = ({ role }: { role: string | undefined }) => {
               {userImage ? (
                 <img src={userImage} alt="userimage" className='rounded-md w-10 h-10 shrink-0' />
               ) : (
-                <img src={gender === "male" ? '/assets/images/avatars/male-user.png' : "/assets/images/avatars/female-user.png"} alt="user" className='rounded-md w-10 h-10 shrink-0' />
+                <img src={gender === "male" ? '/male-user.png' : "/female-user.png"} alt="user" className='rounded-md w-10 h-10 shrink-0' />
               )}
               <div className='text-sm hover:text-lime-300 text-white hover:transition-all hover:ease-in-out truncate'>
                 {userEmail}

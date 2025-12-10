@@ -72,7 +72,7 @@ const createJobPosting = async (req, res) => {
     const notification = new Notification({
       notificationMessage: `${jobTitle} by ${postedGym.gymName}!`,
       jobNotification: newJob._id,
-      isRead: false,
+      readBy: [],
     });
 
     await notification.save();

@@ -7,7 +7,7 @@ const GymMain = () => {
 
   return (
     <div className="h-screen w-full flex bg-black overflow-hidden">
-      <div className="h-full">
+      <div>
         <Sidebar role={role} />
       </div>
       <div className="flex-1 h-full overflow-y-auto p-0 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900">

@@ -1,18 +1,18 @@
 //all gym types will go here of users gym and notification also
 
 export interface GymProps {
-    _id: string;
-    gymName: string;
-    equipments: string[];
-    location: {
-        area: string;
-        city: string;
-        landmark: string;
-        pincode: string;
-        state: string;
-        streetName: string;
-    };
-    gymImages: string[];
+  _id: string;
+  gymName: string;
+  equipments: string[];
+  location: {
+    area: string;
+    city: string;
+    landmark: string;
+    pincode: string;
+    state: string;
+    streetName: string;
+  };
+  gymImages: string[];
 }
 
 export interface SingleGymProps {

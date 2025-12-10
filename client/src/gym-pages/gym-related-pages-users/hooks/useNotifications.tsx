@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import useUserStore from "@/zustand";
+import { useEffect } from "react";
+import useUserStore, { useNotificationStore } from "@/zustand";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { NotificationProps } from "../types/types";
@@ -7,9 +7,8 @@ import { NotificationProps } from "../types/types";
 
 
 export const useNotifications = () => {
-  const [notifications, setNotifications] = useState<NotificationProps[]>([]);
   const userId = useUserStore((state) => state.details?.userId);
-
+  const { notifications, setNotifications } = useNotificationStore()
   // Fetch notifications
   const fetchNotifications = async () => {
     try {
@@ -17,40 +16,60 @@ export const useNotifications = () => {
         import.meta.env.VITE_DB_URL + "/jobs/notifications/all",
         { withCredentials: true }
       );
-      setNotifications(res.data.notifications);
+      setNotifications(res.data.notifications || []);
       toast.success("Notifications fetched successfully");
     } catch (err) {
       console.error(err);
     }
   };
 
-  // Mark all as read
-  const markAllAsRead = async () => {
-    try {
-      const ids = notifications.map((n) => n._id);
 
-      await axios.put(
-        import.meta.env.VITE_DB_URL + "/jobs/notifications/mark-read",
-        { notification_ids: ids },
+  const isRead = (n: NotificationProps) => {
+    const readArray = Array.isArray(n?.readBy) ? n.readBy : [];
+    return userId ? readArray.includes(userId) : false;
+  };
+
+  const markAllRead = async (updatenotifications: NotificationProps[]) => {
+    try {
+      // never call hooks inside this function — keep it pure
+
+      const notification_ids = [];
+
+      if (!updatenotifications) return;
+
+      let updatedNotificationsList = [];
+
+      if (userId) {
+        for (let i = 0; i < updatenotifications.length; i++) {
+          notification_ids.push(updatenotifications[i]._id);
+          updatenotifications[i].readBy.push(userId);
+        }
+
+        updatedNotificationsList = [...updatenotifications];
+        setNotifications(updatedNotificationsList);
+      }
+
+      const res = await axios.put(
+        import.meta.env.VITE_DB_URL + "/jobs/read-all/notifications",
+        { notification_ids },
         { withCredentials: true }
       );
 
-      setNotifications((prev) =>
-        prev.map((n) =>
-          n.readBy.includes(userId!) ? n : { ...n, readBy: [...n.readBy, userId!] }
-        )
-      );
-
-      toast.success("All notifications marked as read!");
+      if (res.status === 200) {
+        toast.success("All notifications marked as read successfully.");
+      }
     } catch (error) {
-      console.log(error);
+      console.error("Error marking notifications as read:", error);
+      toast.error("Could not mark all as read. Try again.");
     }
   };
 
-  // Check if a notification is read by user
-  const isRead = (n: NotificationProps) => {
-    return userId ? n.readBy.includes(userId) : false;
-  };
+  const numberOfUnreadMessages =() => {
+    if(userId && notifications){
+      const count = notifications.filter((notification,_index)=>!notification.readBy.includes(userId)).length
+      return count;
+    }
+  }
 
   // Time formatting logic
   const formatTime = (date: string) => {
@@ -79,5 +98,5 @@ export const useNotifications = () => {
     fetchNotifications();
   }, []);
 
-  return { notifications, isRead, formatTime, markAllAsRead };
+  return { notifications, isRead, formatTime, setNotifications, markAllRead,numberOfUnreadMessages};
 };
