@@ -36,7 +36,7 @@ export const userSidebarLinks = [
   {
     label: "Kanban Board",
     icon: Grid,
-    path: "/kanban",
+    path: "/tracking",
   },
   // {
   //   label: "My Applications",

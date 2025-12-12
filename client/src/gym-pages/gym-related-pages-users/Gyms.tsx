@@ -159,7 +159,7 @@ const Gyms = () => {
             </div>
           )}
 
-          {showsearchModal && <SearchModal />}
+          {showsearchModal && <SearchModal data = {data}/>}
           {notificationModal && <NotificationModal onClose={onClose} />}
           {error && <h1 className="text-red-400 text-3xl font-bold text-center">{error}</h1>}
 

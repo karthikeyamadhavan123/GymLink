@@ -60,3 +60,7 @@ export interface Props {
   isRead: boolean;
   formatTime: (date: string) => string;
 }
+
+export interface SearchModalProps {
+  data: GymProps[]
+}
