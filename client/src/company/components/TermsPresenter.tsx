@@ -1,8 +1,9 @@
 // Presenter Component
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  ChevronDown, 
-  ArrowLeft, 
+import type { Variants } from "framer-motion";
+import {
+  ChevronDown,
+  ArrowLeft,
   ArrowUp,
   FileCheck,
   Dumbbell,
@@ -29,7 +30,7 @@ const TermsConditionsPresenter = ({
   onGoBack,
   onContactSupport
 }: TermsConditionsPresenterProps) => {
-  
+
   const getIconComponent = (iconName: string) => {
     const icons = {
       FileCheck,
@@ -57,7 +58,7 @@ const TermsConditionsPresenter = ({
     }
   };
 
-  const sectionVariants = {
+  const sectionVariants: Variants = {
     hidden: { y: 20, opacity: 0 },
     visible: {
       y: 0,
@@ -70,8 +71,16 @@ const TermsConditionsPresenter = ({
     }
   };
 
-  const contentVariants = {
+  const contentVariants: Variants = {
     hidden: { height: 0, opacity: 0 },
+    exit: {
+      height: 0,
+      opacity: 0,
+      transition: {
+        height: { duration: 0.3, ease: "easeIn" },
+        opacity: { duration: 0.15 }
+      }
+    },
     visible: {
       height: "auto",
       opacity: 1,
@@ -80,27 +89,18 @@ const TermsConditionsPresenter = ({
         opacity: { duration: 0.2, delay: 0.1 }
       }
     },
-    exit: {
-      height: 0,
-      opacity: 0,
-      transition: {
-        height: { duration: 0.3, ease: "easeIn" },
-        opacity: { duration: 0.15 }
-      }
-    }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 relative font-stencil">
+    <div className="min-h-screen bg-linear-to-br from-gray-900 via-black to-gray-900 relative font-stencil">
       {/* Fixed Navigation Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled 
-            ? 'bg-black/80 backdrop-blur-lg border-b border-gray-700/50' 
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
+            ? 'bg-black/80 backdrop-blur-lg border-b border-gray-700/50'
             : 'bg-transparent'
-        }`}
+          }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
@@ -113,11 +113,11 @@ const TermsConditionsPresenter = ({
               <ArrowLeft className="w-5 h-5" />
               <span className="hidden sm:inline">Go Back</span>
             </motion.button>
-            
+
             <h1 className="text-lg md:text-xl font-bold text-white text-center">
               Terms & Conditions
             </h1>
-            
+
             <motion.button
               onClick={onContactSupport}
               className="flex items-center space-x-2 bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 px-4 py-2 rounded-full transition-all duration-200"
@@ -134,7 +134,7 @@ const TermsConditionsPresenter = ({
       {/* Main Content */}
       <div className="pt-20 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
-          
+
           {/* Hero Section */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -147,21 +147,21 @@ const TermsConditionsPresenter = ({
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
-                className="p-4 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-2xl border border-blue-500/30"
+                className="p-4 bg-linear-to-br from-blue-500/20 to-purple-500/20 rounded-2xl border border-blue-500/30"
               >
                 <FileCheck className="w-12 h-12 text-blue-400" />
               </motion.div>
             </div>
-            
+
             <h1 className="text-4xl md:text-6xl font-bold text-lime-300 bg-clip-text  mb-6">
               Terms & Conditions
             </h1>
-            
+
             <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
-              Please read these terms carefully before using our fitness platform. 
+              Please read these terms carefully before using our fitness platform.
               Your use of our service constitutes acceptance of these terms.
             </p>
-            
+
             <div className="flex items-center justify-center space-x-6 text-sm text-gray-400">
               <div className="flex items-center space-x-2">
                 <Calendar className="w-4 h-4" />
@@ -185,12 +185,12 @@ const TermsConditionsPresenter = ({
             {termsData.map((section, index) => {
               const IconComponent = getIconComponent(section.icon);
               const isActive = activeSection === section.id;
-              
+
               return (
                 <motion.div
                   key={section.id}
                   variants={sectionVariants}
-                  className="bg-gradient-to-br from-gray-800/40 to-gray-900/40 backdrop-blur-sm border border-gray-700/50 rounded-2xl overflow-hidden hover:border-gray-600/50 transition-all duration-300"
+                  className="bg-linear-to-br from-gray-800/40 to-gray-900/40 backdrop-blur-sm border border-gray-700/50 rounded-2xl overflow-hidden hover:border-gray-600/50 transition-all duration-300"
                   layout={false}
                 >
                   {/* Section Header */}
@@ -212,13 +212,13 @@ const TermsConditionsPresenter = ({
                         </p>
                       </div>
                     </div>
-                    
+
                     <motion.div
                       animate={{ rotate: isActive ? 180 : 0 }}
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                       className={`${section.color}`}
                     >
-                      <ChevronDown className="w-6 h-6 cursor-pointer"/>
+                      <ChevronDown className="w-6 h-6 cursor-pointer" />
                     </motion.div>
                   </motion.button>
 
@@ -243,7 +243,7 @@ const TermsConditionsPresenter = ({
                                   transition={{ delay: pIndex * 0.1, duration: 0.4 }}
                                   className="flex items-start space-x-3"
                                 >
-                                  <div className={`w-2 h-2 rounded-full ${section.color.replace('text', 'bg')} mt-3 flex-shrink-0`} />
+                                  <div className={`w-2 h-2 rounded-full ${section.color.replace('text', 'bg')} mt-3 shrink-0`} />
                                   <li className="text-gray-300 leading-relaxed">
                                     {paragraph}
                                   </li>
@@ -265,7 +265,7 @@ const TermsConditionsPresenter = ({
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.8 }}
-            className="mt-16 bg-gradient-to-r from-blue-600/10 to-purple-600/10 backdrop-blur-sm border border-gray-700/50 rounded-3xl p-8 md:p-12 text-center"
+            className="mt-16 bg-linear-to-r from-blue-600/10 to-purple-600/10 backdrop-blur-sm border border-gray-700/50 rounded-3xl p-8 md:p-12 text-center"
           >
             <h2 className="text-3xl font-bold text-white mb-4">
               Questions About These Terms?
@@ -273,7 +273,7 @@ const TermsConditionsPresenter = ({
             <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
               If you have any questions about these Terms and Conditions, please don't hesitate to contact our support team.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <motion.button
                 onClick={onContactSupport}
@@ -283,7 +283,7 @@ const TermsConditionsPresenter = ({
               >
                 Contact Support
               </motion.button>
-              
+
               <motion.button
                 onClick={onGoBack}
                 className="bg-gray-700 hover:bg-gray-600 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 cursor-pointer"
@@ -307,7 +307,7 @@ const TermsConditionsPresenter = ({
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <ArrowUp className="w-6 h-6 cursor-pointer"  />
+                <ArrowUp className="w-6 h-6 cursor-pointer" />
               </motion.button>
             )}
           </AnimatePresence>
