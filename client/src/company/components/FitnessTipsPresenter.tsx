@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, Dumbbell, Heart, Moon, Star, Utensils } from 'lucide-react';
 import { FitnessTipPropsPresenter } from '@/types'; 
+import type { Variants } from "framer-motion";
 
 const FitnessTipsPresenter = ({
   categories,
@@ -12,7 +13,7 @@ const FitnessTipsPresenter = ({
   onHoverEnd,
   onGetStarted
 }: FitnessTipPropsPresenter) => {
-  const containerVariants = {
+  const containerVariants:Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -23,7 +24,7 @@ const FitnessTipsPresenter = ({
     }
   };
 
-  const itemVariants = {
+  const itemVariants:Variants = {
     hidden: { y: 10, opacity: 0 }, // Reduced from y: 20
     visible: {
       y: 0,
@@ -49,7 +50,7 @@ const FitnessTipsPresenter = ({
 
   return (
     <div 
-      className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 py-12 px-4 sm:px-6 lg:px-8 font-stencil"
+      className="min-h-screen bg-linear-to-br from-gray-900 via-black to-gray-900 py-12 px-4 sm:px-6 lg:px-8 font-stencil"
       style={{ scrollBehavior: 'auto' }} // Fix 3: Disable smooth scrolling
     >
       <div className="max-w-7xl mx-auto">
@@ -73,7 +74,7 @@ const FitnessTipsPresenter = ({
             >
               <Dumbbell className="w-12 h-12 text-lime-400" />
             </motion.div>
-            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-400 via-purple-500 to-pink-400 bg-clip-text text-transparent">
+            <h1 className="text-4xl md:text-6xl font-bold bg-linear-to-r from-blue-400 via-purple-500 to-pink-400 bg-clip-text text-transparent">
               Fitness Tips
             </h1>
           </div>
@@ -129,7 +130,7 @@ const FitnessTipsPresenter = ({
                 <motion.div
                   key={tip.id}
                   variants={itemVariants}
-                  className={`relative group cursor-pointer bg-gradient-to-br ${tip.bgGradient} backdrop-blur-sm border border-gray-700/50 rounded-2xl p-6 hover:border-gray-600/50 transition-all duration-300`}
+                  className={`relative group cursor-pointer bg-linear-to-br ${tip.bgGradient} backdrop-blur-sm border border-gray-700/50 rounded-2xl p-6 hover:border-gray-600/50 transition-all duration-300`}
                   onHoverStart={() => onHoverStart(tip.id)}
                   onHoverEnd={onHoverEnd}
                   whileHover={{ 
@@ -143,7 +144,7 @@ const FitnessTipsPresenter = ({
                   }}
                 >
                   {/* Background Glow Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute inset-0 bg-linear-to-br from-white/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   
                   {/* Header */}
                   <div className="relative z-10">
@@ -179,7 +180,7 @@ const FitnessTipsPresenter = ({
                           }}
                           className="flex items-start space-x-3"
                         >
-                          <div className={`w-2 h-2 rounded-full ${tip.color.replace('text', 'bg')} mt-2 flex-shrink-0`} />
+                          <div className={`w-2 h-2 rounded-full ${tip.color.replace('text', 'bg')} mt-2 shrink-0`} />
                           <p className="text-gray-300 text-sm leading-relaxed">
                             {individualTip}
                           </p>
@@ -200,7 +201,7 @@ const FitnessTipsPresenter = ({
           transition={{ delay: 0.6, duration: 0.6 }} // Reduced delay and duration
           className="text-center mt-20"
         >
-          <div className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-sm border border-gray-700/50 rounded-3xl p-8 md:p-12">
+          <div className="bg-linear-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-sm border border-gray-700/50 rounded-3xl p-8 md:p-12">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
               Ready to Start Your Journey?
             </h2>

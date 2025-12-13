@@ -30,7 +30,7 @@ const TopTrainerContainer = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-lime-300 mb-2 sm:mb-3 md:mb-4 lg:mb-6 tracking-tight px-2">
             Top Trainers
           </h1>
-          <div className="w-12 sm:w-16 md:w-20 lg:w-24 xl:w-32 h-1 bg-gradient-to-r from-lime-300 to-emerald-400 mx-auto mb-2 sm:mb-3 md:mb-4 lg:mb-6 rounded-full"></div>
+          <div className="w-12 sm:w-16 md:w-20 lg:w-24 xl:w-32 h-1 bg-linear-to-r from-lime-300 to-emerald-400 mx-auto mb-2 sm:mb-3 md:mb-4 lg:mb-6 rounded-full"></div>
           <p className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed px-4">
             Meet our elite fitness professionals who transform lives through expertise, dedication, and results
           </p>

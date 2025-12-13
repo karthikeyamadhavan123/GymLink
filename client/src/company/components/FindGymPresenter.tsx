@@ -1,4 +1,5 @@
 import { FindGymPresenterProps } from '@/types';
+import type { Variants } from "framer-motion";
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Search,
@@ -64,7 +65,7 @@ const FindGymPresenter = ({
     }
   };
 
-  const itemVariants = {
+  const itemVariants:Variants = {
     hidden: { y: 20, opacity: 0 },
     visible: {
       y: 0,
@@ -78,7 +79,7 @@ const FindGymPresenter = ({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 font-stencil">
+    <div className="min-h-screen bg-linear-to-br from-gray-900 via-black to-gray-900 font-stencil">
 
       {/* Hero Section */}
       <motion.div
@@ -93,7 +94,7 @@ const FindGymPresenter = ({
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.3, type: "spring", stiffness: 150 }}
-            className="inline-flex p-4 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-2xl border border-blue-500/30 mb-6"
+            className="inline-flex p-4 bg-linear-to-br from-blue-500/20 to-purple-500/20 rounded-2xl border border-blue-500/30 mb-6"
           >
             <MapPin className="w-12 h-12 text-blue-400" />
           </motion.div>
@@ -235,7 +236,7 @@ const FindGymPresenter = ({
               <motion.div
                 key={gym.id}
                 variants={itemVariants}
-                className={`group relative cursor-pointer bg-gradient-to-br from-gray-800/40 to-gray-900/40 backdrop-blur-sm border border-gray-700/50 rounded-2xl overflow-hidden hover:border-gray-600/50 transition-all duration-300 ${viewMode === 'list' ? 'flex' : ''
+                className={`group relative cursor-pointer bg-linear-to-br from-gray-800/40 to-gray-900/40 backdrop-blur-sm border border-gray-700/50 rounded-2xl overflow-hidden hover:border-gray-600/50 transition-all duration-300 ${viewMode === 'list' ? 'flex' : ''
                   }`}
                 onClick={() => onGymSelect(gym.id)}
                 whileHover={{ scale: 1.02 }}
@@ -243,7 +244,7 @@ const FindGymPresenter = ({
               >
                 {/* Featured Badge */}
                 {gym.featured && (
-                  <div className="absolute top-4 left-4 z-10 bg-gradient-to-r from-yellow-400 to-orange-400 text-black px-3 py-1 rounded-full text-xs font-bold">
+                  <div className="absolute top-4 left-4 z-10 bg-linear-to-r from-yellow-400 to-orange-400 text-black px-3 py-1 rounded-full text-xs font-bold">
                     Featured
                   </div>
                 )}
@@ -267,13 +268,13 @@ const FindGymPresenter = ({
                 </motion.button>
 
                 {/* Image */}
-                <div className={`relative ${viewMode === 'list' ? 'w-64 flex-shrink-0' : 'h-48'} overflow-hidden`}>
+                <div className={`relative ${viewMode === 'list' ? 'w-64 shrink-0' : 'h-48'} overflow-hidden`}>
                   <img
                     src={gym.image}
                     alt={gym.name}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/50 to-transparent" />
 
                   {/* Status Badge */}
                   <div className={`absolute bottom-3 left-3 px-3 py-1 rounded-full text-xs font-medium ${gym.isOpen
